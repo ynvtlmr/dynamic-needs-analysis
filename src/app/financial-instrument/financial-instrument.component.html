@@ -1,0 +1,34 @@
+<div>
+  <div>
+    <label for="financialInstrumentName">Financial Instrument Name:</label>
+    <input id="financialInstrumentName" [(ngModel)]="financialInstrumentName" type="text">
+  </div>
+  <div>
+    <label for="purchasePrice">Purchase Price:</label>
+    <input id="purchasePrice" [(ngModel)]="purchasePrice" type="number">
+  </div>
+  <div>
+    <label for="yearAcquired">Year Acquired:</label>
+    <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number">
+  </div>
+  <div>
+    <label for="currentValue">Current Value:</label>
+    <input id="currentValue" [(ngModel)]="currentValue" type="number">
+  </div>
+  <div>
+    <label for="rate">Rate:</label>
+    <input id="rate" [(ngModel)]="rate" type="number">
+  </div>
+  <div>
+    <label for="term">Term:</label>
+    <input id="term" [(ngModel)]="term" type="number">
+  </div>
+
+  <ul>
+    <li>Current years held: <strong>{{ currentYearsHeld }}</strong> years</li>
+    <li>Current growth dollars: $<strong>{{ currentGrowthDollars | number:'1.0-2'  }}</strong></li>
+    <li>Current growth percentage: <strong>{{ currentGrowthPercentage | number:'1.0-2'  }}</strong>%</li>
+    <li>Future value dollars: $<strong>{{ futureValueDollars | number:'1.0-2'  }}</strong></li>
+    <li>Future value growth percentage: <strong>{{ futureValueGrowthPercentage | number:'1.0-2'  }}</strong>%</li>
+  </ul>
+</div>
