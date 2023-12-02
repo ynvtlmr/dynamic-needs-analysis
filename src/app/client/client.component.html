@@ -8,7 +8,9 @@
 
   <div>
     <label for="province">Province:</label>
-    <input id="province" [(ngModel)]="province" type="text">
+    <select [ngModel]="province" id="province">
+      <option *ngFor="let prov of provinces" [ngValue]="province">{{ prov }}</option>
+    </select>
   </div>
 
   <div>
