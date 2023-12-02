@@ -1,6 +1,9 @@
-<label for="birthdate">Birthdate:</label>
-<input id="birthdate" [(ngModel)]="birthdate" type="date">
-<ul>
-    <li>Age: {{ age }} years</li>
-    <li>Years to retirement: {{ yearsToRetirement }} years</li>
+<div class="input-field">
+  <input type="date" id="birthdate" class="datepicker" [(ngModel)]="birthdate">
+  <label for="birthdate">Birthdate:</label>
+</div>
+
+<ul class="collection">
+  <li class="collection-item">Age: {{ age }} years</li>
+  <li class="collection-item">Years to retirement: {{ yearsToRetirement }} years</li>
 </ul>
