@@ -16,12 +16,35 @@
     <input id="currentValue" [(ngModel)]="currentValue" type="number">
   </div>
   <div>
+    <label for="annualContribution">Annual Contribution:</label>
+    <input id="annualContribution" [(ngModel)]="annualContribution" type="number">
+  </div>
+  <div>
     <label for="rate">Rate:</label>
     <input id="rate" [(ngModel)]="rate" type="number">
   </div>
   <div>
     <label for="term">Term:</label>
     <input id="term" [(ngModel)]="term" type="number">
+  </div>
+
+  <div>
+    <label for="type">Type:</label>
+    <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
+      <option *ngFor="let type of financialInstrumentTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+  <div>
+    <label for="isTaxable">Taxable:</label>
+    <input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox">
+  </div>
+  <div>
+    <label for="isLiquid">Liquid:</label>
+    <input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox">
+  </div>
+  <div>
+    <label for="isToBeSettled">To Be Settled:</label>
+    <input id="isToBeSettled" [(ngModel)]="isToBeSettled" type="checkbox">
   </div>
 
   <ul>
