@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { BirthdateComponent } from "./birthdate/birthdate.component";
 import { ClientComponent } from "./client/client.component";
-import {FinancialInstrumentComponent} from "./financial-instrument/financial-instrument.component";
+import { FinancialInstrumentComponent } from "./financial-instrument/financial-instrument.component";
+import { BeneficiaryComponent } from "./beneficiary/beneficiary.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, BirthdateComponent, ClientComponent, FinancialInstrumentComponent],
+    imports: [CommonModule, RouterOutlet, BirthdateComponent, ClientComponent, FinancialInstrumentComponent, BeneficiaryComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
