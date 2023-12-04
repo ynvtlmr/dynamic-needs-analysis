@@ -3,12 +3,21 @@
     <input #allocationInput type="number" placeholder="Ideal Allocation">
     <button (click)="addBeneficiary(nameInput.value, allocationInput.valueAsNumber)">Add Beneficiary</button>
 
-    <ul>
-        <li *ngFor="let beneficiary of beneficiaries; let i = index">
-            {{ beneficiary.name }} - {{ beneficiary.idealAllocation }}%
-            <button (click)="deleteBeneficiary(i)">Delete</button>
-        </li>
-    </ul>
-
-    <p>Total Allocation: <strong>{{ totalAllocation }}</strong>%</p>
+    <table *ngIf="beneficiaries.length">
+        <tr>
+            <th>Name</th>
+            <th>Allocation</th>
+            <th>Delete</th>
+        </tr>
+        <tr *ngFor="let beneficiary of beneficiaries; let i = index">
+            <td>{{ beneficiary.name }}</td>
+            <td>{{ beneficiary.idealAllocation }}</td>
+            <td><button (click)="deleteBeneficiary(i)">Delete</button></td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>{{ totalAllocation }}</td>
+            <td></td>
+        </tr>
+    </table>
 </div>
