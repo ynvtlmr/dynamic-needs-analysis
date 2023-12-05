@@ -57,6 +57,12 @@
     <input id="isToBeSettled" [(ngModel)]="isToBeSettled" type="checkbox" />
   </div>
 
+  <div>
+    <label for="inputYear">Value at year:</label>
+    <input id="inputYear" [(ngModel)]="inputYear" type="number" />
+    Value: ${{ getValueAtInputYear | number: "1.0-2" }}
+  </div>
+
   <ul>
     <li>
       Current years held: <strong>{{ currentYearsHeld }}</strong> years

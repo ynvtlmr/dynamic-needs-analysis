@@ -45,4 +45,20 @@
       type="number"
     />
   </div>
+
+  <div>
+    <label for="taxBracket">Tax Bracket:</label>
+    <select
+      id="taxBracket"
+      [(ngModel)]="selectedBracket"
+      (ngModelChange)="updateClientData()"
+    >
+      <option
+        *ngFor="let bracket of taxBrackets; let i = index"
+        [ngValue]="bracket"
+      >
+        ${{ bracket.minIncome }} and up - {{ bracket.taxRate }}%
+      </option>
+    </select>
+  </div>
 </div>

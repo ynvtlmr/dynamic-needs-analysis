@@ -22,6 +22,8 @@ export class FinancialInstrumentComponent {
   isLiquid: boolean = false;
   isToBeSettled: boolean = false;
 
+  inputYear: number = new Date().getFullYear();
+
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
   // TODO: get capital gains tax rate from global storage
 
@@ -92,6 +94,9 @@ export class FinancialInstrumentComponent {
     return (
       this.currentValue * Math.pow(1 + this.rate / 100, yearGiven - currentYear)
     );
+  }
+  get getValueAtInputYear(): number {
+    return this.valueAtYear(this.inputYear);
   }
   valueSeries(startYear: number, endYear: number): number[] {
     const series = [];

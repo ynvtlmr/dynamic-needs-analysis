@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BirthdateComponent } from '../birthdate/birthdate.component';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
+import { TAX_BRACKETS, Bracket } from '../constants/tax.constant';
 
 @Component({
   selector: 'app-client',
@@ -11,6 +12,9 @@ import { NgForOf } from '@angular/common';
   imports: [FormsModule, BirthdateComponent, NgForOf],
 })
 export class ClientComponent implements OnInit {
+  taxBrackets: Bracket[] = [];
+  selectedBracket: Bracket | undefined;
+
   ngOnInit(): void {
     // if they exist, load the variables `name, province, annualIncome, incomeReplacementMultiplier` from local storage.
     const storedClient = localStorage.getItem('client');
@@ -22,6 +26,7 @@ export class ClientComponent implements OnInit {
       this.annualIncome = annualIncome;
       this.incomeReplacementMultiplier = incomeReplacementMultiplier;
     }
+    this.updateTaxBrackets();
   }
   name: string = '';
   province: string = '';
@@ -30,6 +35,7 @@ export class ClientComponent implements OnInit {
   provinces: string[] = CANADA_PROVINCES;
 
   updateClientData(): void {
+    this.updateTaxBrackets();
     const client = {
       name: this.name,
       province: this.province,
@@ -37,5 +43,17 @@ export class ClientComponent implements OnInit {
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
     };
     localStorage.setItem('client', JSON.stringify(client));
+  }
+
+  private updateTaxBrackets(): void {
+    const year = new Date().getFullYear(); // or a specific year if required
+    this.taxBrackets = TAX_BRACKETS[year]?.[this.province.toUpperCase()] || [];
+    this.selectedBracket = this.taxBrackets.find((bracket, index, array) => {
+      const nextBracket = array[index + 1];
+      return (
+        this.annualIncome >= bracket.minIncome &&
+        (!nextBracket || this.annualIncome < nextBracket.minIncome)
+      );
+    });
   }
 }
