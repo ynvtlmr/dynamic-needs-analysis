@@ -1,7 +1,7 @@
 <div>
   <div>
     <label for="name">Name:</label>
-    <input id="name" [(ngModel)]="name" type="text">
+    <input id="name" [(ngModel)]="name" type="text" />
   </div>
 
   <app-birthdate></app-birthdate>
@@ -9,17 +9,25 @@
   <div>
     <label for="province">Province:</label>
     <select [ngModel]="province" id="province">
-      <option *ngFor="let prov of provinces" [ngValue]="province">{{ prov }}</option>
+      <option *ngFor="let prov of provinces" [ngValue]="province">
+        {{ prov }}
+      </option>
     </select>
   </div>
 
   <div>
     <label for="annualIncome">Annual Income:</label>
-    <input id="annualIncome" [(ngModel)]="annualIncome" type="number">
+    <input id="annualIncome" [(ngModel)]="annualIncome" type="number" />
   </div>
 
   <div>
-    <label for="incomeReplacementMultiplier">Income Replacement Multiplier:</label>
-    <input id="incomeReplacementMultiplier" [(ngModel)]="incomeReplacementMultiplier" type="number">
+    <label for="incomeReplacementMultiplier"
+      >Income Replacement Multiplier:</label
+    >
+    <input
+      id="incomeReplacementMultiplier"
+      [(ngModel)]="incomeReplacementMultiplier"
+      type="number"
+    />
   </div>
 </div>

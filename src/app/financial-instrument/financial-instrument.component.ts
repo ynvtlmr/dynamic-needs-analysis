@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { FormsModule } from "@angular/forms";
-import { DecimalPipe, CommonModule } from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { DecimalPipe, CommonModule } from '@angular/common';
 import { FIN_INSTR_TYPES } from '../constants/financial-instrument-types.constant';
 
 @Component({
@@ -51,5 +51,4 @@ export class FinancialInstrumentComponent {
     }
     return (this.futureValueDollars / this.purchasePrice - 1) * 100;
   }
-
 }

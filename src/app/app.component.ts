@@ -1,17 +1,24 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { BirthdateComponent } from "./birthdate/birthdate.component";
-import { ClientComponent } from "./client/client.component";
-import { FinancialInstrumentComponent } from "./financial-instrument/financial-instrument.component";
-import { BeneficiaryComponent } from "./beneficiary/beneficiary.component";
+import { BirthdateComponent } from './birthdate/birthdate.component';
+import { ClientComponent } from './client/client.component';
+import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
+import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-    imports: [CommonModule, RouterOutlet, BirthdateComponent, ClientComponent, FinancialInstrumentComponent, BeneficiaryComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    BirthdateComponent,
+    ClientComponent,
+    FinancialInstrumentComponent,
+    BeneficiaryComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'dynamic-needs-analysis';
@@ -38,13 +45,13 @@ export class AppComponent {
 
   loadLocalStorageFromFile(event: Event) {
     const file = (event.target as HTMLInputElement)?.files?.[0];
-    if(!file) {
+    if (!file) {
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
       const data = JSON.parse(reader.result as string);
-      for(let key in data) {
+      for (let key in data) {
         localStorage.setItem(key, data[key]);
       }
       // Reload app

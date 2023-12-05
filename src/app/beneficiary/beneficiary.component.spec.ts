@@ -8,7 +8,7 @@ describe('BeneficiaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormsModule, BeneficiaryComponent]
+      imports: [FormsModule, BeneficiaryComponent],
     }).compileComponents();
     localStorage.clear();
     fixture = TestBed.createComponent(BeneficiaryComponent);

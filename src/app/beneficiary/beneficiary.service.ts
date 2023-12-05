@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Beneficiary } from "./beneficiary.model";
+import { Beneficiary } from './beneficiary.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BeneficiaryService {
   private beneficiaries: Beneficiary[] = [];
@@ -22,7 +22,10 @@ export class BeneficiaryService {
     this.updateStorage();
   }
   get totalAllocation(): number {
-    return this.beneficiaries.reduce((total, beneficiary) => total + beneficiary.idealAllocation, 0);
+    return this.beneficiaries.reduce(
+      (total, beneficiary) => total + beneficiary.idealAllocation,
+      0,
+    );
   }
   private updateStorage(): void {
     localStorage.setItem('beneficiaries', JSON.stringify(this.beneficiaries));
