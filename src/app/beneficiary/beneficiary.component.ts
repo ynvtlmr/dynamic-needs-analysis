@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { BeneficiaryService } from './beneficiary.service';
-import { Beneficiary } from './beneficiary.model';
+
+interface Beneficiary {
+  name: string;
+  idealAllocation: number;
+}
 
 @Component({
   selector: 'app-beneficiary',
@@ -11,21 +14,35 @@ import { Beneficiary } from './beneficiary.model';
   templateUrl: './beneficiary.component.html',
 })
 export class BeneficiaryComponent {
-  constructor(private beneficiaryService: BeneficiaryService) {}
+  beneficiaries: Beneficiary[] = [];
 
-  get beneficiaries(): Beneficiary[] {
-    return this.beneficiaryService.beneficiariesList;
+  constructor() {
+    this.loadBeneficiariesFromStorage();
   }
 
   get totalAllocation(): number {
-    return this.beneficiaryService.totalAllocation;
+    return this.beneficiaries.reduce(
+      (total, beneficiary) => total + beneficiary.idealAllocation,
+      0,
+    );
   }
 
   addBeneficiary(name: string, idealAllocation: number): void {
-    this.beneficiaryService.addBeneficiary(name, idealAllocation);
+    this.beneficiaries.push({ name, idealAllocation });
+    this.updateStorage();
   }
 
   deleteBeneficiary(index: number): void {
-    this.beneficiaryService.deleteBeneficiary(index);
+    this.beneficiaries.splice(index, 1);
+    this.updateStorage();
+  }
+
+  private updateStorage(): void {
+    localStorage.setItem('beneficiaries', JSON.stringify(this.beneficiaries));
+  }
+
+  private loadBeneficiariesFromStorage(): void {
+    const data = localStorage.getItem('beneficiaries');
+    this.beneficiaries = data ? JSON.parse(data) : [];
   }
 }
