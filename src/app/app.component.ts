@@ -5,6 +5,7 @@ import { BirthdateComponent } from './birthdate/birthdate.component';
 import { ClientComponent } from './client/client.component';
 import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
+import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -23,40 +24,17 @@ import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 export class AppComponent {
   title = 'dynamic-needs-analysis';
 
+  constructor(private localStorageService: LocalStorageService) {}
+
   clearAllLocalStorage() {
-    localStorage.clear();
-    window.location.reload();
+    this.localStorageService.clearAll();
   }
 
   downloadLocalStorageAsFile() {
-    const data = JSON.stringify(localStorage);
-    const blob = new Blob([data], { type: 'application/json' });
-    const fileName = 'dna-local-storage.json';
-    const downloadURL = window.URL.createObjectURL(blob);
-
-    const link = document.createElement('a');
-    link.href = downloadURL;
-    link.download = fileName;
-    link.click();
-
-    // Revoke the object URL to free up memory
-    window.URL.revokeObjectURL(downloadURL);
+    this.localStorageService.downloadAsFile();
   }
 
   loadLocalStorageFromFile(event: Event) {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
-    if (!file) {
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const data = JSON.parse(reader.result as string);
-      for (let key in data) {
-        localStorage.setItem(key, data[key]);
-      }
-      // Reload app
-      window.location.reload();
-    };
-    reader.readAsText(file);
+    this.localStorageService.loadFromFile(event);
   }
 }
