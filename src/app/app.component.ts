@@ -15,4 +15,8 @@ import { BeneficiaryComponent } from "./beneficiary/beneficiary.component";
 })
 export class AppComponent {
   title = 'dynamic-needs-analysis';
+  clearAllLocalStorage() {
+    localStorage.clear();
+    window.location.reload();
+  }
 }
