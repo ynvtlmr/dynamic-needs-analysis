@@ -1,28 +1,31 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BeneficiaryService } from './beneficiary.service';
 import { Beneficiary } from './beneficiary.model';
 
 @Component({
   selector: 'app-beneficiary',
   standalone: true,
-  imports: [
-    FormsModule, CommonModule
-  ],
+  imports: [FormsModule, CommonModule],
   templateUrl: './beneficiary.component.html',
 })
 export class BeneficiaryComponent {
-  beneficiaries: Beneficiary[] = [];
+  constructor(private beneficiaryService: BeneficiaryService) {}
 
-  addBeneficiary(name:string, idealAllocation: number): void {
-    this.beneficiaries.push({ name, idealAllocation });
-  }
-
-  deleteBeneficiary(index: number): void {
-    this.beneficiaries.splice(index, 1);
+  get beneficiaries(): Beneficiary[] {
+    return this.beneficiaryService.beneficiariesList;
   }
 
   get totalAllocation(): number {
-    return this.beneficiaries.reduce((total, beneficiary) => total + beneficiary.idealAllocation, 0);
+    return this.beneficiaryService.totalAllocation;
+  }
+
+  addBeneficiary(name: string, idealAllocation: number): void {
+    this.beneficiaryService.addBeneficiary(name, idealAllocation);
+  }
+
+  deleteBeneficiary(index: number): void {
+    this.beneficiaryService.deleteBeneficiary(index);
   }
 }

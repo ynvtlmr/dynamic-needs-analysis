@@ -10,7 +10,7 @@ describe('BeneficiaryComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FormsModule, BeneficiaryComponent]
     }).compileComponents();
-
+    localStorage.clear();
     fixture = TestBed.createComponent(BeneficiaryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
