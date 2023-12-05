@@ -78,8 +78,22 @@
     </li>
     <li>
       Future value growth percentage:
-      <strong>{{ futureValueGrowthPercentage | number: "1.0-2" }}</strong
-      >%
+      <strong>
+        {{ futureValueGrowthPercentage | number: "1.0-2" }}
+      </strong>
+      %
+    </li>
+    <!-- TODO: Add capital gains tax rate -->
+    <li>
+      Current tax liability dollars: $
+      <strong>
+        {{ currentTaxLiabilityDollars(10) | number: "1.0-2" }}
+      </strong>
+    </li>
+    <li>
+      Future tax liability dollars: $<strong>{{
+        futureTaxLiabilityDollars(10) | number: "1.0-2"
+      }}</strong>
     </li>
   </ul>
 </div>

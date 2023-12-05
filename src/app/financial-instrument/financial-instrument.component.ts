@@ -23,6 +23,7 @@ export class FinancialInstrumentComponent {
   isToBeSettled: boolean = false;
 
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
+  // TODO: get capital gains tax rate from global storage
 
   onTypeChange(selectedType: string): void {
     const typeInfo = FIN_INSTR_TYPES.get(selectedType);
@@ -50,5 +51,53 @@ export class FinancialInstrumentComponent {
       return 0;
     }
     return (this.futureValueDollars / this.purchasePrice - 1) * 100;
+  }
+
+  currentTaxLiabilityDollars(capitalGainsTaxRate: number): number {
+    if (!this.isTaxable) {
+      return 0;
+    }
+    return this.currentGrowthDollars * (capitalGainsTaxRate / 100.0);
+  }
+  futureTaxLiabilityDollars(capitalGainsTaxRate: number): number {
+    if (!this.isTaxable) {
+      return 0;
+    }
+    return (
+      (this.futureValueDollars - this.purchasePrice) *
+      (capitalGainsTaxRate / 100.0)
+    );
+  }
+  valueAtYear(yearGiven: number): number {
+    const currentYear = new Date().getFullYear();
+    // Before item was acquired, it was worth 0.
+    if (yearGiven < this.yearAcquired || yearGiven > currentYear + this.term) {
+      return 0;
+    }
+    // For current year
+    if (this.currentYearsHeld === 0 && yearGiven <= currentYear) {
+      return this.purchasePrice;
+    }
+    // For past years
+    if (this.yearAcquired <= yearGiven && yearGiven <= currentYear) {
+      return (
+        this.purchasePrice *
+        Math.pow(
+          this.currentValue / this.purchasePrice,
+          (yearGiven - this.yearAcquired) / this.currentYearsHeld,
+        )
+      );
+    }
+    // For future years
+    return (
+      this.currentValue * Math.pow(1 + this.rate / 100, yearGiven - currentYear)
+    );
+  }
+  valueSeries(startYear: number, endYear: number): number[] {
+    const series = [];
+    for (let year = startYear; year <= endYear; year++) {
+      series.push(this.valueAtYear(year));
+    }
+    return series;
   }
 }
