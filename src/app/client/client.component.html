@@ -51,7 +51,7 @@
     <select
       id="taxBracket"
       [(ngModel)]="selectedBracket"
-      (ngModelChange)="updateClientData()"
+      (ngModelChange)="saveSelectedBracket()"
     >
       <option
         *ngFor="let bracket of taxBrackets; let i = index"

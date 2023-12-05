@@ -27,6 +27,7 @@ export class ClientComponent implements OnInit {
       this.incomeReplacementMultiplier = incomeReplacementMultiplier;
     }
     this.updateTaxBrackets();
+    this.loadSelectedBracket();
   }
   name: string = '';
   province: string = '';
@@ -45,6 +46,16 @@ export class ClientComponent implements OnInit {
     localStorage.setItem('client', JSON.stringify(client));
   }
 
+  private loadSelectedBracket(): void {
+    const selectedTaxBracket = localStorage.getItem('selectedTaxBracket');
+    if (selectedTaxBracket) {
+      const storedBracket = JSON.parse(selectedTaxBracket);
+      this.selectedBracket = this.taxBrackets.find(
+        (bracket) => bracket.minIncome === storedBracket.minIncome,
+      );
+    }
+  }
+
   private updateTaxBrackets(): void {
     const year = new Date().getFullYear(); // or a specific year if required
     this.taxBrackets = TAX_BRACKETS[year]?.[this.province.toUpperCase()] || [];
@@ -55,5 +66,11 @@ export class ClientComponent implements OnInit {
         (!nextBracket || this.annualIncome < nextBracket.minIncome)
       );
     });
+  }
+  saveSelectedBracket() {
+    localStorage.setItem(
+      'selectedTaxBracket',
+      JSON.stringify(this.selectedBracket),
+    );
   }
 }
