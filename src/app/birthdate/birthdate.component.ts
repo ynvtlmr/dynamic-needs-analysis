@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,24 +7,35 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [FormsModule],
 })
-export class BirthdateComponent {
+export class BirthdateComponent implements OnInit {
   private _birthdate: Date | null = null;
   age: number = 0;
   yearsToRetirement: number = 0;
+
+  ngOnInit(): void {
+    // Load the birthdate from localStorage when the component initializes
+    const storedBirthdate = localStorage.getItem('birthdate');
+    if (storedBirthdate) {
+      this.birthdate = storedBirthdate;
+    }
+  }
 
   @Input()
   set birthdate(value: string | null) {
     if (value) {
       const newDate = new Date(value);
-      // Check if the new date is valid before setting
       if (!isNaN(newDate.getTime())) {
         this._birthdate = newDate;
         this.calculateAgeAndRetirement();
+        // Save the valid birthdate to localStorage
+        localStorage.setItem('birthdate', value);
       }
     } else {
       this._birthdate = null;
       this.age = 0;
       this.yearsToRetirement = 0;
+      // Clear the birthdate from localStorage
+      localStorage.removeItem('birthdate');
     }
   }
 
