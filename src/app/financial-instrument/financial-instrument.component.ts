@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe, CommonModule } from '@angular/common';
 import { FIN_INSTR_TYPES } from '../constants/financial-instrument-types.constant';
@@ -25,7 +25,20 @@ export class FinancialInstrumentComponent {
   inputYear: number = new Date().getFullYear();
 
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
-  // TODO: get capital gains tax rate from global storage
+
+  capitalGainsTaxRate: number = 0;
+
+  ngOnInit(): void {
+    this.loadCapitalGainsTaxRate();
+  }
+
+  private loadCapitalGainsTaxRate(): void {
+    const selectedBracketString = localStorage.getItem('selectedTaxBracket');
+    if (selectedBracketString) {
+      const selectedBracket = JSON.parse(selectedBracketString);
+      this.capitalGainsTaxRate = selectedBracket.taxRate * 0.5;
+    }
+  }
 
   onTypeChange(selectedType: string): void {
     const typeInfo = FIN_INSTR_TYPES.get(selectedType);
@@ -55,19 +68,19 @@ export class FinancialInstrumentComponent {
     return (this.futureValueDollars / this.purchasePrice - 1) * 100;
   }
 
-  currentTaxLiabilityDollars(capitalGainsTaxRate: number): number {
+  get currentTaxLiabilityDollars(): number {
     if (!this.isTaxable) {
       return 0;
     }
-    return this.currentGrowthDollars * (capitalGainsTaxRate / 100.0);
+    return this.currentGrowthDollars * (this.capitalGainsTaxRate / 100.0);
   }
-  futureTaxLiabilityDollars(capitalGainsTaxRate: number): number {
+  get futureTaxLiabilityDollars(): number {
     if (!this.isTaxable) {
       return 0;
     }
     return (
       (this.futureValueDollars - this.purchasePrice) *
-      (capitalGainsTaxRate / 100.0)
+      (this.capitalGainsTaxRate / 100.0)
     );
   }
   valueAtYear(yearGiven: number): number {
@@ -98,10 +111,19 @@ export class FinancialInstrumentComponent {
   get getValueAtInputYear(): number {
     return this.valueAtYear(this.inputYear);
   }
-  valueSeries(startYear: number, endYear: number): number[] {
+  valueSeries(startYear: number = 0, endYear: number = 0): any[] {
+    if (
+      startYear === 0 &&
+      endYear === 0 &&
+      this.yearAcquired >= 1900 &&
+      this.term <= 30
+    ) {
+      startYear = this.yearAcquired;
+      endYear = new Date().getFullYear() + this.term;
+    }
     const series = [];
     for (let year = startYear; year <= endYear; year++) {
-      series.push(this.valueAtYear(year));
+      series.push({ year: year, value: this.valueAtYear(year) });
     }
     return series;
   }
