@@ -27,14 +27,27 @@ export class BeneficiaryComponent {
     );
   }
 
-  addBeneficiary(name: string, idealAllocation: number): void {
-    this.beneficiaries.push({ name, allocation: idealAllocation });
+  addBeneficiary(
+    name: string,
+    allocation: number,
+    nameInput: HTMLInputElement,
+    allocationInput: HTMLInputElement,
+  ): void {
+    this.beneficiaries.push({ name, allocation });
     this.updateStorage();
+
+    // Clear the input fields
+    nameInput.value = '';
+    allocationInput.value = '';
   }
 
   deleteBeneficiary(index: number): void {
     this.beneficiaries.splice(index, 1);
     this.updateStorage();
+  }
+
+  onBeneficiaryChange(): void {
+    this.updateStorage(); // Update localStorage whenever there's a change
   }
 
   private updateStorage(): void {

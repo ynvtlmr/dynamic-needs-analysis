@@ -1,23 +1,48 @@
 <div>
-  <input #nameInput type="text" placeholder="Name" />
-  <input #allocationInput type="number" placeholder="Ideal Allocation" />
-  <button
-    (click)="addBeneficiary(nameInput.value, allocationInput.valueAsNumber)"
-  >
-    Add Beneficiary
-  </button>
-
-  <table *ngIf="beneficiaries.length">
+  <table>
     <tr>
       <th>Name</th>
       <th>Allocation</th>
-      <th>Delete</th>
+      <th></th>
     </tr>
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
-      <td>{{ beneficiary.name }}</td>
-      <td>{{ beneficiary.allocation }}</td>
+      <td>
+        <input
+          [(ngModel)]="beneficiary.name"
+          (ngModelChange)="onBeneficiaryChange()"
+          type="text"
+        />
+      </td>
+      <td>
+        <input
+          [(ngModel)]="beneficiary.allocation"
+          (ngModelChange)="onBeneficiaryChange()"
+          type="number"
+        />
+      </td>
       <td><button (click)="deleteBeneficiary(i)">Delete</button></td>
     </tr>
+    <tr>
+      <td><input #nameInput type="text" placeholder="Name" /></td>
+      <td>
+        <input #allocationInput type="number" placeholder="Ideal Allocation" />
+      </td>
+      <td>
+        <button
+          (click)="
+            addBeneficiary(
+              nameInput.value,
+              allocationInput.valueAsNumber,
+              nameInput,
+              allocationInput
+            )
+          "
+        >
+          Add
+        </button>
+      </td>
+    </tr>
+
     <tr>
       <td>Total</td>
       <td>{{ totalAllocation }}</td>
