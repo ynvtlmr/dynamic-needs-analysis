@@ -27,18 +27,18 @@ describe('FinancialInstrumentComponent', () => {
   });
 
   it('should calculate current growth dollars correctly', () => {
-    component.purchasePrice = 100;
+    component.initialValue = 100;
     component.currentValue = 150;
     expect(component.currentGrowthDollars).toBe(50);
   });
 
   it('should calculate current growth percentage correctly', () => {
-    component.purchasePrice = 100;
+    component.initialValue = 100;
     component.currentValue = 150;
     expect(component.currentGrowthPercentage).toBe(50); // 50% growth
 
     // Test for division by zero scenario
-    component.purchasePrice = 0;
+    component.initialValue = 0;
     expect(component.currentGrowthPercentage).toBe(0);
   });
 
@@ -50,14 +50,14 @@ describe('FinancialInstrumentComponent', () => {
   });
 
   it('should calculate future value growth percentage correctly', () => {
-    component.purchasePrice = 100;
+    component.initialValue = 100;
     component.currentValue = 100;
     component.rate = 5; // 5% rate
     component.term = 10; // 10 years
     expect(component.futureValueGrowthPercentage).toBeCloseTo(62.89, 2); // Approximate value
 
     // Test for division by zero scenario
-    component.purchasePrice = 0;
+    component.initialValue = 0;
     expect(component.futureValueGrowthPercentage).toBe(0);
   });
 });

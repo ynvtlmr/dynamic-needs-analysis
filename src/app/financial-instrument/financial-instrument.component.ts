@@ -20,7 +20,7 @@ interface YearValue {
 })
 export class FinancialInstrumentComponent {
   financialInstrumentName: string = '';
-  purchasePrice: number = 0;
+  initialValue: number = 0;
   yearAcquired: number = new Date().getFullYear();
   currentValue: number = 0;
   annualContribution: number = 0;
@@ -82,16 +82,16 @@ export class FinancialInstrumentComponent {
 
   private ensureNegativeValues(): void {
     // Convert to negative if the values are positive
-    if (this.purchasePrice > 0) {
-      this.purchasePrice *= -1;
+    if (this.initialValue > 0) {
+      this.initialValue *= -1;
     }
     if (this.currentValue > 0) {
       this.currentValue *= -1;
     }
   }
-  onPurchasePriceChange(): void {
-    if (this.type === 'Debt / Loan' && this.purchasePrice > 0) {
-      this.purchasePrice *= -1;
+  onInitialValueChange(): void {
+    if (this.type === 'Debt / Loan' && this.initialValue > 0) {
+      this.initialValue *= -1;
     }
   }
 
@@ -105,22 +105,22 @@ export class FinancialInstrumentComponent {
     return currentYear - this.yearAcquired;
   }
   get currentGrowthDollars(): number {
-    return this.currentValue - this.purchasePrice;
+    return this.currentValue - this.initialValue;
   }
   get currentGrowthPercentage(): number {
-    if (this.purchasePrice === 0) {
+    if (this.initialValue === 0) {
       return 0;
     }
-    return (this.currentValue / this.purchasePrice - 1) * 100;
+    return (this.currentValue / this.initialValue - 1) * 100;
   }
   get futureValueDollars(): number {
     return this.currentValue * Math.pow(1 + this.rate / 100, this.term);
   }
   get futureValueGrowthPercentage(): number {
-    if (this.purchasePrice === 0) {
+    if (this.initialValue === 0) {
       return 0;
     }
-    return (this.futureValueDollars / this.purchasePrice - 1) * 100;
+    return (this.futureValueDollars / this.initialValue - 1) * 100;
   }
 
   get currentTaxLiabilityDollars(): number {
@@ -134,7 +134,7 @@ export class FinancialInstrumentComponent {
       return 0;
     }
     return (
-      (this.futureValueDollars - this.purchasePrice) *
+      (this.futureValueDollars - this.initialValue) *
       (this.capitalGainsTaxRate / 100.0)
     );
   }
@@ -150,14 +150,14 @@ export class FinancialInstrumentComponent {
     }
     // For current year
     if (this.currentYearsHeld === 0 && yearGiven <= currentYear) {
-      return this.purchasePrice;
+      return this.initialValue;
     }
     // For past years
     if (this.yearAcquired <= yearGiven && yearGiven <= currentYear) {
       return (
-        this.purchasePrice *
+        this.initialValue *
         Math.pow(
-          this.currentValue / this.purchasePrice,
+          this.currentValue / this.initialValue,
           (yearGiven - this.yearAcquired) / this.currentYearsHeld,
         )
       );
