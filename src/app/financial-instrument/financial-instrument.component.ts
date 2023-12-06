@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe, CommonModule } from '@angular/common';
-import { FIN_INSTR_TYPES } from '../constants/financial-instrument-types.constant';
+import {
+  FIN_INSTR_TYPES,
+  FinTypeAttributes,
+} from '../constants/financial-instrument-types.constant';
+
+interface YearValue {
+  year: number;
+  value: number;
+}
 
 @Component({
   selector: 'app-financial-instrument',
@@ -41,12 +49,13 @@ export class FinancialInstrumentComponent {
   }
 
   onTypeChange(selectedType: string): void {
-    const typeInfo = FIN_INSTR_TYPES.get(selectedType);
+    const typeInfo: FinTypeAttributes | undefined =
+      FIN_INSTR_TYPES.get(selectedType);
     this.isTaxable = typeInfo ? typeInfo.taxable : false;
     this.isLiquid = typeInfo ? typeInfo.liquid : false;
   }
   get currentYearsHeld(): number {
-    const currentYear = new Date().getFullYear();
+    const currentYear: number = new Date().getFullYear();
     return currentYear - this.yearAcquired;
   }
   get currentGrowthDollars(): number {
@@ -83,8 +92,12 @@ export class FinancialInstrumentComponent {
       (this.capitalGainsTaxRate / 100.0)
     );
   }
+  get annualContributionsToDate(): number {
+    return this.annualContribution * this.currentYearsHeld;
+  }
+
   valueAtYear(yearGiven: number): number {
-    const currentYear = new Date().getFullYear();
+    const currentYear: number = new Date().getFullYear();
     // Before item was acquired, it was worth 0.
     if (yearGiven < this.yearAcquired || yearGiven > currentYear + this.term) {
       return 0;
@@ -111,7 +124,7 @@ export class FinancialInstrumentComponent {
   get getValueAtInputYear(): number {
     return this.valueAtYear(this.inputYear);
   }
-  valueSeries(startYear: number = 0, endYear: number = 0): any[] {
+  valueSeries(startYear: number = 0, endYear: number = 0): YearValue[] {
     if (
       startYear === 0 &&
       endYear === 0 &&
@@ -121,8 +134,9 @@ export class FinancialInstrumentComponent {
       startYear = this.yearAcquired;
       endYear = new Date().getFullYear() + this.term;
     }
-    const series = [];
-    for (let year = startYear; year <= endYear; year++) {
+
+    const series: YearValue[] = [];
+    for (let year: number = startYear; year <= endYear; year++) {
       series.push({ year: year, value: this.valueAtYear(year) });
     }
     return series;

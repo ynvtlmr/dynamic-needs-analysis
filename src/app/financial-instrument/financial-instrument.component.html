@@ -1,5 +1,14 @@
 <div>
   <div>
+    <label for="type">Type:</label>
+    <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
+      <option *ngFor="let type of financialInstrumentTypes" [value]="type">
+        {{ type }}
+      </option>
+    </select>
+  </div>
+
+  <div>
     <label for="financialInstrumentName">Financial Instrument Name:</label>
     <input
       id="financialInstrumentName"
@@ -34,15 +43,6 @@
   <div>
     <label for="term">Term:</label>
     <input id="term" [(ngModel)]="term" type="number" />
-  </div>
-
-  <div>
-    <label for="type">Type:</label>
-    <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
-      <option *ngFor="let type of financialInstrumentTypes" [value]="type">
-        {{ type }}
-      </option>
-    </select>
   </div>
   <div>
     <label for="isTaxable">Taxable:</label>
@@ -84,9 +84,7 @@
     </li>
     <li>
       Future value growth percentage:
-      <strong>
-        {{ futureValueGrowthPercentage | number: "1.0-2" }} </strong
-      >%
+      <strong> {{ futureValueGrowthPercentage | number: "1.0-2" }} </strong>%
     </li>
     <li>
       Current tax liability dollars: $

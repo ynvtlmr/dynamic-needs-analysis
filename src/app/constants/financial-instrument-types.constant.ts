@@ -1,7 +1,9 @@
-export const FIN_INSTR_TYPES = new Map<
-  string,
-  { taxable: boolean; liquid: boolean }
->([
+export interface FinTypeAttributes {
+  taxable: boolean;
+  liquid: boolean;
+}
+
+export const FIN_INSTR_TYPES = new Map<string, FinTypeAttributes>([
   ['Cash', { taxable: false, liquid: true }],
   ['Stocks', { taxable: true, liquid: true }],
   ['Bonds', { taxable: true, liquid: true }],
