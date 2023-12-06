@@ -63,6 +63,31 @@
     Value: ${{ getValueAtInputYear | number: "1.0-2" }}
   </div>
 
+  <!-- Button to Load Beneficiaries -->
+  <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
+
+  <!-- Table for Beneficiaries -->
+  <table *ngIf="beneficiaries.length > 0">
+    <tr>
+      <th>Name</th>
+      <th>Allocation (%)</th>
+    </tr>
+    <tr *ngFor="let beneficiary of beneficiaries; let i = index">
+      <td>{{ beneficiary.name }}</td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="beneficiary.idealAllocation"
+          (ngModelChange)="updateAllocation(i, beneficiary.idealAllocation)"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>Total</td>
+      <td>{{ totalAllocations }}</td>
+    </tr>
+  </table>
+
   <ul>
     <li>
       Current years held: <strong>{{ currentYearsHeld }}</strong> years

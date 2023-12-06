@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DecimalPipe, CommonModule } from '@angular/common';
+import { Beneficiary } from '../beneficiary/beneficiary.component';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
@@ -29,6 +30,7 @@ export class FinancialInstrumentComponent {
   isTaxable: boolean = false;
   isLiquid: boolean = false;
   isToBeSettled: boolean = false;
+  beneficiaries: Beneficiary[] = [];
 
   inputYear: number = new Date().getFullYear();
 
@@ -46,6 +48,27 @@ export class FinancialInstrumentComponent {
       const selectedBracket = JSON.parse(selectedBracketString);
       this.capitalGainsTaxRate = selectedBracket.taxRate * 0.5;
     }
+  }
+
+  loadBeneficiaries(): void {
+    const beneficiariesData = localStorage.getItem('beneficiaries');
+    if (beneficiariesData) {
+      this.beneficiaries = JSON.parse(beneficiariesData);
+    }
+    console.log(this.beneficiaries);
+  }
+  updateAllocation(index: number, newAllocation: number): void {
+    if (this.beneficiaries[index]) {
+      this.beneficiaries[index].idealAllocation = newAllocation;
+    }
+    console.log(this.beneficiaries);
+  }
+
+  get totalAllocations(): number {
+    return this.beneficiaries.reduce(
+      (total, beneficiary) => total + beneficiary.idealAllocation,
+      0,
+    );
   }
 
   onTypeChange(selectedType: string): void {

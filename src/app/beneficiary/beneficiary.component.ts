@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-interface Beneficiary {
+export interface Beneficiary {
   name: string;
   idealAllocation: number;
 }
