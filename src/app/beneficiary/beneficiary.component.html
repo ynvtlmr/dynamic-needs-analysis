@@ -15,7 +15,7 @@
     </tr>
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>{{ beneficiary.name }}</td>
-      <td>{{ beneficiary.idealAllocation }}</td>
+      <td>{{ beneficiary.allocation }}</td>
       <td><button (click)="deleteBeneficiary(i)">Delete</button></td>
     </tr>
     <tr>

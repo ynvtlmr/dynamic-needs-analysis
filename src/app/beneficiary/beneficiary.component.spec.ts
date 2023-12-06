@@ -24,7 +24,7 @@ describe('BeneficiaryComponent', () => {
     component.addBeneficiary('John Doe', 25);
     expect(component.beneficiaries.length).toBe(1);
     expect(component.beneficiaries[0].name).toBe('John Doe');
-    expect(component.beneficiaries[0].idealAllocation).toBe(25);
+    expect(component.beneficiaries[0].allocation).toBe(25);
   });
 
   it('should delete a beneficiary', () => {

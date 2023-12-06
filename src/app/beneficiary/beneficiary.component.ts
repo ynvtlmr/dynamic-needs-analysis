@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 export interface Beneficiary {
   name: string;
-  idealAllocation: number;
+  allocation: number;
 }
 
 @Component({
@@ -22,13 +22,13 @@ export class BeneficiaryComponent {
 
   get totalAllocation(): number {
     return this.beneficiaries.reduce(
-      (total, beneficiary) => total + beneficiary.idealAllocation,
+      (total, beneficiary) => total + beneficiary.allocation,
       0,
     );
   }
 
   addBeneficiary(name: string, idealAllocation: number): void {
-    this.beneficiaries.push({ name, idealAllocation });
+    this.beneficiaries.push({ name, allocation: idealAllocation });
     this.updateStorage();
   }
 

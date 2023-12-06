@@ -59,14 +59,14 @@ export class FinancialInstrumentComponent {
   }
   updateAllocation(index: number, newAllocation: number): void {
     if (this.beneficiaries[index]) {
-      this.beneficiaries[index].idealAllocation = newAllocation;
+      this.beneficiaries[index].allocation = newAllocation;
     }
     console.log(this.beneficiaries);
   }
 
   get totalAllocations(): number {
     return this.beneficiaries.reduce(
-      (total, beneficiary) => total + beneficiary.idealAllocation,
+      (total, beneficiary) => total + beneficiary.allocation,
       0,
     );
   }
