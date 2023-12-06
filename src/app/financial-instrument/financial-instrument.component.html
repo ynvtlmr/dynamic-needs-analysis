@@ -18,7 +18,12 @@
   </div>
   <div>
     <label for="purchasePrice">Purchase Price:</label>
-    <input id="purchasePrice" [(ngModel)]="purchasePrice" type="number" />
+    <input
+      id="purchasePrice"
+      [(ngModel)]="purchasePrice"
+      (ngModelChange)="onPurchasePriceChange()"
+      type="number"
+    />
   </div>
   <div>
     <label for="yearAcquired">Year Acquired:</label>
@@ -26,7 +31,12 @@
   </div>
   <div>
     <label for="currentValue">Current Value:</label>
-    <input id="currentValue" [(ngModel)]="currentValue" type="number" />
+    <input
+      id="currentValue"
+      [(ngModel)]="currentValue"
+      (ngModelChange)="onCurrentValueChange()"
+      type="number"
+    />
   </div>
   <div>
     <label for="annualContribution">Annual Contribution:</label>

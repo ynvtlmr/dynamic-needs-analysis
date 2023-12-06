@@ -74,6 +74,31 @@ export class FinancialInstrumentComponent {
       FIN_INSTR_TYPES.get(selectedType);
     this.isTaxable = typeInfo ? typeInfo.taxable : false;
     this.isLiquid = typeInfo ? typeInfo.liquid : false;
+    // Check if the selected type is 'Debt / Loan'
+    if (selectedType === 'Debt / Loan') {
+      this.ensureNegativeValues();
+    }
+  }
+
+  private ensureNegativeValues(): void {
+    // Convert to negative if the values are positive
+    if (this.purchasePrice > 0) {
+      this.purchasePrice *= -1;
+    }
+    if (this.currentValue > 0) {
+      this.currentValue *= -1;
+    }
+  }
+  onPurchasePriceChange(): void {
+    if (this.type === 'Debt / Loan' && this.purchasePrice > 0) {
+      this.purchasePrice *= -1;
+    }
+  }
+
+  onCurrentValueChange(): void {
+    if (this.type === 'Debt / Loan' && this.currentValue > 0) {
+      this.currentValue *= -1;
+    }
   }
   get currentYearsHeld(): number {
     const currentYear: number = new Date().getFullYear();
