@@ -1,64 +1,81 @@
 <div>
-  <div>
-    <label for="name">Name:</label>
-    <input
-      id="name"
-      [(ngModel)]="name"
-      (ngModelChange)="updateClientData()"
-      type="text"
-    />
-  </div>
+  <table>
+    <!-- Client Information -->
+    <tr>
+      <td><label for="name">Name:</label></td>
+      <td>
+        <input
+          id="name"
+          [(ngModel)]="name"
+          (ngModelChange)="updateClientData()"
+          type="text"
+        />
+      </td>
+    </tr>
 
-  <app-birthdate></app-birthdate>
+    <!-- Birthdate Component Integration -->
+    <tr>
+      <td colspan="2">
+        <app-birthdate></app-birthdate>
+      </td>
+    </tr>
 
-  <div>
-    <label for="province">Province:</label>
-    <select
-      [(ngModel)]="province"
-      (ngModelChange)="updateClientData()"
-      id="province"
-    >
-      <option *ngFor="let prov of provinces" [ngValue]="prov">
-        {{ prov }}
-      </option>
-    </select>
-  </div>
-
-  <div>
-    <label for="annualIncome">Annual Income:</label>
-    <input
-      id="annualIncome"
-      [(ngModel)]="annualIncome"
-      (ngModelChange)="updateClientData()"
-      type="number"
-    />
-  </div>
-
-  <div>
-    <label for="incomeReplacementMultiplier"
-      >Income Replacement Multiplier:</label
-    >
-    <input
-      id="incomeReplacementMultiplier"
-      [(ngModel)]="incomeReplacementMultiplier"
-      (ngModelChange)="updateClientData()"
-      type="number"
-    />
-  </div>
-
-  <div>
-    <label for="taxBracket">Tax Bracket:</label>
-    <select
-      id="taxBracket"
-      [(ngModel)]="selectedBracket"
-      (ngModelChange)="saveSelectedBracket()"
-    >
-      <option
-        *ngFor="let bracket of taxBrackets; let i = index"
-        [ngValue]="bracket"
-      >
-        ${{ bracket.minIncome }} and up - {{ bracket.taxRate }}%
-      </option>
-    </select>
-  </div>
+    <tr>
+      <td><label for="province">Province:</label></td>
+      <td>
+        <select
+          [(ngModel)]="province"
+          (ngModelChange)="updateClientData()"
+          id="province"
+        >
+          <option *ngFor="let prov of provinces" [ngValue]="prov">
+            {{ prov }}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="annualIncome">Annual Income:</label></td>
+      <td>
+        <input
+          id="annualIncome"
+          [(ngModel)]="annualIncome"
+          (ngModelChange)="updateClientData()"
+          type="number"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="incomeReplacementMultiplier"
+          >Income Replacement Multiplier:</label
+        >
+      </td>
+      <td>
+        <input
+          id="incomeReplacementMultiplier"
+          [(ngModel)]="incomeReplacementMultiplier"
+          (ngModelChange)="updateClientData()"
+          type="number"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td><label for="taxBracket">Tax Bracket:</label></td>
+      <td>
+        <select
+          id="taxBracket"
+          [(ngModel)]="selectedBracket"
+          (ngModelChange)="saveSelectedBracket()"
+        >
+          <option
+            *ngFor="let bracket of taxBrackets; let i = index"
+            [ngValue]="bracket"
+          >
+            ${{ bracket.minIncome }} and up - {{ bracket.taxRate }}%
+          </option>
+        </select>
+      </td>
+    </tr>
+  </table>
 </div>

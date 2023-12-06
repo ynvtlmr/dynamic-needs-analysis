@@ -1,13 +1,12 @@
-<div>
-  <label for="birthdate">Birthdate:</label>
-  <input type="date" id="birthdate" [(ngModel)]="birthdate" />
-</div>
-
-<ul>
-  <li>
-    Age: <strong>{{ age }}</strong> years
-  </li>
-  <li>
-    Years to retirement: <strong>{{ yearsToRetirement }}</strong> years
-  </li>
-</ul>
+<tr>
+  <td><label for="birthdate">Birthdate:</label></td>
+  <td><input type="date" id="birthdate" [(ngModel)]="birthdate" /></td>
+</tr>
+<tr>
+  <td>Age</td>
+  <td>{{ age }}</td>
+</tr>
+<tr>
+  <td>Years to retirement</td>
+  <td>{{ yearsToRetirement }}</td>
+</tr>
