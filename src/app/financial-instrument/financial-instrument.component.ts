@@ -55,13 +55,11 @@ export class FinancialInstrumentComponent {
     if (beneficiariesData) {
       this.beneficiaries = JSON.parse(beneficiariesData);
     }
-    console.log(this.beneficiaries);
   }
   updateAllocation(index: number, newAllocation: number): void {
     if (this.beneficiaries[index]) {
       this.beneficiaries[index].allocation = newAllocation;
     }
-    console.log(this.beneficiaries);
   }
 
   get totalAllocations(): number {
@@ -144,9 +142,7 @@ export class FinancialInstrumentComponent {
       this.currentValue * Math.pow(1 + this.rate / 100, yearGiven - currentYear)
     );
   }
-  get getValueAtInputYear(): number {
-    return this.valueAtYear(this.inputYear);
-  }
+
   valueSeries(startYear: number = 0, endYear: number = 0): YearValue[] {
     if (
       startYear === 0 &&
