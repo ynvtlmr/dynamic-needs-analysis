@@ -5,21 +5,9 @@
 <br />
 
 <ul>
-    <li (click)="selectTab('client')" [ngClass]="{'active': selectedTab === 'client'}">Client</li>
-    <li (click)="selectTab('beneficiaries')" [ngClass]="{'active': selectedTab === 'beneficiaries'}">Beneficiaries</li>
-    <li (click)="selectTab('financial-instrument')" [ngClass]="{'active': selectedTab === 'financial-instrument'}">Financial Instrument</li>
-    <li (click)="selectTab('business')" [ngClass]="{'active': selectedTab === 'business'}">Business</li>
+    <li routerLink="/client" routerLinkActive="active">Client</li>
+    <li routerLink="/beneficiaries" routerLinkActive="active">Beneficiaries</li>
+    <li routerLink="/financial-instrument" routerLinkActive="active">Financial Instrument</li>
+    <li routerLink="/business" routerLinkActive="active">Business</li>
 </ul>
-
-<div *ngIf="selectedTab === 'client'">
-    <app-client></app-client>
-</div>
-<div *ngIf="selectedTab === 'beneficiaries'">
-    <app-beneficiary></app-beneficiary>
-</div>
-<div *ngIf="selectedTab === 'financial-instrument'">
-    <app-financial-instrument></app-financial-instrument>
-</div>
-<div *ngIf="selectedTab === 'business'">
-    <app-business></app-business>
-</div>
+<router-outlet></router-outlet>

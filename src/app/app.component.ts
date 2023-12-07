@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ClientComponent } from './client/client.component';
 import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
@@ -17,6 +17,8 @@ import { LocalStorageService } from './services/local-storage.service';
     FinancialInstrumentComponent,
     BeneficiaryComponent,
     BusinessComponent,
+    RouterLink,
+    RouterLinkActive,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -37,9 +39,5 @@ export class AppComponent {
 
   loadLocalStorageFromFile(event: Event) {
     this.localStorageService.loadFromFile(event);
-  }
-
-  selectTab(tabName: string) {
-    this.selectedTab = tabName;
   }
 }
