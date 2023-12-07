@@ -23,6 +23,7 @@ import { LocalStorageService } from './services/local-storage.service';
 })
 export class AppComponent {
   title = 'dynamic-needs-analysis';
+  selectedTab: string = 'client';
 
   constructor(private localStorageService: LocalStorageService) {}
 
@@ -36,5 +37,9 @@ export class AppComponent {
 
   loadLocalStorageFromFile(event: Event) {
     this.localStorageService.loadFromFile(event);
+  }
+
+  selectTab(tabName: string) {
+    this.selectedTab = tabName;
   }
 }

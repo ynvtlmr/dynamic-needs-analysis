@@ -4,14 +4,22 @@
 <input type="file" (change)="loadLocalStorageFromFile($event)" />
 <br />
 
-<h1>Client</h1>
-<app-client></app-client>
+<ul>
+    <li (click)="selectTab('client')" [ngClass]="{'active': selectedTab === 'client'}">Client</li>
+    <li (click)="selectTab('beneficiaries')" [ngClass]="{'active': selectedTab === 'beneficiaries'}">Beneficiaries</li>
+    <li (click)="selectTab('financial-instrument')" [ngClass]="{'active': selectedTab === 'financial-instrument'}">Financial Instrument</li>
+    <li (click)="selectTab('business')" [ngClass]="{'active': selectedTab === 'business'}">Business</li>
+</ul>
 
-<h1>Beneficiaries</h1>
-<app-beneficiary></app-beneficiary>
-
-<h1>Financial Instrument</h1>
-<app-financial-instrument></app-financial-instrument>
-
-<h1>Business</h1>
-<app-business></app-business>
+<div *ngIf="selectedTab === 'client'">
+    <app-client></app-client>
+</div>
+<div *ngIf="selectedTab === 'beneficiaries'">
+    <app-beneficiary></app-beneficiary>
+</div>
+<div *ngIf="selectedTab === 'financial-instrument'">
+    <app-financial-instrument></app-financial-instrument>
+</div>
+<div *ngIf="selectedTab === 'business'">
+    <app-business></app-business>
+</div>
