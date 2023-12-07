@@ -4,6 +4,7 @@ import { RouterOutlet } from '@angular/router';
 import { ClientComponent } from './client/client.component';
 import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
+import { BusinessComponent } from './business/business.component';
 import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { LocalStorageService } from './services/local-storage.service';
     ClientComponent,
     FinancialInstrumentComponent,
     BeneficiaryComponent,
+    BusinessComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

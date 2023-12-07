@@ -131,46 +131,30 @@
   <!-- Display Elements -->
   <tr>
     <td>Current years held:</td>
-    <td>
-      <strong>{{ currentYearsHeld }}</strong> years
-    </td>
+    <td>{{ currentYearsHeld }} years</td>
   </tr>
   <tr>
     <td>Current growth dollars:</td>
-    <td>
-      $<strong>{{ currentGrowthDollars | number: "1.0-2" }}</strong>
-    </td>
+    <td>${{ currentGrowthDollars | number: "1.0-2" }}</td>
   </tr>
   <tr>
     <td>Current growth percentage:</td>
-    <td>
-      <strong>{{ currentGrowthPercentage | number: "1.0-2" }}</strong
-      >%
-    </td>
+    <td>{{ currentGrowthPercentage | number: "1.0-2" }}%</td>
   </tr>
   <tr>
     <td>Future value dollars:</td>
-    <td>
-      $<strong>{{ futureValueDollars | number: "1.0-2" }}</strong>
-    </td>
+    <td>${{ futureValueDollars | number: "1.0-2" }}</td>
   </tr>
   <tr>
     <td>Future value growth percentage:</td>
-    <td>
-      <strong>{{ futureValueGrowthPercentage | number: "1.0-2" }}</strong
-      >%
-    </td>
+    <td>{{ futureValueGrowthPercentage | number: "1.0-2" }}%</td>
   </tr>
   <tr>
     <td>Current tax liability dollars:</td>
-    <td>
-      $<strong>{{ currentTaxLiabilityDollars | number: "1.0-2" }}</strong>
-    </td>
+    <td>${{ currentTaxLiabilityDollars | number: "1.0-2" }}</td>
   </tr>
   <tr>
     <td>Future tax liability dollars:</td>
-    <td>
-      $<strong>{{ futureTaxLiabilityDollars | number: "1.0-2" }}</strong>
-    </td>
+    <td>${{ futureTaxLiabilityDollars | number: "1.0-2" }}</td>
   </tr>
 </table>
