@@ -1,11 +1,15 @@
-export interface Bracket {
+export interface TaxBracket {
   minIncome: number;
   taxRate: number;
   dividendEligible: number;
   dividendNonEligible: number;
 }
 
-export const TAX_BRACKETS: Record<number, Record<string, Bracket[]>> = {
+export interface ProvinceTaxBrackets {
+  [year: number]: { [province: string]: TaxBracket[] };
+}
+
+export const TAX_BRACKETS: ProvinceTaxBrackets = {
   2023: {
     AB: [
       {

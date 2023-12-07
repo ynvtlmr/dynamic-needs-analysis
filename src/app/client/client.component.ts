@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
-import { TAX_BRACKETS, Bracket } from '../constants/tax.constant';
+import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 
 @Component({
   selector: 'app-client',
@@ -12,8 +12,8 @@ import { TAX_BRACKETS, Bracket } from '../constants/tax.constant';
   imports: [FormsModule, NgForOf],
 })
 export class ClientComponent implements OnInit {
-  taxBrackets: Bracket[] = [];
-  selectedBracket: Bracket | undefined;
+  taxBrackets: TaxBracket[] = [];
+  selectedBracket: TaxBracket | undefined;
   birthdateModel: Birthdate = new Birthdate(localStorage.getItem('birthdate'));
 
   ngOnInit(): void {
