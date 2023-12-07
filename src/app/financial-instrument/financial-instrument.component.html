@@ -4,69 +4,103 @@
     <td><label for="type">Type:</label></td>
     <td>
       <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
-        <option *ngFor="let type of financialInstrumentTypes" [value]="type">{{ type }}</option>
+        <option *ngFor="let type of financialInstrumentTypes" [value]="type">
+          {{ type }}
+        </option>
       </select>
     </td>
   </tr>
 
   <!-- Financial Instrument Name -->
   <tr>
-    <td><label for="financialInstrumentName">Financial Instrument Name:</label></td>
-    <td><input id="financialInstrumentName" [(ngModel)]="financialInstrumentName" type="text"/></td>
+    <td>
+      <label for="financialInstrumentName">Financial Instrument Name:</label>
+    </td>
+    <td>
+      <input
+        id="financialInstrumentName"
+        [(ngModel)]="financialInstrumentName"
+        type="text"
+      />
+    </td>
   </tr>
 
   <!-- Initial Value -->
   <tr>
     <td><label for="initialValue">Initial Value:</label></td>
-    <td><input id="initialValue" [(ngModel)]="initialValue" (ngModelChange)="onInitialValueChange()" type="number"/></td>
+    <td>
+      <input
+        id="initialValue"
+        [(ngModel)]="initialValue"
+        (ngModelChange)="onInitialValueChange()"
+        type="number"
+      />
+    </td>
   </tr>
 
   <!-- Year Acquired -->
   <tr>
     <td><label for="yearAcquired">Year Acquired:</label></td>
-    <td><input id="yearAcquired" [(ngModel)]="yearAcquired" type="number"/></td>
+    <td>
+      <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number" />
+    </td>
   </tr>
 
   <!-- Current Value -->
   <tr>
     <td><label for="currentValue">Current Value:</label></td>
-    <td><input id="currentValue" [(ngModel)]="currentValue" (ngModelChange)="onCurrentValueChange()" type="number"/></td>
+    <td>
+      <input
+        id="currentValue"
+        [(ngModel)]="currentValue"
+        (ngModelChange)="onCurrentValueChange()"
+        type="number"
+      />
+    </td>
   </tr>
 
   <!-- Annual Contribution -->
   <tr>
     <td><label for="annualContribution">Annual Contribution:</label></td>
-    <td><input id="annualContribution" [(ngModel)]="annualContribution" type="number"/></td>
+    <td>
+      <input
+        id="annualContribution"
+        [(ngModel)]="annualContribution"
+        type="number"
+      />
+    </td>
   </tr>
 
   <!-- Rate -->
   <tr>
     <td><label for="rate">Rate:</label></td>
-    <td><input id="rate" [(ngModel)]="rate" type="number"/></td>
+    <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
   </tr>
 
   <!-- Term -->
   <tr>
     <td><label for="term">Term:</label></td>
-    <td><input id="term" [(ngModel)]="term" type="number"/></td>
+    <td><input id="term" [(ngModel)]="term" type="number" /></td>
   </tr>
 
   <!-- Taxable -->
   <tr>
     <td><label for="isTaxable">Taxable:</label></td>
-    <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox"/></td>
+    <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox" /></td>
   </tr>
 
   <!-- Liquid -->
   <tr>
     <td><label for="isLiquid">Liquid:</label></td>
-    <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox"/></td>
+    <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox" /></td>
   </tr>
 
   <!-- To Be Settled -->
   <tr>
     <td><label for="isToBeSettled">To Be Settled:</label></td>
-    <td><input id="isToBeSettled" [(ngModel)]="isToBeSettled" type="checkbox"/></td>
+    <td>
+      <input id="isToBeSettled" [(ngModel)]="isToBeSettled" type="checkbox" />
+    </td>
   </tr>
 
   <!-- Button to Load Beneficiaries -->
@@ -80,8 +114,13 @@
   <ng-container *ngIf="beneficiaries.length > 0">
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>{{ beneficiary.name }}</td>
-      <td><input type="number" [(ngModel)]="beneficiary.allocation"
-                 (ngModelChange)="updateAllocation(i, beneficiary.allocation)"/></td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="beneficiary.allocation"
+          (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
+        />
+      </td>
     </tr>
     <tr>
       <td>Total Allocation (%)</td>
@@ -92,30 +131,46 @@
   <!-- Display Elements -->
   <tr>
     <td>Current years held:</td>
-    <td><strong>{{ currentYearsHeld }}</strong> years</td>
+    <td>
+      <strong>{{ currentYearsHeld }}</strong> years
+    </td>
   </tr>
   <tr>
     <td>Current growth dollars:</td>
-    <td>$<strong>{{ currentGrowthDollars | number: "1.0-2" }}</strong></td>
+    <td>
+      $<strong>{{ currentGrowthDollars | number: "1.0-2" }}</strong>
+    </td>
   </tr>
   <tr>
     <td>Current growth percentage:</td>
-    <td><strong>{{ currentGrowthPercentage | number: "1.0-2" }}</strong>%</td>
+    <td>
+      <strong>{{ currentGrowthPercentage | number: "1.0-2" }}</strong
+      >%
+    </td>
   </tr>
   <tr>
     <td>Future value dollars:</td>
-    <td>$<strong>{{ futureValueDollars | number: "1.0-2" }}</strong></td>
+    <td>
+      $<strong>{{ futureValueDollars | number: "1.0-2" }}</strong>
+    </td>
   </tr>
   <tr>
     <td>Future value growth percentage:</td>
-    <td><strong>{{ futureValueGrowthPercentage | number: "1.0-2" }}</strong>%</td>
+    <td>
+      <strong>{{ futureValueGrowthPercentage | number: "1.0-2" }}</strong
+      >%
+    </td>
   </tr>
   <tr>
     <td>Current tax liability dollars:</td>
-    <td>$<strong>{{ currentTaxLiabilityDollars | number: "1.0-2" }}</strong></td>
+    <td>
+      $<strong>{{ currentTaxLiabilityDollars | number: "1.0-2" }}</strong>
+    </td>
   </tr>
   <tr>
     <td>Future tax liability dollars:</td>
-    <td>$<strong>{{ futureTaxLiabilityDollars | number: "1.0-2" }}</strong></td>
+    <td>
+      $<strong>{{ futureTaxLiabilityDollars | number: "1.0-2" }}</strong>
+    </td>
   </tr>
 </table>

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { BirthdateComponent } from './birthdate/birthdate.component';
 import { ClientComponent } from './client/client.component';
 import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
@@ -13,7 +12,6 @@ import { LocalStorageService } from './services/local-storage.service';
   imports: [
     CommonModule,
     RouterOutlet,
-    BirthdateComponent,
     ClientComponent,
     FinancialInstrumentComponent,
     BeneficiaryComponent,

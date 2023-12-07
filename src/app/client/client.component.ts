@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BirthdateComponent } from '../birthdate/birthdate.component';
+import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
 import { TAX_BRACKETS, Bracket } from '../constants/tax.constant';
@@ -9,11 +9,12 @@ import { TAX_BRACKETS, Bracket } from '../constants/tax.constant';
   selector: 'app-client',
   templateUrl: './client.component.html',
   standalone: true,
-  imports: [FormsModule, BirthdateComponent, NgForOf],
+  imports: [FormsModule, NgForOf],
 })
 export class ClientComponent implements OnInit {
   taxBrackets: Bracket[] = [];
   selectedBracket: Bracket | undefined;
+  birthdateModel: Birthdate = new Birthdate(localStorage.getItem('birthdate'));
 
   ngOnInit(): void {
     // if they exist, load the variables `name, province, annualIncome, incomeReplacementMultiplier` from local storage.
@@ -72,5 +73,12 @@ export class ClientComponent implements OnInit {
       'selectedTaxBracket',
       JSON.stringify(this.selectedBracket),
     );
+  }
+
+  updateBirthdate(newBirthdate: string | null): void {
+    this.birthdateModel.birthdate = newBirthdate;
+    if (typeof newBirthdate === 'string') {
+      localStorage.setItem('birthdate', newBirthdate);
+    }
   }
 }

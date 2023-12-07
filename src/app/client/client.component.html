@@ -15,9 +15,23 @@
 
     <!-- Birthdate Component Integration -->
     <tr>
-      <td colspan="2">
-        <app-birthdate></app-birthdate>
+      <td><label for="birthdate">Birthdate:</label></td>
+      <td>
+        <input
+          type="date"
+          id="birthdate"
+          [(ngModel)]="birthdateModel.birthdate"
+          (ngModelChange)="updateBirthdate(birthdateModel.birthdate)"
+        />
       </td>
+    </tr>
+    <tr>
+      <td>Age</td>
+      <td>{{ birthdateModel.age }}</td>
+    </tr>
+    <tr>
+      <td>Years to retirement</td>
+      <td>{{ birthdateModel.yearsToRetirement }}</td>
     </tr>
 
     <tr>
