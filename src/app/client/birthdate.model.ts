@@ -1,19 +1,18 @@
+
 export class Birthdate {
   private _birthdate: Date | null = null;
 
-  constructor(initialBirthdate: string | null) {
+  constructor(initialBirthdate: string | null | undefined) {
     this.birthdate = initialBirthdate;
   }
 
   get birthdate(): string | null {
-    return this._birthdate
-      ? this._birthdate.toISOString().substring(0, 10)
-      : null;
+    return this._birthdate ? this._birthdate.toISOString().substring(0, 10) : null;
   }
 
-  set birthdate(value: string | null) {
+  set birthdate(value: string | null | undefined) {
     if (value) {
-      const newDate = new Date(value);
+      const newDate: Date = new Date(value);
       if (!isNaN(newDate.getTime())) {
         this._birthdate = newDate;
       } else {

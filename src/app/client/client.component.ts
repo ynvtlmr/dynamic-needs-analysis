@@ -5,6 +5,14 @@ import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 
+interface Client {
+  name: string;
+  province: string;
+  annualIncome: number;
+  incomeReplacementMultiplier: number;
+  birthdate?: string | null;
+}
+
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -17,20 +25,20 @@ export class ClientComponent implements OnInit {
   birthdateModel: Birthdate = new Birthdate(localStorage.getItem('birthdate'));
 
   ngOnInit(): void {
-    // if they exist, load the variables `name, province, annualIncome, incomeReplacementMultiplier` from local storage.
     const storedClient = localStorage.getItem('client');
     if (storedClient) {
-      const { name, province, annualIncome, incomeReplacementMultiplier } =
-        JSON.parse(storedClient);
-      this.name = name;
-      this.province = province;
-      this.annualIncome = annualIncome;
-      this.incomeReplacementMultiplier = incomeReplacementMultiplier;
+      const client: Client = JSON.parse(storedClient);
+      this.name = client.name;
+      this.birthdateModel.birthdate = client.birthdate;
+      this.province = client.province;
+      this.annualIncome = client.annualIncome;
+      this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
     }
     this.updateTaxBrackets();
     this.loadSelectedBracket();
   }
   name: string = '';
+  birthdate: string = '';
   province: string = '';
   annualIncome: number = 0;
   incomeReplacementMultiplier: number = 1;
@@ -38,14 +46,16 @@ export class ClientComponent implements OnInit {
 
   updateClientData(): void {
     this.updateTaxBrackets();
-    const client = {
+    const client: Client = {
       name: this.name,
+      birthdate: this.birthdateModel.birthdate,
       province: this.province,
       annualIncome: this.annualIncome,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
     };
     localStorage.setItem('client', JSON.stringify(client));
   }
+
 
   private loadSelectedBracket(): void {
     const selectedTaxBracket = localStorage.getItem('selectedTaxBracket');
@@ -73,12 +83,5 @@ export class ClientComponent implements OnInit {
       'selectedTaxBracket',
       JSON.stringify(this.selectedBracket),
     );
-  }
-
-  updateBirthdate(newBirthdate: string | null): void {
-    this.birthdateModel.birthdate = newBirthdate;
-    if (typeof newBirthdate === 'string') {
-      localStorage.setItem('birthdate', newBirthdate);
-    }
   }
 }
