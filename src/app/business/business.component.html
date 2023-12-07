@@ -27,6 +27,8 @@
       <th>Share Percentage</th>
       <th>Insurance Coverage</th>
       <th>Actions</th>
+      <th>Share Value</th>
+      <th>Liquidation Disparity</th>
     </tr>
     <tr *ngFor="let shareholder of shareholders; let i = index">
       <td>{{ shareholder.shareholderName }}</td>
@@ -34,6 +36,10 @@
       <td>{{ shareholder.insuranceCoverage }}</td>
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>
+      </td>
+      <td>{{ shareholder.shareValue(valuation) | number: "1.2-2" }}</td>
+      <td>
+        {{ shareholder.liquidationDisparity(valuation) | number: "1.2-2" }}
       </td>
     </tr>
     <tr>
