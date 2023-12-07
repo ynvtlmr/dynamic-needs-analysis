@@ -30,22 +30,23 @@ export class BusinessComponent {
   // Calculate total value of major shareholders' shares
   get totalMajorShareholderValue(): number {
     return this.shareholders.reduce(
-        (acc, shareholder) =>
-            acc + shareholder.shareValue(this.valuation),
-        0
+      (acc, shareholder) => acc + shareholder.shareValue(this.valuation),
+      0,
     );
   }
 
   // Calculate total insurance coverage of major shareholders
   get totalMajorShareholderInsurance(): number {
     return this.shareholders.reduce(
-        (acc, shareholder) => acc + shareholder.insuranceCoverage,
-        0
+      (acc, shareholder) => acc + shareholder.insuranceCoverage,
+      0,
     );
   }
 
   // Calculate total disparity between share value and insurance coverage
   get totalMajorShareholderDisparity(): number {
-    return this.totalMajorShareholderValue - this.totalMajorShareholderInsurance;
+    return (
+      this.totalMajorShareholderValue - this.totalMajorShareholderInsurance
+    );
   }
 }
