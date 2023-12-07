@@ -1,7 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
+
+export interface Business {
+  businessName: string;
+  valuation: number;
+  rate: number;
+  term: number;
+  shareholders: Shareholder[];
+}
 
 @Component({
   selector: 'app-business',
@@ -9,24 +17,52 @@ import { CommonModule } from '@angular/common';
   imports: [FormsModule, CommonModule],
   templateUrl: './business.component.html',
 })
-export class BusinessComponent {
+export class BusinessComponent implements OnInit{
   businessName: string = '';
   valuation: number = 0;
   rate: number = 0;
   term: number = 0;
   shareholders: Shareholder[] = [];
 
+  ngOnInit(): void {
+    this.loadBusinessFromStorage();
+  }
+
   addShareholder(name: string, share: number, coverage: number): void {
     if (name && share > 0 && coverage > 0) {
       this.shareholders.push(new Shareholder(name, share, coverage));
+      this.updateStorage();
     }
   }
 
   // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);
+    this.updateStorage();
   }
 
+  private updateStorage(): void {
+    const business: Business = {
+      businessName: this.businessName,
+      valuation: this.valuation,
+      rate: this.rate,
+      term: this.term,
+      shareholders: this.shareholders
+    };
+    localStorage.setItem('business', JSON.stringify(business));
+  }
+
+  private loadBusinessFromStorage(): void {
+    const data = localStorage.getItem('business');
+    if (data) {
+      const business: Business = JSON.parse(data);
+      this.businessName = business.businessName;
+      this.valuation = business.valuation;
+      this.rate = business.rate;
+      this.term = business.term;
+      this.shareholders = business.shareholders;
+    }
+  }
   // Calculate total percentage owned by all shareholders
   get totalMajorShareholderPercentage(): number {
     return this.shareholders.reduce(
