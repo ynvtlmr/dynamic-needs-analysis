@@ -17,7 +17,7 @@ export interface Business {
   imports: [FormsModule, CommonModule],
   templateUrl: './business.component.html',
 })
-export class BusinessComponent implements OnInit{
+export class BusinessComponent implements OnInit {
   businessName: string = '';
   valuation: number = 0;
   rate: number = 0;
@@ -51,7 +51,7 @@ export class BusinessComponent implements OnInit{
       valuation: this.valuation,
       rate: this.rate,
       term: this.term,
-      shareholders: this.shareholders
+      shareholders: this.shareholders,
     };
     localStorage.setItem('business', JSON.stringify(business));
   }
@@ -64,7 +64,14 @@ export class BusinessComponent implements OnInit{
       this.valuation = business.valuation;
       this.rate = business.rate;
       this.term = business.term;
-      this.shareholders = business.shareholders.map(sh => new Shareholder(sh.shareholderName, sh.sharePercentage, sh.insuranceCoverage));
+      this.shareholders = business.shareholders.map(
+        (sh) =>
+          new Shareholder(
+            sh.shareholderName,
+            sh.sharePercentage,
+            sh.insuranceCoverage,
+          ),
+      );
     }
   }
   // Calculate total percentage owned by all shareholders

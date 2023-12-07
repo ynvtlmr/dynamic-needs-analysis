@@ -31,9 +31,27 @@
       <th>Liquidation Disparity</th>
     </tr>
     <tr *ngFor="let shareholder of shareholders; let i = index">
-      <td><input [(ngModel)]="shareholder.shareholderName" (ngModelChange)="onShareholderChange()" type="text"></td>
-      <td><input [(ngModel)]="shareholder.sharePercentage" (ngModelChange)="onShareholderChange()" type="number"></td>
-      <td><input [(ngModel)]="shareholder.insuranceCoverage" (ngModelChange)="onShareholderChange()" type="number"></td>
+      <td>
+        <input
+          [(ngModel)]="shareholder.shareholderName"
+          (ngModelChange)="onShareholderChange()"
+          type="text"
+        />
+      </td>
+      <td>
+        <input
+          [(ngModel)]="shareholder.sharePercentage"
+          (ngModelChange)="onShareholderChange()"
+          type="number"
+        />
+      </td>
+      <td>
+        <input
+          [(ngModel)]="shareholder.insuranceCoverage"
+          (ngModelChange)="onShareholderChange()"
+          type="number"
+        />
+      </td>
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>
       </td>

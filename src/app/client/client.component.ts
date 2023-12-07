@@ -56,7 +56,6 @@ export class ClientComponent implements OnInit {
     localStorage.setItem('client', JSON.stringify(client));
   }
 
-
   private loadSelectedBracket(): void {
     const selectedTaxBracket = localStorage.getItem('selectedTaxBracket');
     if (selectedTaxBracket) {

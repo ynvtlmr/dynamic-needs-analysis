@@ -1,4 +1,3 @@
-
 export class Birthdate {
   private _birthdate: Date | null = null;
 
@@ -7,7 +6,9 @@ export class Birthdate {
   }
 
   get birthdate(): string | null {
-    return this._birthdate ? this._birthdate.toISOString().substring(0, 10) : null;
+    return this._birthdate
+      ? this._birthdate.toISOString().substring(0, 10)
+      : null;
   }
 
   set birthdate(value: string | null | undefined) {
