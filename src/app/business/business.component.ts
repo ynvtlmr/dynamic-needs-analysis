@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-business',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './business.component.html',
 })
 export class BusinessComponent {
@@ -16,6 +17,13 @@ export class BusinessComponent {
   shareholders: Shareholder[] = [];
 
   addShareholder(name: string, share: number, coverage: number): void {
-    this.shareholders.push(new Shareholder(name, share, coverage));
+    if (name && share > 0 && coverage > 0) {
+      this.shareholders.push(new Shareholder(name, share, coverage));
+    }
+  }
+
+  // Delete a shareholder by index
+  deleteShareholder(index: number): void {
+    this.shareholders.splice(index, 1);
   }
 }

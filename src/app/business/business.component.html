@@ -1,5 +1,4 @@
 <div>
-  <h2>Business Details</h2>
   <table>
     <tr>
       <td><label for="businessName">Business Name:</label></td>
@@ -21,8 +20,43 @@
     </tr>
   </table>
 
-  <h2>Shareholders</h2>
-  <!-- Form to add shareholders -->
-  <!-- Table to list shareholders -->
-  <!-- Additional UI elements as needed -->
+  <h3>Shareholders</h3>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Share Percentage</th>
+      <th>Insurance Coverage</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let shareholder of shareholders; let i = index">
+      <td>{{ shareholder.shareholderName }}</td>
+      <td>{{ shareholder.sharePercentage }}</td>
+      <td>{{ shareholder.insuranceCoverage }}</td>
+      <td>
+        <button (click)="deleteShareholder(i)">Delete</button>
+      </td>
+    </tr>
+    <tr>
+      <td><input #shareholderNameInput type="text" placeholder="Name" /></td>
+      <td>
+        <input #sharePercentageInput type="number" placeholder="Share %" />
+      </td>
+      <td>
+        <input #insuranceCoverageInput type="number" placeholder="Coverage" />
+      </td>
+      <td>
+        <button
+          (click)="
+            addShareholder(
+              shareholderNameInput.value,
+              sharePercentageInput.valueAsNumber,
+              insuranceCoverageInput.valueAsNumber
+            )
+          "
+        >
+          Add Shareholder
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>
