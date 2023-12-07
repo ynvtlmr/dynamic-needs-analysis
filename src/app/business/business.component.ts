@@ -64,7 +64,7 @@ export class BusinessComponent implements OnInit{
       this.valuation = business.valuation;
       this.rate = business.rate;
       this.term = business.term;
-      this.shareholders = business.shareholders;
+      this.shareholders = business.shareholders.map(sh => new Shareholder(sh.shareholderName, sh.sharePercentage, sh.insuranceCoverage));
     }
   }
   // Calculate total percentage owned by all shareholders
