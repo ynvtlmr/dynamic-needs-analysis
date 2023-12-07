@@ -5,6 +5,7 @@ import { ClientComponent } from './client/client.component';
 import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 import { BusinessComponent } from './business/business.component';
+import { GoalComponent } from './goal/goal.component';
 import { LocalStorageService } from './services/local-storage.service';
 
 @Component({
@@ -17,6 +18,7 @@ import { LocalStorageService } from './services/local-storage.service';
     FinancialInstrumentComponent,
     BeneficiaryComponent,
     BusinessComponent,
+    GoalComponent,
     RouterLink,
     RouterLinkActive,
   ],
