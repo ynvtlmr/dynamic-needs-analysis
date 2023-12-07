@@ -27,6 +27,14 @@ export class BusinessComponent {
     this.shareholders.splice(index, 1);
   }
 
+  // Calculate total percentage owned by all shareholders
+  get totalMajorShareholderPercentage(): number {
+    return this.shareholders.reduce(
+      (acc, shareholder) => acc + shareholder.sharePercentage,
+      0,
+    );
+  }
+
   // Calculate total value of major shareholders' shares
   get totalMajorShareholderValue(): number {
     return this.shareholders.reduce(
