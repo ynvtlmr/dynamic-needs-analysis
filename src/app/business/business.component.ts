@@ -41,6 +41,10 @@ export class BusinessComponent implements OnInit{
     this.updateStorage();
   }
 
+  onShareholderChange(): void {
+    this.updateStorage();
+  }
+
   private updateStorage(): void {
     const business: Business = {
       businessName: this.businessName,
