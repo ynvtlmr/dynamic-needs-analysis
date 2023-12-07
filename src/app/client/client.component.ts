@@ -46,6 +46,7 @@ export class ClientComponent implements OnInit {
 
   updateClientData(): void {
     this.updateTaxBrackets();
+    this.saveSelectedBracket()
     const client: Client = {
       name: this.name,
       birthdate: this.birthdateModel.birthdate,

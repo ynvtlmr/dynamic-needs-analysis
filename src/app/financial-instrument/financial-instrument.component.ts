@@ -18,7 +18,7 @@ interface YearValue {
   imports: [FormsModule, DecimalPipe, CommonModule],
   templateUrl: './financial-instrument.component.html',
 })
-export class FinancialInstrumentComponent {
+export class FinancialInstrumentComponent implements OnInit {
   financialInstrumentName: string = '';
   initialValue: number = 0;
   yearAcquired: number = new Date().getFullYear();
@@ -31,8 +31,6 @@ export class FinancialInstrumentComponent {
   isLiquid: boolean = false;
   isToBeSettled: boolean = false;
   beneficiaries: Beneficiary[] = [];
-
-  inputYear: number = new Date().getFullYear();
 
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
