@@ -21,7 +21,7 @@
           type="date"
           id="birthdate"
           [(ngModel)]="birthdateModel.birthdate"
-          (ngModelChange)="updateClientData()"
+          (ngModelChange)="updateBirthdateAndMultiplier($event)"
         />
       </td>
     </tr>

@@ -84,4 +84,12 @@ export class ClientComponent implements OnInit {
       JSON.stringify(this.selectedBracket),
     );
   }
+
+  updateBirthdateAndMultiplier(newBirthdate: string | null): void {
+    this.birthdateModel.birthdate = newBirthdate;
+    // Update incomeReplacementMultiplier based on the new years to retirement
+    this.incomeReplacementMultiplier = this.birthdateModel.yearsToRetirement;
+    // Update the client data in localStorage
+    this.updateClientData();
+  }
 }
