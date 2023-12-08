@@ -18,7 +18,7 @@ export class AssetComponent extends FinancialInstrumentBase implements OnInit {
   type: string = '';
   isTaxable: boolean = false;
   isLiquid: boolean = false;
-  isToBeSettled: boolean = false;
+  isToBeSold: boolean = false;
   beneficiaries: Beneficiary[] = []; // Initialize with an empty array
   capitalGainsTaxRate: number = 0;
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
