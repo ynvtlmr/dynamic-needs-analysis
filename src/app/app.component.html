@@ -4,12 +4,12 @@
 <input type="file" (change)="loadLocalStorageFromFile($event)" />
 <br />
 
-<ul>
-  <li routerLink="/client" routerLinkActive="active">Client</li>
-  <li routerLink="/beneficiaries" routerLinkActive="active">Beneficiaries</li>
-  <li routerLink="/business" routerLinkActive="active">Business</li>
-  <li routerLink="/goal" routerLinkActive="active">Goal</li>
-  <li routerLink="/asset" routerLinkActive="active">Asset</li>
-  <li routerLink="/debt" routerLinkActive="active">Debt</li>
-</ul>
+<button
+  *ngFor="let link of navLinks"
+  [class.active]="selectedTab === link.path"
+  (click)="selectedTab = link.path"
+  [routerLink]="link.path">
+  {{link.label}}
+</button>
+
 <router-outlet></router-outlet>
