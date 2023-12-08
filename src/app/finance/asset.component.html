@@ -1,0 +1,111 @@
+<table>
+  <!-- Type -->
+  <tr>
+    <td><label for="type">Type:</label></td>
+    <td>
+      <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
+        <option *ngFor="let type of financialInstrumentTypes" [value]="type">
+          {{ type }}
+        </option>
+      </select>
+    </td>
+  </tr>
+
+  <!-- Name -->
+  <tr>
+    <td>
+      <label for="financialInstrumentName">Financial Instrument Name:</label>
+    </td>
+    <td>
+      <input id="financialInstrumentName" [(ngModel)]="name" type="text" />
+    </td>
+  </tr>
+
+  <!-- Year Acquired -->
+  <tr>
+    <td><label for="yearAcquired">Year Acquired:</label></td>
+    <td>
+      <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number" />
+    </td>
+  </tr>
+
+  <!-- Initial Value -->
+  <tr>
+    <td><label for="initialValue">Initial Value:</label></td>
+    <td>
+      <input id="initialValue" [(ngModel)]="initialValue" type="number" />
+    </td>
+  </tr>
+
+  <!-- Current Value -->
+  <tr>
+    <td><label for="currentValue">Current Value:</label></td>
+    <td>
+      <input id="currentValue" [(ngModel)]="currentValue" type="number" />
+    </td>
+  </tr>
+
+  <!-- Rate -->
+  <tr>
+    <td><label for="rate">Rate:</label></td>
+    <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
+  </tr>
+
+  <!-- Term -->
+  <tr>
+    <td><label for="term">Term:</label></td>
+    <td><input id="term" [(ngModel)]="term" type="number" /></td>
+  </tr>
+
+  <!-- Additional Attributes -->
+  <tr>
+    <td><label for="isTaxable">Taxable:</label></td>
+    <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox" /></td>
+  </tr>
+  <tr>
+    <td><label for="isLiquid">Liquid:</label></td>
+    <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox" /></td>
+  </tr>
+  <tr>
+    <td><label for="isToBeSettled">To Be Settled:</label></td>
+    <td>
+      <input id="isToBeSettled" [(ngModel)]="isToBeSettled" type="checkbox" />
+    </td>
+  </tr>
+
+  <!-- Button to Load Beneficiaries -->
+  <tr>
+    <td colspan="2">
+      <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
+    </td>
+  </tr>
+
+  <!-- Beneficiaries Table -->
+  <ng-container *ngIf="beneficiaries.length > 0">
+    <tr *ngFor="let beneficiary of beneficiaries; let i = index">
+      <td>{{ beneficiary.name }}</td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="beneficiary.allocation"
+          (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>Total Allocation (%)</td>
+      <td>{{ totalAllocations }}</td>
+    </tr>
+  </ng-container>
+
+  <!-- Display Calculated Values -->
+  <tr>
+    <td>Current Tax Liability ($):</td>
+    <td>{{ currentTaxLiabilityDollars | number: "1.0-2" }}</td>
+  </tr>
+  <tr>
+    <td>Future Tax Liability ($):</td>
+    <td>{{ futureTaxLiabilityDollars | number: "1.0-2" }}</td>
+  </tr>
+  <!-- Add other calculations and displays as needed -->
+</table>

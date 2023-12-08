@@ -7,6 +7,7 @@ import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 import { BusinessComponent } from './business/business.component';
 import { GoalComponent } from './goal/goal.component';
 import { LocalStorageService } from './services/local-storage.service';
+import { AssetComponent } from './finance/asset.component';
 
 @Component({
   selector: 'app-root',
