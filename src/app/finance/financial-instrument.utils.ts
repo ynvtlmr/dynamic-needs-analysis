@@ -1,41 +1,52 @@
-export class FinancialInstrumentUtils {
-  static currentYearsHeld(yearAcquired: number): number {
-    const currentYear: number = new Date().getFullYear();
-    return currentYear - yearAcquired;
-  }
+export class FinancialInstrumentBase {
+  name: string;
+  initialValue: number;
+  yearAcquired: number;
+  currentValue: number;
+  rate: number;
+  term: number;
 
-  static currentGrowthDollars(
+  constructor(
+    name: string,
     initialValue: number,
-    currentValue: number,
-  ): number {
-    return currentValue - initialValue;
-  }
-
-  static currentGrowthPercentage(
-    initialValue: number,
-    currentValue: number,
-  ): number {
-    if (initialValue === 0) {
-      return 0;
-    }
-    return (currentValue / initialValue - 1) * 100;
-  }
-
-  static futureValueDollars(
+    yearAcquired: number,
     currentValue: number,
     rate: number,
     term: number,
-  ): number {
-    return currentValue * Math.pow(1 + rate / 100, term);
+  ) {
+    this.name = name;
+    this.initialValue = initialValue;
+    this.yearAcquired = yearAcquired;
+    this.currentValue = currentValue;
+    this.rate = rate;
+    this.term = term;
   }
 
-  static futureValueGrowthPercentage(
-    initialValue: number,
-    futureValueDollars: number,
-  ): number {
-    if (initialValue === 0) {
+  get currentYearsHeld(): number {
+    const currentYear: number = new Date().getFullYear();
+    return currentYear - this.yearAcquired;
+  }
+
+  get currentGrowthDollars(): number {
+    return this.currentValue - this.initialValue;
+  }
+
+  get currentGrowthPercentage(): number {
+    if (this.initialValue === 0) {
       return 0;
     }
-    return (futureValueDollars / initialValue - 1) * 100;
+    return (this.currentValue / this.initialValue - 1) * 100;
+  }
+
+  get futureValueDollars(): number {
+    return this.currentValue * Math.pow(1 + this.rate / 100, this.term);
+  }
+
+  get futureValueGrowthPercentage(): number {
+    let futureValue = this.futureValueDollars;
+    if (this.initialValue === 0) {
+      return 0;
+    }
+    return (futureValue / this.initialValue - 1) * 100;
   }
 }
