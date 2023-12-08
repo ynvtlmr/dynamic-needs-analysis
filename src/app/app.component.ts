@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { ClientComponent } from './client/client.component';
-import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 import { BusinessComponent } from './business/business.component';
 import { GoalComponent } from './goal/goal.component';
@@ -16,10 +15,10 @@ import { AssetComponent } from './finance/asset.component';
     CommonModule,
     RouterOutlet,
     ClientComponent,
-    FinancialInstrumentComponent,
     BeneficiaryComponent,
     BusinessComponent,
     GoalComponent,
+    AssetComponent,
     RouterLink,
     RouterLinkActive,
   ],
