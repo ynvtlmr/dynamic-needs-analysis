@@ -77,7 +77,7 @@ export class AssetComponent extends FinancialInstrumentBase implements OnInit {
     }
   }
 
-  totalAllocations(): number {
+  get totalAllocations(): number {
     return this.beneficiaries.reduce(
       (total, beneficiary) => total + beneficiary.allocation,
       0,
