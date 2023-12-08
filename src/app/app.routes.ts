@@ -2,7 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { ClientComponent } from './client/client.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
-import { FinancialInstrumentComponent } from './financial-instrument/financial-instrument.component';
 import { BusinessComponent } from './business/business.component';
 import { GoalComponent } from './goal/goal.component';
 import { AssetComponent } from './finance/asset.component';

@@ -39,9 +39,7 @@ export class DebtComponent extends FinancialInstrumentBase implements OnInit {
   }
 
   get futureValueOfActualTermDebtDollars(): number {
-    return (
-      this.currentvalueOfDebtDollars * Math.pow(1 + this.rate / 100, this.term)
-    );
+    return this.initialValue * Math.pow(1 + this.rate / 100, this.term);
   }
 
   get insurableFutureValueDollars(): number {
@@ -53,14 +51,14 @@ export class DebtComponent extends FinancialInstrumentBase implements OnInit {
       rate = -rate;
     }
 
-    const denominator = annualPayment + (rate / 100) * annualPayment;
-    const numerator = annualPayment - (rate / 100) * fv;
+    const denominator: number = annualPayment + (rate / 100) * annualPayment;
+    const numerator: number = annualPayment - (rate / 100) * fv;
     if (denominator === 0) {
       return 0;
     }
 
-    const a = Math.log(numerator / denominator);
-    const b = Math.log(1.0 + rate / 100.0);
+    const a: number = Math.log(numerator / denominator);
+    const b: number = Math.log(1.0 + rate / 100.0);
     return a / b;
   }
 }
