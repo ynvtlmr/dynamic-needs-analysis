@@ -1,53 +1,70 @@
-// import { Asset } from './asset.component';
-// import { Beneficiary } from '../beneficiary/beneficiary.component';
-//
-// describe('Asset', () => {
-//   let asset: Asset;
-//   const mockBeneficiaries: Beneficiary[] = [
-//     { name: 'Beneficiary 1', allocation: 50 },
-//     { name: 'Beneficiary 2', allocation: 50 },
-//   ];
-//
-//   beforeEach(() => {
-//     asset = new Asset(
-//       'Test Asset',
-//       1000, // initialValue
-//       new Date().getFullYear() - 5, // yearAcquired
-//       1500, // currentValue
-//       5, // rate
-//       10, // term
-//       'Stocks', // type
-//       true, // isTaxable
-//       true, // isLiquid
-//       false, // isToBeSettled
-//       mockBeneficiaries,
-//
-//     );
-//
-//     // Mocking localStorage for capital gains tax rate
-//     spyOn(localStorage, 'getItem').and.callFake((key: string) => {
-//       if (key === 'selectedTaxBracket') {
-//         return JSON.stringify({ taxRate: 20 });
-//       }
-//       return null;
-//     });
-//
-//     asset.ngOnInit(); // Simulating component initialization
-//   });
-//   it('should create an instance of Asset', () => {
-//     expect(asset).toBeTruthy();
-//   });
-//   it('should load capital gains tax rate correctly', () => {
-//     expect(asset['capitalGainsTaxRate']).toBe(10); // 20% tax rate * 0.5
-//   });
-//   it('should calculate current tax liability correctly', () => {
-//     expect(asset.currentTaxLiabilityDollars).toBe(50); // (1500 - 1000) * 10%
-//   });
-//   it('should calculate future tax liability correctly', () => {
-//     const futureValue = 1500 * Math.pow(1 + 0.05, 10); // Future value calculation
-//     expect(asset.futureTaxLiabilityDollars).toBeCloseTo(
-//       (futureValue - 1000) * 0.1,
-//       2,
-//     );
-//   });
-// });
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { AssetComponent } from './asset.component';
+import { CommonModule } from '@angular/common';
+
+describe('AssetComponent', () => {
+  let component: AssetComponent;
+  let fixture: ComponentFixture<AssetComponent>;
+
+  beforeEach(async () => {
+    // Mock localStorage
+    spyOn(localStorage, 'getItem').and.callFake((key: string) => {
+      if (key === 'selectedTaxBracket') {
+        return JSON.stringify({ taxRate: 20 }); // Mocked tax rate value
+      }
+      return null;
+    });
+
+    await TestBed.configureTestingModule({
+      imports: [FormsModule, CommonModule, AssetComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(AssetComponent);
+    component = fixture.componentInstance;
+
+    // Mock Initialization
+    component.name = 'Sample Asset';
+    component.initialValue = 1000;
+    component.yearAcquired = 2010;
+    component.currentValue = 2000;
+    component.rate = 5;
+    component.term = 10;
+    component.type = 'Stocks';
+    component.isTaxable = true;
+    component.isLiquid = true;
+    component.isToBeSold = false;
+    component.beneficiaries = [];
+
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should correctly calculate current years held', () => {
+    const currentYear = new Date().getFullYear();
+    expect(component.currentYearsHeld).toBe(currentYear - 2010);
+  });
+
+  it('should correctly calculate current growth dollars', () => {
+    expect(component.currentGrowthDollars).toBe(1000); // 2000 - 1000
+  });
+
+  it('should load capital gains tax rate correctly', () => {
+    expect(component.capitalGainsTaxRate).toBe(10); // 20% tax rate * 0.5
+  });
+
+  it('should calculate current tax liability correctly', () => {
+    expect(component.currentTaxLiabilityDollars).toBe(100); // (2000 - 1000) * 10%
+  });
+
+  it('should calculate future tax liability correctly', () => {
+    const futureValue = 2000 * Math.pow(1 + 0.05, 10); // Future value calculation
+    expect(component.futureTaxLiabilityDollars).toBeCloseTo(
+      (futureValue - 1000) * 0.1,
+      2,
+    );
+  });
+});
