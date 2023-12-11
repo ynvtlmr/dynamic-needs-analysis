@@ -111,28 +111,28 @@
   </tr>
   <tr>
     <td>Current Growth Dollars ($):</td>
-    <td>{{ currentGrowthDollars | number: "1.0-2" }}</td>
+    <td>{{ currentGrowthDollars | currency }}</td>
   </tr>
   <tr>
     <td>Current Growth Percentage (%):</td>
-    <td>{{ currentGrowthPercentage | number: "1.0-2" }}</td>
+    <td>{{ currentGrowthPercentage | number: "1.0-2" }}%</td>
   </tr>
   <tr>
     <td>Future Value Dollars ($):</td>
-    <td>{{ futureValueDollars | number: "1.0-2" }}</td>
+    <td>{{ futureValueDollars | currency }}</td>
   </tr>
   <tr>
     <td>Future Value Growth Percentage (%):</td>
-    <td>{{ futureValueGrowthPercentage | number: "1.0-2" }}</td>
+    <td>{{ futureValueGrowthPercentage | number: "1.0-2" }}%</td>
   </tr>
 
   <!-- Display Calculated Values -->
   <tr>
     <td>Current Tax Liability ($):</td>
-    <td>{{ currentTaxLiabilityDollars | number: "1.0-2" }}</td>
+    <td>{{ currentTaxLiabilityDollars | currency }}</td>
   </tr>
   <tr>
     <td>Future Tax Liability ($):</td>
-    <td>{{ futureTaxLiabilityDollars | number: "1.0-2" }}</td>
+    <td>{{ futureTaxLiabilityDollars | currency }}</td>
   </tr>
 </table>

@@ -50,15 +50,15 @@
   <!-- Calculated Values -->
   <tr>
     <td>Amount Paid Off ($):</td>
-    <td>{{ amountPaidOffDollars | number: "1.0-2" }}</td>
+    <td>{{ amountPaidOffDollars | currency }}</td>
   </tr>
   <tr>
     <td>Current Value of Debt ($):</td>
-    <td>{{ currentValueOfDebtDollars | number: "1.0-2" }}</td>
+    <td>{{ currentValueOfDebtDollars | currency }}</td>
   </tr>
   <tr>
     <td>Debt Remaining ($):</td>
-    <td>{{ debtRemainingDollars | number: "1.0-2" }}</td>
+    <td>{{ debtRemainingDollars | currency }}</td>
   </tr>
   <tr>
     <td>Years to be Paid Off:</td>
@@ -66,6 +66,6 @@
   </tr>
   <tr>
     <td>Insurable Future Value ($):</td>
-    <td>{{ insurableFutureValueDollars | number: "1.0-2" }}</td>
+    <td>{{ insurableFutureValueDollars | currency }}</td>
   </tr>
 </table>
