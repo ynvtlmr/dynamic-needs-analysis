@@ -35,7 +35,7 @@ export class DebtComponent extends FinancialInstrumentBase implements OnInit {
   }
 
   get yearsToBePaidOff(): number {
-    return DebtComponent.nper(this.rate, this.annualPayment, this.initialValue);
+    return DebtComponent.nper(this.rate, this.annualPayment, this.debtRemainingDollars);
   }
 
   get futureValueOfActualTermDebtDollars(): number {
