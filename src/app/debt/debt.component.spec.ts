@@ -39,7 +39,7 @@ describe('DebtComponent', () => {
   it('should calculate current value of debt correctly', () => {
     const yearsHeld = new Date().getFullYear() - 2015;
     const expectedValue = 5000 * Math.pow(1 + 0.03, yearsHeld);
-    expect(component.currentvalueOfDebtDollars).toBeCloseTo(expectedValue, 2);
+    expect(component.currentValueOfDebtDollars).toBeCloseTo(expectedValue, 2);
   });
 
   it('should calculate debt remaining correctly', () => {
