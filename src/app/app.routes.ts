@@ -4,8 +4,8 @@ import { ClientComponent } from './client/client.component';
 import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
 import { BusinessComponent } from './business/business.component';
 import { GoalComponent } from './goal/goal.component';
-import { AssetComponent } from './finance/asset.component';
-import { DebtComponent } from './finance/debt.component';
+import { AssetComponent } from './asset/asset.component';
+import { DebtComponent } from './debt/debt.component';
 
 export const routes: Routes = [
   { path: 'client', component: ClientComponent },

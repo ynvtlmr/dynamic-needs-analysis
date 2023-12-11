@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FinancialInstrumentBase } from './financial-instrument.utils';
+import { FinancialInstrumentBase } from '../finance/financial-instrument.utils';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
-} from '../constants/financial-instrument-types.constant';
+} from '../constants/asset-types.constant';
 
 @Component({
   selector: 'app-asset',
@@ -82,5 +82,28 @@ export class AssetComponent extends FinancialInstrumentBase implements OnInit {
       (total, beneficiary) => total + beneficiary.allocation,
       0,
     );
+  }
+
+  get currentGrowthDollars(): number {
+    return this.currentValue - this.initialValue;
+  }
+
+  get currentGrowthPercentage(): number {
+    if (this.initialValue === 0) {
+      return 0;
+    }
+    return (this.currentValue / this.initialValue - 1) * 100;
+  }
+
+  get futureValueDollars(): number {
+    return this.currentValue * Math.pow(1 + this.rate / 100, this.term);
+  }
+
+  get futureValueGrowthPercentage(): number {
+    let futureValue = this.futureValueDollars;
+    if (this.initialValue === 0) {
+      return 0;
+    }
+    return (futureValue / this.initialValue - 1) * 100;
   }
 }

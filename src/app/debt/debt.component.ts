@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FinancialInstrumentBase } from './financial-instrument.utils';
+import { FinancialInstrumentBase } from '../finance/financial-instrument.utils';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 

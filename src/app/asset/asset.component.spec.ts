@@ -67,4 +67,28 @@ describe('AssetComponent', () => {
       2,
     );
   });
+
+
+  it('should calculate current growth dollars correctly', () => {
+    expect(component.currentGrowthDollars).toBe(50); // 150 - 100
+  });
+
+  it('should calculate current growth percentage correctly', () => {
+    expect(component.currentGrowthPercentage).toBe(50); // 50% growth
+  });
+
+  it('should calculate future value dollars correctly', () => {
+    // The future value is calculated using the formula: currentValue * (1 + rate/100)^term
+    const futureValue = 150 * Math.pow(1 + 5 / 100, 10);
+    expect(component.futureValueDollars).toBeCloseTo(futureValue, 2);
+  });
+
+  it('should calculate future value growth percentage correctly', () => {
+    const futureValue = component.futureValueDollars;
+    const growthPercentage = (futureValue / 100 - 1) * 100;
+    expect(component.futureValueGrowthPercentage).toBeCloseTo(
+      growthPercentage,
+      2,
+    );
+  });
 });

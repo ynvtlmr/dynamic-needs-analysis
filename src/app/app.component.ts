@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { ClientComponent } from './client/client.component';
-import { BeneficiaryComponent } from './beneficiary/beneficiary.component';
-import { BusinessComponent } from './business/business.component';
-import { GoalComponent } from './goal/goal.component';
 import { LocalStorageService } from './services/local-storage.service';
-import { AssetComponent } from './finance/asset.component';
 
 interface NavLink {
   path: string;
@@ -19,11 +14,6 @@ interface NavLink {
   imports: [
     CommonModule,
     RouterOutlet,
-    ClientComponent,
-    BeneficiaryComponent,
-    BusinessComponent,
-    GoalComponent,
-    AssetComponent,
     RouterLink,
     RouterLinkActive,
   ],
