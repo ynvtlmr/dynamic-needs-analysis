@@ -5,7 +5,7 @@ import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 
-interface Client {
+export interface Client {
   name: string;
   province: string;
   annualIncome: number;

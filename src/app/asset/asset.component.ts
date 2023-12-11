@@ -7,6 +7,22 @@ import {
   FinTypeAttributes,
 } from '../constants/asset-types.constant';
 
+export interface Asset {
+  name: string;
+  initialValue: number;
+  currentValue: number;
+  yearAcquired: number;
+  rate: number;
+  term: number;
+  type: string;
+  isTaxable: boolean;
+  isLiquid: boolean;
+  isToBeSold: boolean;
+  capitalGainsTaxRate: number;
+  financialInstrumentTypes: string[];
+  beneficiaries: Beneficiary[];
+}
+
 @Component({
   selector: 'app-asset',
   templateUrl: './asset.component.html',
@@ -20,12 +36,11 @@ export class AssetComponent implements OnInit {
   yearAcquired: number = new Date().getFullYear();
   rate: number = 0;
   term: number = 0;
-
   type: string = '';
   isTaxable: boolean = false;
   isLiquid: boolean = false;
   isToBeSold: boolean = false;
-  beneficiaries: Beneficiary[] = []; // Initialize with an empty array
+  beneficiaries: Beneficiary[] = [];
   capitalGainsTaxRate: number = 0;
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
