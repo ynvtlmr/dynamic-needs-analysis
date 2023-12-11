@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FinancialInstrumentBase } from '../finance/financial-instrument.utils';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -14,7 +13,14 @@ import {
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class AssetComponent extends FinancialInstrumentBase implements OnInit {
+export class AssetComponent implements OnInit {
+  name: string = '';
+  initialValue: number = 0;
+  currentValue: number = 0;
+  yearAcquired: number = new Date().getFullYear();
+  rate: number = 0;
+  term: number = 0;
+
   type: string = '';
   isTaxable: boolean = false;
   isLiquid: boolean = false;
@@ -23,13 +29,15 @@ export class AssetComponent extends FinancialInstrumentBase implements OnInit {
   capitalGainsTaxRate: number = 0;
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
-  constructor() {
-    // If needed, pass default values or modify as per requirements
-    super('', 0, new Date().getFullYear(), 0, 0, 0);
-  }
+  constructor() {}
 
   ngOnInit(): void {
     this.loadCapitalGainsTaxRate();
+  }
+
+  get currentYearsHeld(): number {
+    const currentYear: number = new Date().getFullYear();
+    return currentYear - this.yearAcquired;
   }
 
   private loadCapitalGainsTaxRate(): void {

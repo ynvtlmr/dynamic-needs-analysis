@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FinancialInstrumentBase } from '../finance/financial-instrument.utils';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
+
+export interface Debt {
+  name: string;
+  initialValue: number;
+  yearAcquired: number;
+  rate: number;
+  term: number;
+  annualPayment: number;
+}
 
 @Component({
   selector: 'app-debt',
@@ -9,15 +17,23 @@ import { CommonModule, DecimalPipe } from '@angular/common';
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class DebtComponent extends FinancialInstrumentBase implements OnInit {
+export class DebtComponent implements OnInit {
+  name: string = '';
+  initialValue: number = 0;
+  yearAcquired: number = new Date().getFullYear();
+  rate: number = 0;
+  term: number = 0;
   annualPayment: number = 0;
 
-  constructor() {
-    super('', 0, new Date().getFullYear(), 0, 0, 0);
-  }
+  constructor() {}
 
   ngOnInit(): void {
     // Initialization logic here
+  }
+
+  get currentYearsHeld(): number {
+    const currentYear: number = new Date().getFullYear();
+    return currentYear - this.yearAcquired;
   }
 
   get amountPaidOffDollars(): number {
