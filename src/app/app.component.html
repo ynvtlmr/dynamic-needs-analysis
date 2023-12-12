@@ -1,9 +1,9 @@
-<router-outlet></router-outlet>
+<!-- Save app state -->
 <button (click)="clearAllLocalStorage()">Clear All</button>
 <button (click)="downloadLocalStorageAsFile()">Download</button>
 <input type="file" (change)="loadLocalStorageFromFile($event)" />
 <br />
-
+<!-- Navigation -->
 <button
   *ngFor="let link of navLinks"
   [class.active]="selectedTab === link.path"
@@ -11,3 +11,5 @@
   [routerLink]="link.path">
   {{link.label}}
 </button>
+<!-- Router -->
+<router-outlet></router-outlet>
