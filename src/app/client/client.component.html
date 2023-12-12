@@ -27,11 +27,11 @@
       </td>
     </tr>
     <tr>
-      <td>Age</td>
+      <td>Age:</td>
       <td>{{ birthdateModel.age }}</td>
     </tr>
     <tr>
-      <td>Years to retirement</td>
+      <td>Years of Active Income:</td>
       <td>{{ birthdateModel.yearsToRetirement }}</td>
     </tr>
 
@@ -53,7 +53,7 @@
       <td><label for="annualIncome">Annual Income ($):</label></td>
       <td>
         <input
-          (ngModelChange)="updateClientData()"
+          (ngModelChange)="forceIncomeUpdate($event)"
           [(ngModel)]="annualIncome"
           id="annualIncome"
           type="number"

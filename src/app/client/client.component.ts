@@ -53,6 +53,10 @@ export class ClientComponent implements OnInit {
     }
   }
 
+  forceIncomeUpdate(newIncome: number): void {
+    this.annualIncome = newIncome;
+    this.updateClientData();
+  }
   updateClientData(): void {
     this.updateTaxBrackets();
     this.saveSelectedBracket();
