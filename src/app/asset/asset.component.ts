@@ -6,6 +6,7 @@ import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
 } from '../constants/asset-types.constant';
+import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Asset {
@@ -39,18 +40,45 @@ export class AssetComponent implements OnInit {
   rate: number = 0;
   term: number = 0;
   type: string = '';
+
+  // boolean attributes
   isTaxable: boolean = false;
   isLiquid: boolean = false;
   isToBeSold: boolean = false;
+
+  // other
   beneficiaries: Beneficiary[] = [];
   capitalGainsTaxRate: number = 0;
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
+
+  // tax
+  taxBrackets: TaxBracket[] = [];
+  selectedBracket: TaxBracket | undefined;
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadCapitalGainsTaxRate();
     this.loadBeneficiaries();
+    this.initializeTaxBrackets();
+  }
+
+  private initializeTaxBrackets(): void {
+    const year = new Date().getFullYear(); // Use current year or a specific year
+    const province = this.localStorageService.getItem('client')?.province; // Load province from client data
+    if (province) {
+      this.taxBrackets = TAX_BRACKETS[year]?.[province.toUpperCase()] || [];
+      this.selectedBracket = this.taxBrackets[0]; // Initialize to the first bracket or a specific logic
+    }
+
+    const selectedTaxBracket =
+      this.localStorageService.getItem('selectedTaxBracket');
+    if (selectedTaxBracket) {
+      const storedBracket = selectedTaxBracket;
+      this.selectedBracket = this.taxBrackets.find(
+        (bracket) => bracket.minIncome === storedBracket.minIncome,
+      );
+    }
   }
 
   get currentYearsHeld(): number {

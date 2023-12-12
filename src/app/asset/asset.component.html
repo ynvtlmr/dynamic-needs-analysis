@@ -1,9 +1,16 @@
 <table>
   <!-- Capital Gains Tax Rate -->
   <tr>
-    <td>Capital Gains Tax Rate:</td>
-    <td>{{ capitalGainsTaxRate }}</td>
+    <td><label for="taxBracket">Capital Gains Tax Rate:</label></td>
+    <td>
+      <select id="taxBracket" [(ngModel)]="selectedBracket">
+        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
+          ${{ bracket.minIncome }} and up - {{ bracket.taxRate / 2 }}%
+        </option>
+      </select>
+    </td>
   </tr>
+
 
   <!-- Type -->
   <tr>
