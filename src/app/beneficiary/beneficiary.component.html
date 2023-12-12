@@ -7,41 +7,23 @@
     </tr>
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>
-        <input
-          [(ngModel)]="beneficiary.name"
-          (ngModelChange)="onBeneficiaryChange()"
-          type="text"
-        />
+        <input [(ngModel)]="beneficiary.name" (ngModelChange)="onBeneficiaryChange()" type="text" />
       </td>
       <td>
-        <input
-          [(ngModel)]="beneficiary.allocation"
-          (ngModelChange)="onBeneficiaryChange()"
-          type="number"
-        />
+        <input [(ngModel)]="beneficiary.allocation" (ngModelChange)="onBeneficiaryChange()" type="number" />
       </td>
-      <td><button (click)="deleteBeneficiary(i)">Delete</button></td>
+      <td>
+        <button (click)="deleteBeneficiary(i)">Delete</button>
+      </td>
     </tr>
     <tr>
-      <td><input #nameInput type="text" placeholder="Name" /></td>
-      <td>
-        <input #allocationInput type="number" placeholder="Ideal Allocation" />
-      </td>
-      <td>
-        <button
-          (click)="
-            addBeneficiary(nameInput.value, allocationInput.valueAsNumber)
-          "
-        >
-          Add
-        </button>
+      <td colspan="3">
+        <button (click)="addBeneficiary()">Add New Beneficiary</button>
       </td>
     </tr>
-
     <tr>
       <td>Total</td>
       <td>{{ totalAllocation }}</td>
-      <td></td>
     </tr>
   </table>
 </div>

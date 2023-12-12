@@ -27,9 +27,8 @@ export class BeneficiaryComponent {
     );
   }
 
-  addBeneficiary(name: string, allocation: number): void {
-    this.beneficiaries.push({ name, allocation });
-    this.updateStorage();
+  addBeneficiary(): void {
+    this.beneficiaries.push({ name: '', allocation: 0 });
   }
 
   deleteBeneficiary(index: number): void {
