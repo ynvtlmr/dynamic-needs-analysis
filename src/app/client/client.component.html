@@ -9,6 +9,7 @@
           [(ngModel)]="name"
           id="name"
           type="text"
+          placeholder="John Smith"
         />
       </td>
     </tr>
@@ -49,7 +50,7 @@
       </td>
     </tr>
     <tr>
-      <td><label for="annualIncome">Annual Income:</label></td>
+      <td><label for="annualIncome">Annual Income ($):</label></td>
       <td>
         <input
           (ngModelChange)="updateClientData()"

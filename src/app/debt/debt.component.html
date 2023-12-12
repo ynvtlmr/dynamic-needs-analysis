@@ -2,12 +2,12 @@
   <!-- Debt Name -->
   <tr>
     <td><label for="debtName">Debt Name:</label></td>
-    <td><input [(ngModel)]="name" id="debtName" type="text" /></td>
+    <td><input [(ngModel)]="name" id="debtName" type="text" placeholder="Bank Loan"/></td>
   </tr>
 
   <!-- Initial Value -->
   <tr>
-    <td><label for="initialValue">Initial Value:</label></td>
+    <td><label for="initialValue">PrincipalValue ($):</label></td>
     <td>
       <input [(ngModel)]="initialValue" id="initialValue" type="number" />
     </td>
@@ -23,19 +23,19 @@
 
   <!-- Rate -->
   <tr>
-    <td><label for="rate">Rate:</label></td>
+    <td><label for="rate">Interest Rate (%):</label></td>
     <td><input [(ngModel)]="rate" id="rate" type="number" /></td>
   </tr>
 
   <!-- Term -->
   <tr>
-    <td><label for="term">Term:</label></td>
+    <td><label for="term">Term (years):</label></td>
     <td><input [(ngModel)]="term" id="term" type="number" /></td>
   </tr>
 
   <!-- Annual Payment -->
   <tr>
-    <td><label for="annualPayment">Annual Payment:</label></td>
+    <td><label for="annualPayment">Annual Payment ($):</label></td>
     <td>
       <input [(ngModel)]="annualPayment" id="annualPayment" type="number" />
     </td>
