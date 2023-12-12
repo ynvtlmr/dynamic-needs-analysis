@@ -31,18 +31,15 @@ export class BusinessComponent implements OnInit {
     this.loadBusinessFromStorage();
   }
 
-  addShareholder(name: string, share: number, coverage: number): void {
-    if (name && share > 0 && coverage > 0) {
-      this.shareholders.push(new Shareholder(name, share, coverage));
-      this.updateStorage();
+  addShareholder(): void {
+    const client = this.localStorageService.getItem('client');
+    if (this.shareholders.length === 0 && client && client.name) {
+      this.shareholders.push(new Shareholder(client.name, 0, 0));
+    } else {
+      this.shareholders.push(new Shareholder('', 0, 0));
     }
   }
 
-  addEmptyShareholder(): void {
-    this.shareholders.push(new Shareholder('', 0, 0));
-  }
-
-  // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);
     this.updateStorage();
