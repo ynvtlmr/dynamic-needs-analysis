@@ -35,6 +35,10 @@ export class BusinessComponent implements OnInit {
     }
   }
 
+  addEmptyShareholder(): void {
+    this.shareholders.push(new Shareholder('', 0, 0));
+  }
+
   // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);

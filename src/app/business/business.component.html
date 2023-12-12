@@ -61,25 +61,8 @@
       </td>
     </tr>
     <tr>
-      <td><input #shareholderNameInput type="text" placeholder="Name" /></td>
-      <td>
-        <input #sharePercentageInput type="number" placeholder="Share %" />
-      </td>
-      <td>
-        <input #insuranceCoverageInput type="number" placeholder="Coverage" />
-      </td>
-      <td>
-        <button
-          (click)="
-            addShareholder(
-              shareholderNameInput.value,
-              sharePercentageInput.valueAsNumber,
-              insuranceCoverageInput.valueAsNumber
-            )
-          "
-        >
-          Add Shareholder
-        </button>
+      <td colspan="6">
+        <button (click)="addEmptyShareholder()">Add Shareholder</button>
       </td>
     </tr>
   </table>
