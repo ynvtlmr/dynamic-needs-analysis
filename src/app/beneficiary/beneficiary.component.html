@@ -7,10 +7,18 @@
     </tr>
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>
-        <input [(ngModel)]="beneficiary.name" (ngModelChange)="onBeneficiaryChange()" type="text" />
+        <input
+          [(ngModel)]="beneficiary.name"
+          (ngModelChange)="onBeneficiaryChange()"
+          type="text"
+        />
       </td>
       <td>
-        <input [(ngModel)]="beneficiary.allocation" (ngModelChange)="onBeneficiaryChange()" type="number" />
+        <input
+          [(ngModel)]="beneficiary.allocation"
+          (ngModelChange)="onBeneficiaryChange()"
+          type="number"
+        />
       </td>
       <td>
         <button (click)="deleteBeneficiary(i)">Delete</button>

@@ -47,11 +47,18 @@ export class DebtComponent implements OnInit {
   }
 
   get debtRemainingDollars(): number {
-    return Math.max(0, this.currentValueOfDebtDollars - this.amountPaidOffDollars);
+    return Math.max(
+      0,
+      this.currentValueOfDebtDollars - this.amountPaidOffDollars,
+    );
   }
 
   get yearsToBePaidOff(): number {
-    return DebtComponent.nper(this.rate, this.annualPayment, this.debtRemainingDollars);
+    return DebtComponent.nper(
+      this.rate,
+      this.annualPayment,
+      this.debtRemainingDollars,
+    );
   }
 
   get futureValueOfActualTermDebtDollars(): number {
@@ -62,18 +69,23 @@ export class DebtComponent implements OnInit {
     return this.futureValueOfActualTermDebtDollars - this.amountPaidOffDollars;
   }
 
-  static nper(rate: number, annualPayment: number, presentValue: number): number {
+  static nper(
+    rate: number,
+    annualPayment: number,
+    presentValue: number,
+  ): number {
     rate = rate / 100; // Convert to decimal
 
     // Ensure rate is positive and non-zero
     if (rate <= 0) {
-      throw new Error("Interest rate must be positive.");
+      throw new Error('Interest rate must be positive.');
     }
 
     // The formula to calculate nper
-    const numerator = Math.log(annualPayment / (annualPayment - presentValue * rate));
+    const numerator = Math.log(
+      annualPayment / (annualPayment - presentValue * rate),
+    );
     const denominator = Math.log(1 + rate);
     return numerator / denominator;
   }
-
 }

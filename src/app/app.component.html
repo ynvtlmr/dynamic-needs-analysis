@@ -8,8 +8,9 @@
   *ngFor="let link of navLinks"
   [class.active]="selectedTab === link.path"
   (click)="selectedTab = link.path"
-  [routerLink]="link.path">
-  {{link.label}}
+  [routerLink]="link.path"
+>
+  {{ link.label }}
 </button>
 <!-- Router -->
 <router-outlet></router-outlet>

@@ -68,7 +68,6 @@ describe('AssetComponent', () => {
     );
   });
 
-
   it('should calculate current growth dollars correctly', () => {
     expect(component.currentGrowthDollars).toBe(50); // 150 - 100
   });
