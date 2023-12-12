@@ -78,7 +78,7 @@ export class DebtComponent implements OnInit {
 
     // Ensure rate is positive and non-zero
     if (rate <= 0) {
-      throw new Error('Interest rate must be positive.');
+      rate *= -1;
     }
 
     // The formula to calculate nper

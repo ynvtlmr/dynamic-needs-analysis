@@ -19,12 +19,6 @@ export const TAX_BRACKETS: ProvinceTaxBrackets = {
         dividendNonEligible: 15.86,
       },
       {
-        minIncome: 0,
-        taxRate: 25.0,
-        dividendEligible: 2.57,
-        dividendNonEligible: 15.86,
-      },
-      {
         minIncome: 53359,
         taxRate: 30.5,
         dividendEligible: 10.16,

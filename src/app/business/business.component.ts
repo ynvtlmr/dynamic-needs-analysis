@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
+import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Business {
   businessName: string;
@@ -23,6 +24,8 @@ export class BusinessComponent implements OnInit {
   rate: number = 0;
   term: number = 0;
   shareholders: Shareholder[] = [];
+
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadBusinessFromStorage();
@@ -57,19 +60,18 @@ export class BusinessComponent implements OnInit {
       term: this.term,
       shareholders: this.shareholders,
     };
-    localStorage.setItem('business', JSON.stringify(business));
+    this.localStorageService.setItem('business', business);
   }
 
   private loadBusinessFromStorage(): void {
-    const data = localStorage.getItem('business');
-    if (data) {
-      const business: Business = JSON.parse(data);
+    const business: Business = this.localStorageService.getItem('business');
+    if (business) {
       this.businessName = business.businessName;
       this.valuation = business.valuation;
       this.rate = business.rate;
       this.term = business.term;
       this.shareholders = business.shareholders.map(
-        (sh) =>
+        (sh: Shareholder) =>
           new Shareholder(
             sh.shareholderName,
             sh.sharePercentage,

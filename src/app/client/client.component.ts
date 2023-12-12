@@ -4,6 +4,7 @@ import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
+import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Client {
   name: string;
@@ -22,18 +23,14 @@ export interface Client {
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
   selectedBracket: TaxBracket | undefined;
-  birthdateModel: Birthdate = new Birthdate(localStorage.getItem('birthdate'));
+  birthdateModel: Birthdate = new Birthdate(
+    this.localStorageService.getItem('birthdate'),
+  );
+
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    const storedClient = localStorage.getItem('client');
-    if (storedClient) {
-      const client: Client = JSON.parse(storedClient);
-      this.name = client.name;
-      this.birthdateModel.birthdate = client.birthdate;
-      this.province = client.province;
-      this.annualIncome = client.annualIncome;
-      this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
-    }
+    this.loadClientFromStorage();
     this.updateTaxBrackets();
     this.loadSelectedBracket();
   }
@@ -43,6 +40,18 @@ export class ClientComponent implements OnInit {
   annualIncome: number = 0;
   incomeReplacementMultiplier: number = 1;
   provinces: string[] = CANADA_PROVINCES;
+
+  private loadClientFromStorage(): void {
+    const clientData = this.localStorageService.getItem('client');
+    if (clientData) {
+      const client: Client = clientData;
+      this.name = client.name;
+      this.birthdateModel.birthdate = client.birthdate;
+      this.province = client.province;
+      this.annualIncome = client.annualIncome;
+      this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
+    }
+  }
 
   updateClientData(): void {
     this.updateTaxBrackets();
@@ -54,13 +63,14 @@ export class ClientComponent implements OnInit {
       annualIncome: this.annualIncome,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
     };
-    localStorage.setItem('client', JSON.stringify(client));
+    this.localStorageService.setItem('client', client);
   }
 
   private loadSelectedBracket(): void {
-    const selectedTaxBracket = localStorage.getItem('selectedTaxBracket');
+    const selectedTaxBracket =
+      this.localStorageService.getItem('selectedTaxBracket');
     if (selectedTaxBracket) {
-      const storedBracket = JSON.parse(selectedTaxBracket);
+      const storedBracket = selectedTaxBracket;
       this.selectedBracket = this.taxBrackets.find(
         (bracket) => bracket.minIncome === storedBracket.minIncome,
       );
@@ -78,10 +88,11 @@ export class ClientComponent implements OnInit {
       );
     });
   }
+
   saveSelectedBracket() {
-    localStorage.setItem(
+    this.localStorageService.setItem(
       'selectedTaxBracket',
-      JSON.stringify(this.selectedBracket),
+      this.selectedBracket,
     );
   }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Beneficiary {
   name: string;
@@ -16,7 +17,7 @@ export interface Beneficiary {
 export class BeneficiaryComponent {
   beneficiaries: Beneficiary[] = [];
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.loadBeneficiariesFromStorage();
   }
 
@@ -41,11 +42,11 @@ export class BeneficiaryComponent {
   }
 
   private updateStorage(): void {
-    localStorage.setItem('beneficiaries', JSON.stringify(this.beneficiaries));
+    this.localStorageService.setItem('beneficiaries', this.beneficiaries);
   }
 
   private loadBeneficiariesFromStorage(): void {
-    const data = localStorage.getItem('beneficiaries');
-    this.beneficiaries = data ? JSON.parse(data) : [];
+    const data = this.localStorageService.getItem('beneficiaries');
+    this.beneficiaries = data ? data : [];
   }
 }

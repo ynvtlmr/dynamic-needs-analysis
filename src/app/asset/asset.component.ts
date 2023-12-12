@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { LocalStorageService } from '../services/local-storage.service';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
@@ -44,10 +45,11 @@ export class AssetComponent implements OnInit {
   capitalGainsTaxRate: number = 0;
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadCapitalGainsTaxRate();
+    this.loadBeneficiaries();
   }
 
   get currentYearsHeld(): number {
@@ -56,10 +58,10 @@ export class AssetComponent implements OnInit {
   }
 
   private loadCapitalGainsTaxRate(): void {
-    const selectedBracketString = localStorage.getItem('selectedTaxBracket');
+    const selectedBracketString =
+      this.localStorageService.getItem('selectedTaxBracket');
     if (selectedBracketString) {
-      const selectedBracket = JSON.parse(selectedBracketString);
-      this.capitalGainsTaxRate = selectedBracket.taxRate * 0.5;
+      this.capitalGainsTaxRate = selectedBracketString.taxRate * 0.5;
     }
   }
 
@@ -88,10 +90,8 @@ export class AssetComponent implements OnInit {
   }
 
   loadBeneficiaries(): void {
-    const beneficiariesData = localStorage.getItem('beneficiaries');
-    if (beneficiariesData) {
-      this.beneficiaries = JSON.parse(beneficiariesData);
-    }
+    this.beneficiaries =
+      this.localStorageService.getItem('beneficiaries') || [];
   }
 
   updateAllocation(index: number, newAllocation: number): void {

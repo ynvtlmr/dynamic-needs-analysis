@@ -7,11 +7,6 @@ import { Beneficiary } from '../beneficiary/beneficiary.component';
 export class BeneficiaryManagementService {
   constructor() {}
 
-  loadBeneficiaries(): Beneficiary[] {
-    const beneficiariesData = localStorage.getItem('beneficiaries');
-    return beneficiariesData ? JSON.parse(beneficiariesData) : [];
-  }
-
   updateAllocation(
     beneficiaries: Beneficiary[],
     index: number,

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Goal {
   goalName: string;
@@ -17,7 +18,7 @@ export interface Goal {
 export class GoalComponent {
   goals: Goal[] = [];
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     this.loadGoalsFromStorage();
   }
 
@@ -38,11 +39,11 @@ export class GoalComponent {
   }
 
   private updateStorage(): void {
-    localStorage.setItem('goals', JSON.stringify(this.goals));
+    this.localStorageService.setItem('goals', this.goals);
   }
 
   private loadGoalsFromStorage(): void {
-    const data = localStorage.getItem('goals');
-    this.goals = data ? JSON.parse(data) : [];
+    const data = this.localStorageService.getItem('goals');
+    this.goals = data ? data : [];
   }
 }
