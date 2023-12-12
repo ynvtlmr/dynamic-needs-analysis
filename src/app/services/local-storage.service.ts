@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
   // Serialize data before storing
   private serialize(data: any): string {
-    return JSON.stringify(data);
+    return JSON.stringify(data, null, 2);
   }
 
   // Deserialize data when retrieving
