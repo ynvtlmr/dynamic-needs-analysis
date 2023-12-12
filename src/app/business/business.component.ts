@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Shareholder } from './shareholder.model';
-import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../services/local-storage.service';
+import { Shareholder } from './shareholder.model';
 
 export interface Business {
   businessName: string;
@@ -13,9 +13,9 @@ export interface Business {
 }
 
 @Component({
+  imports: [FormsModule, CommonModule],
   selector: 'app-business',
   standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './business.component.html',
 })
 export class BusinessComponent implements OnInit {
@@ -55,10 +55,10 @@ export class BusinessComponent implements OnInit {
   private updateStorage(): void {
     const business: Business = {
       businessName: this.businessName,
-      valuation: this.valuation,
       rate: this.rate,
-      term: this.term,
       shareholders: this.shareholders,
+      term: this.term,
+      valuation: this.valuation,
     };
     this.localStorageService.setItem('business', business);
   }

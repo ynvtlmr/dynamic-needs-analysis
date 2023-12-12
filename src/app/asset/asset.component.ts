@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { Beneficiary } from '../beneficiary/beneficiary.component';
-import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { LocalStorageService } from '../services/local-storage.service';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Beneficiary } from '../beneficiary/beneficiary.component';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
 } from '../constants/asset-types.constant';
+import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Asset {
   name: string;
@@ -16,6 +16,7 @@ export interface Asset {
   rate: number;
   term: number;
   type: string;
+
   isTaxable: boolean;
   isLiquid: boolean;
   isToBeSold: boolean;
@@ -25,10 +26,10 @@ export interface Asset {
 }
 
 @Component({
-  selector: 'app-asset',
-  templateUrl: './asset.component.html',
-  standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
+  selector: 'app-asset',
+  standalone: true,
+  templateUrl: './asset.component.html',
 })
 export class AssetComponent implements OnInit {
   name: string = '';
@@ -83,7 +84,7 @@ export class AssetComponent implements OnInit {
   }
 
   onTypeChange(selectedType: string): void {
-    const typeInfo: FinTypeAttributes | undefined =
+    const typeInfo: undefined | FinTypeAttributes =
       FIN_INSTR_TYPES.get(selectedType);
     this.isTaxable = typeInfo ? typeInfo.taxable : false;
     this.isLiquid = typeInfo ? typeInfo.liquid : false;

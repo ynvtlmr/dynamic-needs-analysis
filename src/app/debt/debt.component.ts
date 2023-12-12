@@ -1,6 +1,6 @@
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, DecimalPipe } from '@angular/common';
 
 export interface Debt {
   name: string;
@@ -12,10 +12,10 @@ export interface Debt {
 }
 
 @Component({
-  selector: 'app-debt',
-  templateUrl: './debt.component.html',
-  standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
+  selector: 'app-debt',
+  standalone: true,
+  templateUrl: './debt.component.html',
 })
 export class DebtComponent implements OnInit {
   name: string = '';

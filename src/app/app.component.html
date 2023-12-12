@@ -1,13 +1,13 @@
 <!-- Save app state -->
 <button (click)="clearAllLocalStorage()">Clear All</button>
 <button (click)="downloadLocalStorageAsFile()">Download</button>
-<input type="file" (change)="loadLocalStorageFromFile($event)" />
+<input (change)="loadLocalStorageFromFile($event)" type="file" />
 <br />
 <!-- Navigation -->
 <button
+  (click)="selectedTab = link.path"
   *ngFor="let link of navLinks"
   [class.active]="selectedTab === link.path"
-  (click)="selectedTab = link.path"
   [routerLink]="link.path"
 >
   {{ link.label }}

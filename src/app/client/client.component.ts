@@ -1,10 +1,10 @@
+import { NgForOf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
-import { NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../services/local-storage.service';
+import { Birthdate } from './birthdate.model';
 
 export interface Client {
   name: string;
@@ -15,14 +15,14 @@ export interface Client {
 }
 
 @Component({
-  selector: 'app-client',
-  templateUrl: './client.component.html',
-  standalone: true,
   imports: [FormsModule, NgForOf],
+  selector: 'app-client',
+  standalone: true,
+  templateUrl: './client.component.html',
 })
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
-  selectedBracket: TaxBracket | undefined;
+  selectedBracket: undefined | TaxBracket;
   birthdateModel: Birthdate = new Birthdate(
     this.localStorageService.getItem('birthdate'),
   );
@@ -57,11 +57,11 @@ export class ClientComponent implements OnInit {
     this.updateTaxBrackets();
     this.saveSelectedBracket();
     const client: Client = {
-      name: this.name,
-      birthdate: this.birthdateModel.birthdate,
-      province: this.province,
       annualIncome: this.annualIncome,
+      birthdate: this.birthdateModel.birthdate,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
+      name: this.name,
+      province: this.province,
     };
     this.localStorageService.setItem('client', client);
   }
@@ -96,7 +96,7 @@ export class ClientComponent implements OnInit {
     );
   }
 
-  updateBirthdateAndMultiplier(newBirthdate: string | null): void {
+  updateBirthdateAndMultiplier(newBirthdate: null | string): void {
     this.birthdateModel.birthdate = newBirthdate;
     // Update incomeReplacementMultiplier based on the new years to retirement
     this.incomeReplacementMultiplier = this.birthdateModel.yearsToRetirement;

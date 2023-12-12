@@ -1,7 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { AssetComponent } from './asset.component';
-import { CommonModule } from '@angular/common';
 
 describe('AssetComponent', () => {
   let component: AssetComponent;

@@ -1,6 +1,6 @@
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { CommonModule, DecimalPipe } from '@angular/common';
 import { DebtComponent } from './debt.component';
 
 describe('DebtComponent', () => {

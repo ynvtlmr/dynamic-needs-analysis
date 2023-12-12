@@ -9,7 +9,7 @@
   <tr>
     <td><label for="type">Type:</label></td>
     <td>
-      <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
+      <select (change)="onTypeChange(type)" [(ngModel)]="type" id="type">
         <option *ngFor="let type of financialInstrumentTypes" [value]="type">
           {{ type }}
         </option>
@@ -23,7 +23,7 @@
       <label for="financialInstrumentName">Asset Name:</label>
     </td>
     <td>
-      <input id="financialInstrumentName" [(ngModel)]="name" type="text" />
+      <input [(ngModel)]="name" id="financialInstrumentName" type="text" />
     </td>
   </tr>
 
@@ -31,7 +31,7 @@
   <tr>
     <td><label for="yearAcquired">Year Acquired:</label></td>
     <td>
-      <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number" />
+      <input [(ngModel)]="yearAcquired" id="yearAcquired" type="number" />
     </td>
   </tr>
 
@@ -39,7 +39,7 @@
   <tr>
     <td><label for="initialValue">Initial Value:</label></td>
     <td>
-      <input id="initialValue" [(ngModel)]="initialValue" type="number" />
+      <input [(ngModel)]="initialValue" id="initialValue" type="number" />
     </td>
   </tr>
 
@@ -47,35 +47,35 @@
   <tr>
     <td><label for="currentValue">Current Value:</label></td>
     <td>
-      <input id="currentValue" [(ngModel)]="currentValue" type="number" />
+      <input [(ngModel)]="currentValue" id="currentValue" type="number" />
     </td>
   </tr>
 
   <!-- Rate -->
   <tr>
     <td><label for="rate">Rate:</label></td>
-    <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
+    <td><input [(ngModel)]="rate" id="rate" type="number" /></td>
   </tr>
 
   <!-- Term -->
   <tr>
     <td><label for="term">Term:</label></td>
-    <td><input id="term" [(ngModel)]="term" type="number" /></td>
+    <td><input [(ngModel)]="term" id="term" type="number" /></td>
   </tr>
 
   <!-- Additional Attributes -->
   <tr>
     <td><label for="isTaxable">Taxable:</label></td>
-    <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox" /></td>
+    <td><input [(ngModel)]="isTaxable" id="isTaxable" type="checkbox" /></td>
   </tr>
   <tr>
     <td><label for="isLiquid">Liquid:</label></td>
-    <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox" /></td>
+    <td><input [(ngModel)]="isLiquid" id="isLiquid" type="checkbox" /></td>
   </tr>
   <tr>
     <td><label for="isToBeSold">To Be Sold:</label></td>
     <td>
-      <input id="isToBeSold" [(ngModel)]="isToBeSold" type="checkbox" />
+      <input [(ngModel)]="isToBeSold" id="isToBeSold" type="checkbox" />
     </td>
   </tr>
 
@@ -92,9 +92,9 @@
       <td>{{ beneficiary.name }}</td>
       <td>
         <input
-          type="number"
-          [(ngModel)]="beneficiary.allocation"
           (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
+          [(ngModel)]="beneficiary.allocation"
+          type="number"
         />
       </td>
     </tr>

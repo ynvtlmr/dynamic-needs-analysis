@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -9,16 +9,16 @@ import {
 import { LocalStorageService } from './services/local-storage.service';
 
 interface NavLink {
-  path: string;
   label: string;
+  path: string;
 }
 
 @Component({
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
-  templateUrl: './app.component.html',
   styleUrl: './app.component.css',
+  templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'dynamic-needs-analysis';
@@ -42,11 +42,11 @@ export class AppComponent {
   }
 
   navLinks: NavLink[] = [
-    { path: 'client', label: 'Client' },
-    { path: 'beneficiaries', label: 'Beneficiaries' },
-    { path: 'business', label: 'Business' },
-    { path: 'goal', label: 'Goal' },
-    { path: 'asset', label: 'Asset' },
-    { path: 'debt', label: 'Debt' },
+    { label: 'Client', path: 'client' },
+    { label: 'Beneficiaries', path: 'beneficiaries' },
+    { label: 'Business', path: 'business' },
+    { label: 'Goal', path: 'goal' },
+    { label: 'Asset', path: 'asset' },
+    { label: 'Debt', path: 'debt' },
   ];
 }

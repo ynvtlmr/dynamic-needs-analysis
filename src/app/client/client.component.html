@@ -5,9 +5,9 @@
       <td><label for="name">Name:</label></td>
       <td>
         <input
-          id="name"
-          [(ngModel)]="name"
           (ngModelChange)="updateClientData()"
+          [(ngModel)]="name"
+          id="name"
           type="text"
         />
       </td>
@@ -18,10 +18,10 @@
       <td><label for="birthdate">Birthdate:</label></td>
       <td>
         <input
-          type="date"
-          id="birthdate"
-          [(ngModel)]="birthdateModel.birthdate"
           (ngModelChange)="updateBirthdateAndMultiplier($event)"
+          [(ngModel)]="birthdateModel.birthdate"
+          id="birthdate"
+          type="date"
         />
       </td>
     </tr>
@@ -38,8 +38,8 @@
       <td><label for="province">Province:</label></td>
       <td>
         <select
-          [(ngModel)]="province"
           (ngModelChange)="updateClientData()"
+          [(ngModel)]="province"
           id="province"
         >
           <option *ngFor="let prov of provinces" [ngValue]="prov">
@@ -52,9 +52,9 @@
       <td><label for="annualIncome">Annual Income:</label></td>
       <td>
         <input
-          id="annualIncome"
-          [(ngModel)]="annualIncome"
           (ngModelChange)="updateClientData()"
+          [(ngModel)]="annualIncome"
+          id="annualIncome"
           type="number"
         />
       </td>
@@ -67,9 +67,9 @@
       </td>
       <td>
         <input
-          id="incomeReplacementMultiplier"
-          [(ngModel)]="incomeReplacementMultiplier"
           (ngModelChange)="updateClientData()"
+          [(ngModel)]="incomeReplacementMultiplier"
+          id="incomeReplacementMultiplier"
           type="number"
         />
       </td>
@@ -78,9 +78,9 @@
       <td><label for="taxBracket">Tax Bracket:</label></td>
       <td>
         <select
-          id="taxBracket"
-          [(ngModel)]="selectedBracket"
           (ngModelChange)="saveSelectedBracket()"
+          [(ngModel)]="selectedBracket"
+          id="taxBracket"
         >
           <option
             *ngFor="let bracket of taxBrackets; let i = index"

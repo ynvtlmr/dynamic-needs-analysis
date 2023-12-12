@@ -9,22 +9,22 @@
     <tr *ngFor="let goal of goals; let i = index">
       <td>
         <input
-          [(ngModel)]="goal.goalName"
           (ngModelChange)="onGoalChange()"
+          [(ngModel)]="goal.goalName"
           type="text"
         />
       </td>
       <td>
         <input
-          [(ngModel)]="goal.dollarAmount"
           (ngModelChange)="onGoalChange()"
+          [(ngModel)]="goal.dollarAmount"
           type="number"
         />
       </td>
       <td>
         <input
-          [(ngModel)]="goal.isPhilanthropic"
           (ngModelChange)="onGoalChange()"
+          [(ngModel)]="goal.isPhilanthropic"
           type="checkbox"
         />
       </td>

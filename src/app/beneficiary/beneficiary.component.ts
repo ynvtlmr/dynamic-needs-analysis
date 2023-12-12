@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Beneficiary {
@@ -9,9 +9,9 @@ export interface Beneficiary {
 }
 
 @Component({
+  imports: [FormsModule, CommonModule],
   selector: 'app-beneficiary',
   standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './beneficiary.component.html',
 })
 export class BeneficiaryComponent {
@@ -29,7 +29,7 @@ export class BeneficiaryComponent {
   }
 
   addBeneficiary(): void {
-    this.beneficiaries.push({ name: '', allocation: 0 });
+    this.beneficiaries.push({ allocation: 0, name: '' });
   }
 
   deleteBeneficiary(index: number): void {

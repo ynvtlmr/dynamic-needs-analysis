@@ -8,15 +8,15 @@
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>
         <input
-          [(ngModel)]="beneficiary.name"
           (ngModelChange)="onBeneficiaryChange()"
+          [(ngModel)]="beneficiary.name"
           type="text"
         />
       </td>
       <td>
         <input
-          [(ngModel)]="beneficiary.allocation"
           (ngModelChange)="onBeneficiaryChange()"
+          [(ngModel)]="beneficiary.allocation"
           type="number"
         />
       </td>

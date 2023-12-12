@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface Goal {
@@ -10,9 +10,9 @@ export interface Goal {
 }
 
 @Component({
+  imports: [FormsModule, CommonModule],
   selector: 'app-goal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
   templateUrl: './goal.component.html',
 })
 export class GoalComponent {
@@ -23,7 +23,7 @@ export class GoalComponent {
   }
 
   addEmptyGoal(): void {
-    this.goals.push({ goalName: '', dollarAmount: 0, isPhilanthropic: false });
+    this.goals.push({ dollarAmount: 0, goalName: '', isPhilanthropic: false });
   }
 
   deleteGoal(index: number): void {

@@ -9,7 +9,7 @@ describe('BeneficiaryManagementService', () => {
     service = TestBed.inject(BeneficiaryManagementService);
     spyOn(localStorage, 'getItem').and.callFake((key: string) => {
       if (key === 'beneficiaries') {
-        return JSON.stringify([{ name: 'John Doe', allocation: 50 }]);
+        return JSON.stringify([{ allocation: 50, name: 'John Doe' }]);
       }
       return null;
     });
@@ -27,15 +27,15 @@ describe('BeneficiaryManagementService', () => {
   });
 
   it('should update allocation of a beneficiary', () => {
-    const beneficiaries = [{ name: 'John Doe', allocation: 50 }];
+    const beneficiaries = [{ allocation: 50, name: 'John Doe' }];
     service.updateAllocation(beneficiaries, 0, 60);
     expect(beneficiaries[0].allocation).toBe(60);
   });
 
   it('should calculate total allocations correctly', () => {
     const beneficiaries = [
-      { name: 'John Doe', allocation: 50 },
-      { name: 'Jane Doe', allocation: 30 },
+      { allocation: 50, name: 'John Doe' },
+      { allocation: 30, name: 'Jane Doe' },
     ];
     const total = service.getTotalAllocations(beneficiaries);
     expect(total).toBe(80);
