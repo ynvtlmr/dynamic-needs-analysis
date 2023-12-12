@@ -22,20 +22,17 @@ export class GoalComponent {
     this.loadGoalsFromStorage();
   }
 
-  addGoal(name: string, amount: number, isPhilanthropic: boolean): void {
-    if (name) {
-      this.goals.push({
-        goalName: name,
-        dollarAmount: amount,
-        isPhilanthropic: isPhilanthropic,
-      });
-      this.updateStorage();
-    }
+  addEmptyGoal(): void {
+    this.goals.push({ goalName: '', dollarAmount: 0, isPhilanthropic: false });
   }
 
   deleteGoal(index: number): void {
     this.goals.splice(index, 1);
     this.updateStorage();
+  }
+
+  onGoalChange(): void {
+    this.updateStorage(); // Update localStorage whenever there's a change
   }
 
   private updateStorage(): void {

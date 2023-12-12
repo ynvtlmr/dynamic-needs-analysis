@@ -7,31 +7,34 @@
       <th></th>
     </tr>
     <tr *ngFor="let goal of goals; let i = index">
-      <td><input [(ngModel)]="goal.goalName" type="text" /></td>
-      <td><input [(ngModel)]="goal.dollarAmount" type="number" /></td>
-      <td><input [(ngModel)]="goal.isPhilanthropic" type="checkbox" /></td>
+      <td>
+        <input
+          [(ngModel)]="goal.goalName"
+          (ngModelChange)="onGoalChange()"
+          type="text"
+        />
+      </td>
+      <td>
+        <input
+          [(ngModel)]="goal.dollarAmount"
+          (ngModelChange)="onGoalChange()"
+          type="number"
+        />
+      </td>
+      <td>
+        <input
+          [(ngModel)]="goal.isPhilanthropic"
+          (ngModelChange)="onGoalChange()"
+          type="checkbox"
+        />
+      </td>
       <td>
         <button (click)="deleteGoal(i)">Delete</button>
       </td>
     </tr>
     <tr>
-      <td><input #goalNameInput type="text" placeholder="Goal Name" /></td>
-      <td><input #goalAmountInput type="number" placeholder="Amount" /></td>
-      <td>
-        <input #goalIsPhilanthropicInput type="checkbox" />
-      </td>
-      <td>
-        <button
-          (click)="
-            addGoal(
-              goalNameInput.value,
-              goalAmountInput.valueAsNumber,
-              goalIsPhilanthropicInput.checked
-            )
-          "
-        >
-          Add
-        </button>
+      <td colspan="4">
+        <button (click)="addEmptyGoal()">Add New Goal</button>
       </td>
     </tr>
   </table>
