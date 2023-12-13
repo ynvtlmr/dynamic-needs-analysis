@@ -72,7 +72,7 @@ export class AssetComponent implements OnInit {
     }
 
     const selectedTaxBracket =
-      this.localStorageService.getItem('selectedTaxBracket');
+      this.localStorageService.getItem('client')?.selectedBracket;
     if (selectedTaxBracket) {
       const storedBracket = selectedTaxBracket;
       this.selectedBracket = this.taxBrackets.find(
@@ -88,7 +88,7 @@ export class AssetComponent implements OnInit {
 
   private loadCapitalGainsTaxRate(): void {
     const selectedBracketString =
-      this.localStorageService.getItem('selectedTaxBracket');
+      this.localStorageService.getItem('client')?.selectedBracket;
     if (selectedBracketString) {
       this.capitalGainsTaxRate = selectedBracketString.taxRate * 0.5;
     }

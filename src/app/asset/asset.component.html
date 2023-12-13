@@ -1,17 +1,4 @@
 <table>
-  <!-- Capital Gains Tax Rate -->
-  <tr>
-    <td><label for="taxBracket">Capital Gains Tax Rate:</label></td>
-    <td>
-      <select id="taxBracket" [(ngModel)]="selectedBracket">
-        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
-          ${{ bracket.minIncome }} and up - {{ bracket.taxRate / 2 }}%
-        </option>
-      </select>
-    </td>
-  </tr>
-
-
   <!-- Type -->
   <tr>
     <td><label for="type">Type:</label></td>
@@ -73,6 +60,18 @@
   <tr>
     <td><label for="term">Term (years):</label></td>
     <td><input [(ngModel)]="term" id="term" type="number" /></td>
+  </tr>
+
+  <!-- Capital Gains Tax Rate -->
+  <tr>
+    <td><label for="taxBracket">Capital Gains Tax Rate:</label></td>
+    <td>
+      <select id="taxBracket" [(ngModel)]="selectedBracket">
+        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
+          ${{ bracket.minIncome }} and up - {{ bracket.taxRate / 2 }}%
+        </option>
+      </select>
+    </td>
   </tr>
 
   <!-- Additional Attributes -->

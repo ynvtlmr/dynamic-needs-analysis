@@ -12,6 +12,7 @@ export interface Client {
   annualIncome: number;
   incomeReplacementMultiplier: number;
   birthdate?: string | null;
+  selectedBracket: TaxBracket | undefined;
 }
 
 @Component({
@@ -31,7 +32,7 @@ export class ClientComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadClientFromStorage();
-    this.updateTaxBrackets();
+    this.updateTaxBracketsUsingIncome();
     this.loadSelectedBracket();
   }
   name: string = '';
@@ -50,38 +51,47 @@ export class ClientComponent implements OnInit {
       this.province = client.province;
       this.annualIncome = client.annualIncome;
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
+      this.selectedBracket = client.selectedBracket;
     }
   }
 
   forceIncomeUpdate(newIncome: number): void {
     this.annualIncome = newIncome;
     this.updateClientData();
+    this.updateTaxBracketsUsingIncome();
+    this.saveSelectedBracket();
+  }
+  updateNameManually(newName: string): void {
+    this.name = newName;
+    this.updateClientData();
+  }
+  updateMultiplierManually(newMultiplier: number): void {
+    this.incomeReplacementMultiplier = newMultiplier;
+    this.updateClientData();
   }
   updateClientData(): void {
-    this.updateTaxBrackets();
-    this.saveSelectedBracket();
     const client: Client = {
       annualIncome: this.annualIncome,
       birthdate: this.birthdateModel.birthdate,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
       name: this.name,
       province: this.province,
+      selectedBracket: this.selectedBracket,
     };
     this.localStorageService.setItem('client', client);
   }
 
   private loadSelectedBracket(): void {
     const selectedTaxBracket =
-      this.localStorageService.getItem('selectedTaxBracket');
+      this.localStorageService.getItem('client')?.selectedBracket;
     if (selectedTaxBracket) {
-      const storedBracket = selectedTaxBracket;
       this.selectedBracket = this.taxBrackets.find(
-        (bracket) => bracket.minIncome === storedBracket.minIncome,
+        (bracket) => bracket.minIncome === selectedTaxBracket.minIncome,
       );
     }
   }
 
-  private updateTaxBrackets(): void {
+  private updateTaxBracketsUsingIncome(): void {
     const year = new Date().getFullYear(); // or a specific year if required
     this.taxBrackets = TAX_BRACKETS[year]?.[this.province.toUpperCase()] || [];
     this.selectedBracket = this.taxBrackets.find((bracket, index, array) => {
@@ -93,11 +103,17 @@ export class ClientComponent implements OnInit {
     });
   }
 
-  saveSelectedBracket() {
-    this.localStorageService.setItem(
-      'selectedTaxBracket',
-      this.selectedBracket,
-    );
+  saveManualBracket(bracket: TaxBracket): void {
+    this.selectedBracket = bracket;
+    this.saveSelectedBracket();
+  }
+  saveSelectedBracket(): void {
+    // Retrieve the entire client object from localStorage
+    const client: Client = this.localStorageService.getItem('client');
+    client.selectedBracket = this.selectedBracket;
+    this.localStorageService.setItem('client', client);
+    console.log(this.selectedBracket)
+    console.log(client.selectedBracket)
   }
 
   updateBirthdateAndMultiplier(newBirthdate: null | string): void {

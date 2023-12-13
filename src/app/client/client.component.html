@@ -5,7 +5,7 @@
       <td><label for="name">Name:</label></td>
       <td>
         <input
-          (ngModelChange)="updateClientData()"
+          (ngModelChange)="updateNameManually($event)"
           [(ngModel)]="name"
           id="name"
           type="text"
@@ -68,7 +68,7 @@
       </td>
       <td>
         <input
-          (ngModelChange)="updateClientData()"
+          (ngModelChange)="updateMultiplierManually($event)"
           [(ngModel)]="incomeReplacementMultiplier"
           id="incomeReplacementMultiplier"
           type="number"
@@ -79,7 +79,7 @@
       <td><label for="taxBracket">Tax Bracket:</label></td>
       <td>
         <select
-          (ngModelChange)="saveSelectedBracket()"
+          (ngModelChange)="saveManualBracket($event)"
           [(ngModel)]="selectedBracket"
           id="taxBracket"
         >
