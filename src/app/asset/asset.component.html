@@ -88,19 +88,23 @@
   <tr>
     <td colspan="2">
       <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
+      <button (click)="clearBeneficiaries()">Clear All Beneficiaries</button>
     </td>
   </tr>
 
   <!-- Beneficiaries Table -->
   <ng-container *ngIf="beneficiaries.length > 0">
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
-      <td>{{ beneficiary.name }}</td>
+      <td><input type="text" [(ngModel)]="beneficiary.name"></td>
       <td>
         <input
           type="number"
           [(ngModel)]="beneficiary.allocation"
           (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
         />
+      </td>
+      <td>
+        <button (click)="deleteBeneficiary(i)">Delete</button>
       </td>
     </tr>
     <tr>

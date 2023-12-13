@@ -49,7 +49,6 @@ export class AssetComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCapitalGainsTaxRate();
-    this.loadBeneficiaries();
   }
 
   get currentYearsHeld(): number {
@@ -90,8 +89,24 @@ export class AssetComponent implements OnInit {
   }
 
   loadBeneficiaries(): void {
-    this.beneficiaries =
-      this.localStorageService.getItem('beneficiaries') || [];
+    if (this.beneficiaries.length > 0) {
+      let emptyBeneficiary: Beneficiary = {
+        name: '',
+        allocation: 0,
+      };
+      this.beneficiaries.push(emptyBeneficiary);
+    } else {
+      this.beneficiaries =
+        this.localStorageService.getItem('beneficiaries') || [];
+    }
+  }
+
+  deleteBeneficiary(index: number): void {
+    this.beneficiaries.splice(index, 1);
+  }
+
+  clearBeneficiaries(): void {
+    this.beneficiaries = [];
   }
 
   updateAllocation(index: number, newAllocation: number): void {
