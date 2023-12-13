@@ -3,19 +3,24 @@
     <tr>
       <td><label for="businessName">Business Name:</label></td>
       <td>
-        <input id="businessName" [(ngModel)]="businessName" type="text" />
+        <input
+          id="businessName"
+          [(ngModel)]="businessName"
+          type="text"
+          placeholder="Widgets Co."
+        />
       </td>
     </tr>
     <tr>
-      <td><label for="valuation">Valuation:</label></td>
+      <td><label for="valuation">Valuation ($):</label></td>
       <td><input id="valuation" [(ngModel)]="valuation" type="number" /></td>
     </tr>
     <tr>
-      <td><label for="rate">Rate:</label></td>
+      <td><label for="rate">Appreciation Rate (%):</label></td>
       <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
     </tr>
     <tr>
-      <td><label for="term">Term:</label></td>
+      <td><label for="term">Term (years):</label></td>
       <td><input id="term" [(ngModel)]="term" type="number" /></td>
     </tr>
   </table>
@@ -24,11 +29,11 @@
   <table>
     <tr>
       <th>Name</th>
-      <th>Share Percentage</th>
-      <th>Insurance Coverage</th>
+      <th>Share Percentage (%)</th>
+      <th>Insurance Coverage ($)</th>
       <th>Actions</th>
-      <th>Share Value</th>
-      <th>Liquidation Disparity</th>
+      <th>Share Value ($)</th>
+      <th>Liquidation Disparity ($)</th>
     </tr>
     <tr *ngFor="let shareholder of shareholders; let i = index">
       <td>
@@ -69,19 +74,19 @@
 
   <table>
     <tr>
-      <td>Total Shareholder Percentage Owned:</td>
+      <td>Total Shareholder Percentage Owned (%):</td>
       <td>{{ totalMajorShareholderPercentage | number: "1.2-2" }}</td>
     </tr>
     <tr>
-      <td>Total Major Shareholder Value:</td>
+      <td>Total Major Shareholder Value ($):</td>
       <td>{{ totalMajorShareholderValue | number: "1.2-2" }}</td>
     </tr>
     <tr>
-      <td>Total Major Shareholder Insurance:</td>
+      <td>Total Major Shareholder Insurance ($):</td>
       <td>{{ totalMajorShareholderInsurance | number: "1.2-2" }}</td>
     </tr>
     <tr>
-      <td>Total Major Shareholder Disparity:</td>
+      <td>Total Major Shareholder Disparity ($):</td>
       <td>{{ totalMajorShareholderDisparity | number: "1.2-2" }}</td>
     </tr>
   </table>

@@ -2,7 +2,7 @@
   <table>
     <tr>
       <th>Name</th>
-      <th>Amount</th>
+      <th>Amount ($)</th>
       <th>Philanthropic</th>
       <th></th>
     </tr>
@@ -12,6 +12,7 @@
           [(ngModel)]="goal.goalName"
           (ngModelChange)="onGoalChange()"
           type="text"
+          placeholder="Red Cross"
         />
       </td>
       <td>

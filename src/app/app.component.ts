@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
   RouterLink,
   RouterLinkActive,
   RouterOutlet,
+  NavigationEnd,
 } from '@angular/router';
 import { LocalStorageService } from './services/local-storage.service';
 
@@ -27,7 +28,21 @@ export class AppComponent {
   constructor(
     private localStorageService: LocalStorageService,
     private router: Router,
-  ) {}
+  ) {
+    this.selectedTab = localStorageService.getItem('selectedTab') || 'client';
+  }
+
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Extract the path and set the selectedTab
+        const currentPath = event.urlAfterRedirects.split('/')[1];
+        this.selectedTab = currentPath;
+        // Optionally save the selectedTab to localStorage
+        this.localStorageService.setItem('selectedTab', currentPath);
+      }
+    });
+  }
 
   clearAllLocalStorage() {
     this.localStorageService.clearAll();

@@ -23,7 +23,12 @@
       <label for="financialInstrumentName">Asset Name:</label>
     </td>
     <td>
-      <input id="financialInstrumentName" [(ngModel)]="name" type="text" />
+      <input
+        id="financialInstrumentName"
+        [(ngModel)]="name"
+        type="text"
+        placeholder="AAPL Stocks"
+      />
     </td>
   </tr>
 
@@ -37,7 +42,7 @@
 
   <!-- Initial Value -->
   <tr>
-    <td><label for="initialValue">Initial Value:</label></td>
+    <td><label for="initialValue">Initial Value ($):</label></td>
     <td>
       <input id="initialValue" [(ngModel)]="initialValue" type="number" />
     </td>
@@ -45,7 +50,7 @@
 
   <!-- Current Value -->
   <tr>
-    <td><label for="currentValue">Current Value:</label></td>
+    <td><label for="currentValue">Current Value ($):</label></td>
     <td>
       <input id="currentValue" [(ngModel)]="currentValue" type="number" />
     </td>
@@ -53,13 +58,13 @@
 
   <!-- Rate -->
   <tr>
-    <td><label for="rate">Rate:</label></td>
+    <td><label for="rate">Appreciation Rate (%):</label></td>
     <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
   </tr>
 
   <!-- Term -->
   <tr>
-    <td><label for="term">Term:</label></td>
+    <td><label for="term">Term (years):</label></td>
     <td><input id="term" [(ngModel)]="term" type="number" /></td>
   </tr>
 
