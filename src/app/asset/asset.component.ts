@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../services/local-storage.service';
 import {
   FIN_INSTR_TYPES,
@@ -19,7 +20,7 @@ export interface Asset {
   isTaxable: boolean;
   isLiquid: boolean;
   isToBeSold: boolean;
-  capitalGainsTaxRate: number;
+  selectedTaxBracket: number;
   financialInstrumentTypes: string[];
   beneficiaries: Beneficiary[];
 }
@@ -42,13 +43,16 @@ export class AssetComponent implements OnInit {
   isLiquid: boolean = false;
   isToBeSold: boolean = false;
   beneficiaries: Beneficiary[] = [];
+  selectedTaxBracket: TaxBracket | undefined;
+
   capitalGainsTaxRate: number = 0;
+  taxBrackets: TaxBracket[] = [];
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.loadCapitalGainsTaxRate();
+    this.loadClientTaxBracket();
   }
 
   get currentYearsHeld(): number {
@@ -56,11 +60,23 @@ export class AssetComponent implements OnInit {
     return currentYear - this.yearAcquired;
   }
 
-  private loadCapitalGainsTaxRate(): void {
-    const selectedBracketString =
-      this.localStorageService.getItem('client')?.selectedBracket;
-    if (selectedBracketString) {
-      this.capitalGainsTaxRate = selectedBracketString.taxRate * 0.5;
+  private loadClientTaxBracket(): void {
+    const clientData = this.localStorageService.getItem('client');
+    if (clientData?.selectedBracket) {
+      const clientBracketMinIncome = clientData.selectedBracket.minIncome;
+      this.taxBrackets = TAX_BRACKETS[new Date().getFullYear()]?.[clientData.province.toUpperCase()] || [];
+      this.selectedTaxBracket = this.taxBrackets.find(
+        (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
+      );
+    }
+  }
+
+  updateSelectedTaxBracket(): void {
+    if (this.selectedTaxBracket) {
+      this.capitalGainsTaxRate = this.selectedTaxBracket.taxRate * 0.5;
+      // Other logic to handle the change, like updating localStorage
+    } else {
+      this.capitalGainsTaxRate = 0;
     }
   }
 
