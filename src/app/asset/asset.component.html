@@ -3,7 +3,11 @@
   <tr>
     <td><label for="taxBracket">Tax Bracket:</label></td>
     <td>
-      <select id="taxBracket" [(ngModel)]="selectedTaxBracket" (ngModelChange)="updateSelectedTaxBracket()">
+      <select
+        id="taxBracket"
+        [(ngModel)]="selectedTaxBracket"
+        (ngModelChange)="updateSelectedTaxBracket()"
+      >
         <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
           ${{ bracket.minIncome }} and up - {{ bracket.taxRate * 0.5 }}%
         </option>
@@ -101,7 +105,7 @@
   <!-- Beneficiaries Table -->
   <ng-container *ngIf="beneficiaries.length > 0">
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
-      <td><input type="text" [(ngModel)]="beneficiary.name"></td>
+      <td><input type="text" [(ngModel)]="beneficiary.name" /></td>
       <td>
         <input
           type="number"

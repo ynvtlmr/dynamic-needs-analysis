@@ -64,7 +64,10 @@ export class AssetComponent implements OnInit {
     const clientData = this.localStorageService.getItem('client');
     if (clientData?.selectedBracket) {
       const clientBracketMinIncome = clientData.selectedBracket.minIncome;
-      this.taxBrackets = TAX_BRACKETS[new Date().getFullYear()]?.[clientData.province.toUpperCase()] || [];
+      this.taxBrackets =
+        TAX_BRACKETS[new Date().getFullYear()]?.[
+          clientData.province.toUpperCase()
+        ] || [];
       this.selectedTaxBracket = this.taxBrackets.find(
         (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
       );
