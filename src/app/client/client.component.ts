@@ -12,6 +12,7 @@ export interface Client {
   annualIncome: number;
   incomeReplacementMultiplier: number;
   birthdate?: string | null;
+  selectedBracket?: TaxBracket | undefined;
 }
 
 @Component({
@@ -22,7 +23,6 @@ export interface Client {
 })
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
-  selectedBracket: TaxBracket | undefined;
   birthdateModel: Birthdate = new Birthdate(
     this.localStorageService.getItem('birthdate'),
   );
@@ -40,6 +40,7 @@ export class ClientComponent implements OnInit {
   annualIncome: number = 0;
   incomeReplacementMultiplier: number = 1;
   provinces: string[] = CANADA_PROVINCES;
+  selectedBracket: TaxBracket | undefined;
 
   private loadClientFromStorage(): void {
     const clientData = this.localStorageService.getItem('client');
@@ -50,6 +51,7 @@ export class ClientComponent implements OnInit {
       this.province = client.province;
       this.annualIncome = client.annualIncome;
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
+      this.selectedBracket = client.selectedBracket;
     }
   }
 
@@ -62,17 +64,18 @@ export class ClientComponent implements OnInit {
       province: this.province,
       annualIncome: this.annualIncome,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
+      selectedBracket: this.selectedBracket,
     };
     this.localStorageService.setItem('client', client);
   }
 
   private loadSelectedBracket(): void {
     const selectedTaxBracket =
-      this.localStorageService.getItem('selectedTaxBracket');
+      this.localStorageService.getItem('client').selectedBracket;
     if (selectedTaxBracket) {
       const storedBracket = selectedTaxBracket;
       this.selectedBracket = this.taxBrackets.find(
-        (bracket) => bracket.minIncome === storedBracket.minIncome,
+        (bracket: TaxBracket) => bracket.minIncome === storedBracket.minIncome,
       );
     }
   }
@@ -90,10 +93,10 @@ export class ClientComponent implements OnInit {
   }
 
   saveSelectedBracket() {
-    this.localStorageService.setItem(
-      'selectedTaxBracket',
-      this.selectedBracket,
-    );
+    this.localStorageService.setItem('client', {
+      ...this.localStorageService.getItem('client'),
+      selectedBracket: this.selectedBracket,
+    });
   }
 
   updateBirthdateAndMultiplier(newBirthdate: string | null): void {

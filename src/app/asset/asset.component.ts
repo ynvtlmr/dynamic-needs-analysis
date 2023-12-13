@@ -58,7 +58,7 @@ export class AssetComponent implements OnInit {
 
   private loadCapitalGainsTaxRate(): void {
     const selectedBracketString =
-      this.localStorageService.getItem('selectedTaxBracket');
+      this.localStorageService.getItem('client')?.selectedBracket;
     if (selectedBracketString) {
       this.capitalGainsTaxRate = selectedBracketString.taxRate * 0.5;
     }
