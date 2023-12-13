@@ -39,7 +39,12 @@ export class BusinessComponent implements OnInit {
   }
 
   addEmptyShareholder(): void {
-    this.shareholders.push(new Shareholder('', 0, 0));
+    if (this.shareholders.length === 0) {
+      const clientName = this.localStorageService.getItem('client').name;
+      this.shareholders.push(new Shareholder(clientName, 0, 0));
+    } else {
+      this.shareholders.push(new Shareholder('', 0, 0));
+    }
   }
 
   // Delete a shareholder by index
