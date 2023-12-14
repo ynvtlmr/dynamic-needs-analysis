@@ -1,0 +1,29 @@
+<div>
+  <table>
+    <!-- Table headings -->
+    <tr>
+      <th>Name</th>
+      <th>Current Value ($)</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <!-- Loop through assets -->
+    <tr *ngFor="let asset of assets; let i = index">
+      <td>{{ asset.name }}</td>
+      <td>{{ asset.currentValue | currency }}</td>
+      <td><button (click)="editAsset(i)">Edit</button></td>
+      <td><button (click)="deleteAsset(i)">Delete</button></td>
+    </tr>
+  </table>
+
+  <button (click)="addNewAsset()">Add New Asset</button>
+
+  <!-- Asset editing UI -->
+  <div *ngIf="editingAsset">
+    <app-asset
+      [asset]="editingAsset"
+      (save)="saveAsset($event)"
+      (cancel)="onCancelEditing()"
+    ></app-asset>
+  </div>
+</div>

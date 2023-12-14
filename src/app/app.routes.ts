@@ -8,15 +8,14 @@ import { AssetComponent } from './asset/asset.component';
 import { DebtComponent } from './debt/debt.component';
 import { BusinessManagerComponent } from './business-manager/business-manager.component';
 import { DebtManagerComponent } from './debt-manager/debt-manager.component';
+import { AssetManagerComponent } from './asset-manager/asset-manager.component';
 
 export const routes: Routes = [
   { path: 'client', component: ClientComponent },
   { path: 'beneficiaries', component: BeneficiaryComponent },
-  { path: 'business', component: BusinessComponent },
-  { path: 'goal', component: GoalComponent },
-  { path: 'asset', component: AssetComponent },
-  { path: 'debt', component: DebtComponent },
   { path: 'business-manager', component: BusinessManagerComponent },
+  { path: 'goal', component: GoalComponent },
+  { path: 'asset-manager', component: AssetManagerComponent },
   { path: 'debt-manager', component: DebtManagerComponent },
   { path: '', redirectTo: '/client', pathMatch: 'full' },
 ];

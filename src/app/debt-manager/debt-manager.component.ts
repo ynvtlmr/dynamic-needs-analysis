@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Debt, DebtComponent } from '../debt/debt.component';
 import { LocalStorageService } from '../services/local-storage.service';

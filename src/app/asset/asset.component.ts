@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -20,9 +28,10 @@ export interface Asset {
   isTaxable: boolean;
   isLiquid: boolean;
   isToBeSold: boolean;
-  selectedTaxBracket: number;
   financialInstrumentTypes: string[];
   beneficiaries: Beneficiary[];
+  selectedTaxBracket: TaxBracket | undefined;
+  capitalGainsTaxRate: number;
 }
 
 @Component({
@@ -31,7 +40,7 @@ export interface Asset {
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class AssetComponent implements OnInit {
+export class AssetComponent implements OnChanges {
   name: string = '';
   initialValue: number = 0;
   currentValue: number = 0;
@@ -49,10 +58,60 @@ export class AssetComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
   financialInstrumentTypes: string[] = Array.from(FIN_INSTR_TYPES.keys());
 
+  @Input() asset: Asset | null = null;
+  @Output() save: EventEmitter<Asset> = new EventEmitter<Asset>();
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadClientTaxBracket();
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.asset) {
+      this.populateAssetData(this.asset);
+    }
+  }
+
+  populateAssetData(asset: Asset): void {
+    this.name = asset.name;
+    this.initialValue = asset.initialValue;
+    this.currentValue = asset.currentValue;
+    this.yearAcquired = asset.yearAcquired;
+    this.rate = asset.rate;
+    this.term = asset.term;
+    this.type = asset.type;
+    this.isTaxable = asset.isTaxable;
+    this.isLiquid = asset.isLiquid;
+    this.isToBeSold = asset.isToBeSold;
+    this.beneficiaries = asset.beneficiaries;
+    this.selectedTaxBracket = asset.selectedTaxBracket;
+    this.capitalGainsTaxRate = asset.capitalGainsTaxRate;
+    this.financialInstrumentTypes = asset.financialInstrumentTypes;
+  }
+
+  onSave(): void {
+    const asset: Asset = {
+      name: this.name,
+      initialValue: this.initialValue,
+      currentValue: this.currentValue,
+      yearAcquired: this.yearAcquired,
+      rate: this.rate,
+      term: this.term,
+      type: this.type,
+      isTaxable: this.isTaxable,
+      isLiquid: this.isLiquid,
+      isToBeSold: this.isToBeSold,
+      selectedTaxBracket: this.selectedTaxBracket,
+      capitalGainsTaxRate: this.capitalGainsTaxRate,
+      financialInstrumentTypes: this.financialInstrumentTypes,
+      beneficiaries: this.beneficiaries,
+    };
+    this.save.emit(asset);
+  }
+
+  onCancel(): void {
+    this.cancel.emit();
   }
 
   get currentYearsHeld(): number {
