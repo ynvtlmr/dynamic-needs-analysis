@@ -29,10 +29,30 @@ export class BusinessComponent implements OnInit {
 
   @Input() business: Business | null = null;
   @Output() save: EventEmitter<Business> = new EventEmitter<Business>();
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.business) {
+      this.populateBusinessData(this.business);
+    }
+  }
+
+  populateBusinessData(business: Business): void {
+    this.businessName = business.businessName;
+    this.valuation = business.valuation;
+    this.rate = business.rate;
+    this.term = business.term;
+    this.shareholders = business.shareholders.map(
+      (sh) =>
+        new Shareholder(
+          sh.shareholderName,
+          sh.sharePercentage,
+          sh.insuranceCoverage,
+        ),
+    );
+  }
 
   onSave(): void {
     const business: Business = {
@@ -43,6 +63,10 @@ export class BusinessComponent implements OnInit {
       shareholders: this.shareholders,
     };
     this.save.emit(business);
+  }
+
+  onCancel(): void {
+    this.cancel.emit();
   }
 
   addEmptyShareholder(): void {

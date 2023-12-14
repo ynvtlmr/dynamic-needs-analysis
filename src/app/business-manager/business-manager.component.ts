@@ -54,4 +54,9 @@ export class BusinessManagerComponent {
   updateStorage(): void {
     this.localStorageService.setItem('businesses', this.businesses);
   }
+
+  onCancelEditing(): void {
+    this.editingBusiness = null;
+    this.editingBusinessIndex = null;
+  }
 }
