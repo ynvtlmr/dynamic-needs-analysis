@@ -131,7 +131,7 @@ export class AssetComponent implements OnInit, OnChanges {
         (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
       );
     }
-    this.updateSelectedTaxBracket()
+    this.updateSelectedTaxBracket();
   }
 
   updateSelectedTaxBracket(): void {
@@ -168,7 +168,11 @@ export class AssetComponent implements OnInit, OnChanges {
   }
 
   loadBeneficiaries(): void {
-    if (this.beneficiaries.length > 0) {
+    if (
+      this.beneficiaries.length > 0 ||
+      this.beneficiaries.length >=
+        this.localStorageService.getItem('beneficiaries')?.length
+    ) {
       let emptyBeneficiary: Beneficiary = {
         name: '',
         allocation: 0,
