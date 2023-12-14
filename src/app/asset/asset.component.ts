@@ -168,11 +168,7 @@ export class AssetComponent implements OnInit, OnChanges {
   }
 
   loadBeneficiaries(): void {
-    if (
-      this.beneficiaries.length > 0 ||
-      this.beneficiaries.length >=
-        this.localStorageService.getItem('beneficiaries')?.length
-    ) {
+    if (this.beneficiaries.length > 0) {
       let emptyBeneficiary: Beneficiary = {
         name: '',
         allocation: 0,
@@ -181,6 +177,13 @@ export class AssetComponent implements OnInit, OnChanges {
     } else {
       this.beneficiaries =
         this.localStorageService.getItem('beneficiaries') || [];
+    }
+
+    const definedBeneficiaries =
+      this.localStorageService.getItem('beneficiaries');
+    if (definedBeneficiaries.length === 0) {
+      // prompt user to add beneficiaries in beneficiary component using alert
+      alert('Please add beneficiaries in beneficiary component');
     }
   }
 
