@@ -70,10 +70,9 @@ export class ClientComponent implements OnInit {
   }
 
   private loadSelectedBracket(): void {
-    const selectedTaxBracket =
-      this.localStorageService.getItem('client').selectedBracket;
-    if (selectedTaxBracket) {
-      const storedBracket = selectedTaxBracket;
+    const clientData = this.localStorageService.getItem('client');
+    if (clientData && clientData.selectedBracket) {
+      const storedBracket = clientData.selectedBracket;
       this.selectedBracket = this.taxBrackets.find(
         (bracket: TaxBracket) => bracket.minIncome === storedBracket.minIncome,
       );
