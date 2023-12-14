@@ -32,21 +32,7 @@ export class BusinessComponent implements OnInit {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnInit(): void {
-    if (this.business) {
-      this.loadBusiness(this.business);
-    } else {
-      this.loadBusinessFromStorage();
-    }
-  }
-
-  loadBusiness(business: Business): void {
-    this.businessName = business.businessName;
-    this.valuation = business.valuation;
-    this.rate = business.rate;
-    this.term = business.term;
-    this.shareholders = business.shareholders;
-  }
+  ngOnInit(): void {}
 
   onSave(): void {
     const business: Business = {
@@ -57,13 +43,6 @@ export class BusinessComponent implements OnInit {
       shareholders: this.shareholders,
     };
     this.save.emit(business);
-  }
-
-  addShareholder(name: string, share: number, coverage: number): void {
-    if (name && share > 0 && coverage > 0) {
-      this.shareholders.push(new Shareholder(name, share, coverage));
-      this.updateStorage();
-    }
   }
 
   addEmptyShareholder(): void {
@@ -78,41 +57,8 @@ export class BusinessComponent implements OnInit {
   // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);
-    this.updateStorage();
   }
 
-  onShareholderChange(): void {
-    this.updateStorage();
-  }
-
-  private updateStorage(): void {
-    const business: Business = {
-      businessName: this.businessName,
-      valuation: this.valuation,
-      rate: this.rate,
-      term: this.term,
-      shareholders: this.shareholders,
-    };
-    this.localStorageService.setItem('business', business);
-  }
-
-  private loadBusinessFromStorage(): void {
-    const business: Business = this.localStorageService.getItem('business');
-    if (business) {
-      this.businessName = business.businessName;
-      this.valuation = business.valuation;
-      this.rate = business.rate;
-      this.term = business.term;
-      this.shareholders = business.shareholders.map(
-        (sh: Shareholder) =>
-          new Shareholder(
-            sh.shareholderName,
-            sh.sharePercentage,
-            sh.insuranceCoverage,
-          ),
-      );
-    }
-  }
   // Calculate total percentage owned by all shareholders
   get totalMajorShareholderPercentage(): number {
     return this.shareholders.reduce(

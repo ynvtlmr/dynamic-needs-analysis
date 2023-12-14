@@ -37,25 +37,13 @@
     </tr>
     <tr *ngFor="let shareholder of shareholders; let i = index">
       <td>
-        <input
-          [(ngModel)]="shareholder.shareholderName"
-          (ngModelChange)="onShareholderChange()"
-          type="text"
-        />
+        <input [(ngModel)]="shareholder.shareholderName" type="text" />
       </td>
       <td>
-        <input
-          [(ngModel)]="shareholder.sharePercentage"
-          (ngModelChange)="onShareholderChange()"
-          type="number"
-        />
+        <input [(ngModel)]="shareholder.sharePercentage" type="number" />
       </td>
       <td>
-        <input
-          [(ngModel)]="shareholder.insuranceCoverage"
-          (ngModelChange)="onShareholderChange()"
-          type="number"
-        />
+        <input [(ngModel)]="shareholder.insuranceCoverage" type="number" />
       </td>
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>
