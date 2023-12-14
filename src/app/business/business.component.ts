@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
@@ -20,7 +28,7 @@ export class Business {
   imports: [FormsModule, CommonModule],
   templateUrl: './business.component.html',
 })
-export class BusinessComponent implements OnInit {
+export class BusinessComponent implements OnChanges {
   businessName: string = '';
   valuation: number = 0;
   rate: number = 0;
@@ -33,7 +41,7 @@ export class BusinessComponent implements OnInit {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges) {
     if (this.business) {
       this.populateBusinessData(this.business);
     }

@@ -1,4 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 
@@ -17,7 +24,7 @@ export interface Debt {
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class DebtComponent implements OnInit {
+export class DebtComponent implements OnChanges {
   name: string = '';
   initialValue: number = 0;
   yearAcquired: number = new Date().getFullYear();
@@ -25,10 +32,40 @@ export class DebtComponent implements OnInit {
   term: number = 0;
   annualPayment: number = 0;
 
+  @Input() debt: Debt | null = null;
+  @Output() save: EventEmitter<Debt> = new EventEmitter<Debt>();
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
+
   constructor() {}
 
-  ngOnInit(): void {
-    // Initialization logic here
+  ngOnChanges(changes: SimpleChanges) {
+    if (this.debt) {
+      this.populateDebtData(this.debt);
+    }
+  }
+
+  populateDebtData(debt: Debt): void {
+    this.name = debt.name;
+    this.initialValue = debt.initialValue;
+    this.yearAcquired = debt.yearAcquired;
+    this.rate = debt.rate;
+    this.term = debt.term;
+    this.annualPayment = debt.annualPayment;
+  }
+  onSave(): void {
+    const debt: Debt = {
+      name: this.name,
+      initialValue: this.initialValue,
+      yearAcquired: this.yearAcquired,
+      rate: this.rate,
+      term: this.term,
+      annualPayment: this.annualPayment,
+    };
+    this.save.emit(debt);
+  }
+
+  onCancel(): void {
+    this.cancel.emit();
   }
 
   get currentYearsHeld(): number {

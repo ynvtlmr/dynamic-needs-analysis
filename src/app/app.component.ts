@@ -64,5 +64,6 @@ export class AppComponent {
     { path: 'asset', label: 'Asset' },
     { path: 'debt', label: 'Debt' },
     { path: 'business-manager', label: 'Business Manager' },
+    { path: 'debt-manager', label: 'Debt Manager' },
   ];
 }

@@ -1,0 +1,25 @@
+<div>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Initial Value ($)</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let debt of debts; let i = index">
+      <td>{{ debt.name }}</td>
+      <td>{{ debt.initialValue | currency }}</td>
+      <td><button (click)="editDebt(i)">Edit</button></td>
+      <td><button (click)="deleteDebt(i)">Delete</button></td>
+    </tr>
+  </table>
+
+  <button (click)="addNewDebt()">Add New Debt</button>
+  <div *ngIf="editingDebt">
+    <app-debt
+      [debt]="editingDebt"
+      (save)="saveDebt($event)"
+      (cancel)="onCancelEditing()"
+    ></app-debt>
+  </div>
+</div>
