@@ -40,7 +40,7 @@ export interface Asset {
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class AssetComponent implements OnChanges {
+export class AssetComponent implements OnInit, OnChanges {
   name: string = '';
   initialValue: number = 0;
   currentValue: number = 0;
@@ -131,6 +131,7 @@ export class AssetComponent implements OnChanges {
         (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
       );
     }
+    this.updateSelectedTaxBracket()
   }
 
   updateSelectedTaxBracket(): void {
