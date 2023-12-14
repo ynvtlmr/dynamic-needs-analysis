@@ -6,6 +6,7 @@ import { BusinessComponent } from './business/business.component';
 import { GoalComponent } from './goal/goal.component';
 import { AssetComponent } from './asset/asset.component';
 import { DebtComponent } from './debt/debt.component';
+import { BusinessManagerComponent } from './business-manager/business-manager.component';
 
 export const routes: Routes = [
   { path: 'client', component: ClientComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'goal', component: GoalComponent },
   { path: 'asset', component: AssetComponent },
   { path: 'debt', component: DebtComponent },
+  { path: 'business-manager', component: BusinessManagerComponent },
   { path: '', redirectTo: '/client', pathMatch: 'full' },
 ];
 

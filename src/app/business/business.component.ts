@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../services/local-storage.service';
 
-export interface Business {
-  businessName: string;
-  valuation: number;
-  rate: number;
-  term: number;
-  shareholders: Shareholder[];
+export class Business {
+  constructor(
+    public businessName: string,
+    public valuation: number,
+    public rate: number,
+    public term: number,
+    public shareholders: Shareholder[], // Assuming Shareholder is already defined
+  ) {}
 }
 
 @Component({
@@ -25,10 +27,36 @@ export class BusinessComponent implements OnInit {
   term: number = 0;
   shareholders: Shareholder[] = [];
 
+  @Input() business: Business | null = null;
+  @Output() save: EventEmitter<Business> = new EventEmitter<Business>();
+
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.loadBusinessFromStorage();
+    if (this.business) {
+      this.loadBusiness(this.business);
+    } else {
+      this.loadBusinessFromStorage();
+    }
+  }
+
+  loadBusiness(business: Business): void {
+    this.businessName = business.businessName;
+    this.valuation = business.valuation;
+    this.rate = business.rate;
+    this.term = business.term;
+    this.shareholders = business.shareholders;
+  }
+
+  onSave(): void {
+    const business: Business = {
+      businessName: this.businessName,
+      valuation: this.valuation,
+      rate: this.rate,
+      term: this.term,
+      shareholders: this.shareholders,
+    };
+    this.save.emit(business);
   }
 
   addShareholder(name: string, share: number, coverage: number): void {
