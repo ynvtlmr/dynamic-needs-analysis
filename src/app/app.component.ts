@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  Router,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-  NavigationEnd,
-} from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LocalStorageService } from './services/local-storage.service';
 
 interface NavLink {
@@ -25,10 +19,9 @@ export class AppComponent {
   title = 'dynamic-needs-analysis';
   selectedTab: string = 'client';
 
-  constructor(
-    private localStorageService: LocalStorageService,
-    private router: Router,
-  ) {
+  constructor(private localStorageService: LocalStorageService) {
+    console.log(this.selectedTab);
+    console.log(localStorageService.getItem('selectedTab'));
     this.selectedTab = localStorageService.getItem('selectedTab') || 'client';
   }
 
@@ -52,5 +45,6 @@ export class AppComponent {
     { path: 'business-manager', label: 'Businesses' },
     { path: 'goal', label: 'Goals' },
     { path: 'diversification', label: 'Diversification' },
+    { path: 'asset-beneficiary', label: 'Asset-Beneficiary' },
   ];
 }

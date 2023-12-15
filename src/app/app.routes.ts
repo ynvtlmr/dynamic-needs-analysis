@@ -7,6 +7,7 @@ import { BusinessManagerComponent } from './inputs/business-manager/business-man
 import { DebtManagerComponent } from './inputs/debt-manager/debt-manager.component';
 import { AssetManagerComponent } from './inputs/asset-manager/asset-manager.component';
 import { DiversificationComponent } from './outputs/diversification/diversification.component';
+import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
 
 export const routes: Routes = [
   { path: 'client', component: ClientComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
   { path: 'debt-manager', component: DebtManagerComponent },
   { path: 'goal', component: GoalComponent },
   { path: 'diversification', component: DiversificationComponent },
+  { path: 'asset-beneficiary', component: AssetBeneficiaryComponent },
   { path: '', redirectTo: '/client', pathMatch: 'full' },
 ];
 

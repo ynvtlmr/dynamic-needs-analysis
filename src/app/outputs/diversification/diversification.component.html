@@ -1,22 +1,13 @@
-<div
-  style="
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  "
+<ngx-charts-pie-chart
+  *ngIf="data && data.length > 0"
+  [view]="[700, 400]"
+  [scheme]="colorScheme"
+  [results]="data"
+  [legend]="true"
+  [labels]="true"
+  [doughnut]="false"
+  [animations]="false"
+  [tooltipDisabled]="false"
+  [legendTitle]="'Diversification'"
 >
-  <ngx-charts-pie-chart
-    *ngIf="data && data.length > 0"
-    [view]="[700, 400]"
-    [scheme]="colorScheme"
-    [results]="data"
-    [legend]="true"
-    [labels]="true"
-    [doughnut]="false"
-    [animations]="false"
-    [tooltipDisabled]="false"
-    [legendTitle]="'Diversification'"
-  >
-  </ngx-charts-pie-chart>
-</div>
+</ngx-charts-pie-chart>
