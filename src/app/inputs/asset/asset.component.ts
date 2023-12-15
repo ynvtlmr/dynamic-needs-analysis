@@ -177,23 +177,27 @@ export class AssetComponent implements OnChanges {
     this.isLiquid = typeInfo ? typeInfo.liquid : false;
   }
 
+  // Load beneficiaries from local storage or asset
   loadBeneficiaries(): void {
-    if (this.beneficiaries.length > 0) {
-      let emptyBeneficiary: Beneficiary = {
-        name: '',
-        allocation: 0,
-      };
-      this.beneficiaries.push(emptyBeneficiary);
-    } else {
-      this.beneficiaries =
-        this.localStorageService.getItem('beneficiaries') || [];
+    if (!this.beneficiaries.length) {
+      this.beneficiaries = this.localStorageService.getItem('beneficiaries') || [];
     }
+    this.addEmptyBeneficiaryIfNeeded();
+    this.checkDefinedBeneficiaries();
+  }
 
-    const definedBeneficiaries =
-      this.localStorageService.getItem('beneficiaries');
+  // Check if beneficiaries are defined in local storage
+  checkDefinedBeneficiaries(): void {
+    const definedBeneficiaries = this.localStorageService.getItem('beneficiaries');
     if (definedBeneficiaries.length === 0) {
-      // prompt user to add beneficiaries in beneficiary component using alert
       alert('Please add beneficiaries in beneficiary component');
+    }
+  }
+
+  // Add an empty beneficiary if the list is not empty
+  addEmptyBeneficiaryIfNeeded(): void {
+    if (this.beneficiaries.length && !this.beneficiaries.some(b => !b.name)) {
+      this.beneficiaries.push({ name: '', allocation: 0 });
     }
   }
 
@@ -223,10 +227,7 @@ export class AssetComponent implements OnChanges {
   }
 
   get currentGrowthPercentage(): number {
-    if (this.initialValue === 0) {
-      return 0;
-    }
-    return (this.currentValue / this.initialValue - 1) * 100;
+    return this.initialValue === 0 ? 0 : ((this.currentValue / this.initialValue - 1) * 100);
   }
 
   get futureValueDollars(): number {
@@ -235,9 +236,6 @@ export class AssetComponent implements OnChanges {
 
   get futureValueGrowthPercentage(): number {
     let futureValue = this.futureValueDollars;
-    if (this.initialValue === 0) {
-      return 0;
-    }
-    return (futureValue / this.initialValue - 1) * 100;
+    return this.initialValue === 0 ? 0 : ((futureValue / this.initialValue - 1) * 100);
   }
 }
