@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
-import {CurrencyPipe, NgForOf} from '@angular/common';
+import { CurrencyPipe, NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
 

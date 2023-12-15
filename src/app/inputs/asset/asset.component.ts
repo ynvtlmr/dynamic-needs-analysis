@@ -3,7 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
@@ -40,7 +39,8 @@ export interface Asset {
   standalone: true,
   imports: [FormsModule, DecimalPipe, CommonModule],
 })
-export class AssetComponent implements OnInit, OnChanges {
+export class AssetComponent implements OnChanges {
+  // Asset properties
   name: string = '';
   initialValue: number = 0;
   currentValue: number = 0;
@@ -74,23 +74,28 @@ export class AssetComponent implements OnInit, OnChanges {
   }
 
   populateAssetData(asset: Asset): void {
-    this.name = asset.name;
-    this.initialValue = asset.initialValue;
-    this.currentValue = asset.currentValue;
-    this.yearAcquired = asset.yearAcquired;
-    this.rate = asset.rate;
-    this.term = asset.term;
-    this.type = asset.type;
-    this.isTaxable = asset.isTaxable;
-    this.isLiquid = asset.isLiquid;
-    this.isToBeSold = asset.isToBeSold;
-    this.beneficiaries = asset.beneficiaries;
-    // this.selectedTaxBracket = asset.selectedTaxBracket;
+    // Assign asset properties
+    Object.assign(this, asset);
+    // Set tax brackets and selected tax bracket
+    this.setTaxBracketsAndSelected(asset);
+  }
+
+  setTaxBracketsAndSelected(asset: Asset): void {
+    const currentYear = new Date().getFullYear();
+    const clientData = this.localStorageService.getItem('client');
+
+    // Set tax brackets based on client's province
+    this.taxBrackets =
+      TAX_BRACKETS[currentYear]?.[clientData?.province.toUpperCase() || ''] ||
+      [];
+
+    // Set selected tax bracket from asset, fallback to client's bracket
     this.selectedTaxBracket = this.taxBrackets.find(
-      (bracket: TaxBracket) => bracket.minIncome === asset.selectedTaxBracket?.minIncome,
+      (bracket) =>
+        bracket.minIncome ===
+        (asset.selectedTaxBracket?.minIncome ||
+          clientData?.selectedBracket?.minIncome),
     );
-    this.capitalGainsTaxRate = asset.capitalGainsTaxRate;
-    this.financialInstrumentTypes = asset.financialInstrumentTypes;
   }
 
   onSave(): void {
@@ -130,7 +135,7 @@ export class AssetComponent implements OnInit, OnChanges {
         this.taxBrackets =
           TAX_BRACKETS[new Date().getFullYear()]?.[
             clientData.province.toUpperCase()
-            ] || [];
+          ] || [];
         this.selectedTaxBracket = this.taxBrackets.find(
           (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
         );
