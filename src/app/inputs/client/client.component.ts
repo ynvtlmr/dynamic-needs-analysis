@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
-import { NgForOf } from '@angular/common';
+import {CurrencyPipe, NgForOf} from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
-import { LocalStorageService } from '../services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 export interface Client {
   name: string;
@@ -19,7 +19,7 @@ export interface Client {
   selector: 'app-client',
   templateUrl: './client.component.html',
   standalone: true,
-  imports: [FormsModule, NgForOf],
+  imports: [FormsModule, NgForOf, CurrencyPipe],
 })
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];

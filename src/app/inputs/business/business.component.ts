@@ -10,7 +10,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
-import { LocalStorageService } from '../services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 export class Business {
   constructor(

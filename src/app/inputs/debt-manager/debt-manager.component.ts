@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Debt, DebtComponent } from '../debt/debt.component';
-import { LocalStorageService } from '../services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({

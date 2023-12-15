@@ -59,9 +59,9 @@ export class AppComponent {
   navLinks: NavLink[] = [
     { path: 'client', label: 'Client' },
     { path: 'beneficiaries', label: 'Beneficiaries' },
-    { path: 'business-manager', label: 'Businesses' },
-    { path: 'goal', label: 'Goals' },
     { path: 'asset-manager', label: 'Assets' },
     { path: 'debt-manager', label: 'Debts' },
+    { path: 'business-manager', label: 'Businesses' },
+    { path: 'goal', label: 'Goals' },
   ];
 }

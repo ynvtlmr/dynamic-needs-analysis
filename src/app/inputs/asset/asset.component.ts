@@ -11,7 +11,7 @@ import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
-import { LocalStorageService } from '../services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
@@ -85,7 +85,10 @@ export class AssetComponent implements OnInit, OnChanges {
     this.isLiquid = asset.isLiquid;
     this.isToBeSold = asset.isToBeSold;
     this.beneficiaries = asset.beneficiaries;
-    this.selectedTaxBracket = asset.selectedTaxBracket;
+    // this.selectedTaxBracket = asset.selectedTaxBracket;
+    this.selectedTaxBracket = this.taxBrackets.find(
+      (bracket: TaxBracket) => bracket.minIncome === asset.selectedTaxBracket?.minIncome,
+    );
     this.capitalGainsTaxRate = asset.capitalGainsTaxRate;
     this.financialInstrumentTypes = asset.financialInstrumentTypes;
   }
@@ -120,16 +123,18 @@ export class AssetComponent implements OnInit, OnChanges {
   }
 
   private loadClientTaxBracket(): void {
-    const clientData = this.localStorageService.getItem('client');
-    if (clientData?.selectedBracket) {
-      const clientBracketMinIncome = clientData.selectedBracket.minIncome;
-      this.taxBrackets =
-        TAX_BRACKETS[new Date().getFullYear()]?.[
-          clientData.province.toUpperCase()
-        ] || [];
-      this.selectedTaxBracket = this.taxBrackets.find(
-        (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
-      );
+    if (!this.selectedTaxBracket) {
+      const clientData = this.localStorageService.getItem('client');
+      if (clientData?.selectedBracket) {
+        const clientBracketMinIncome = clientData.selectedBracket.minIncome;
+        this.taxBrackets =
+          TAX_BRACKETS[new Date().getFullYear()]?.[
+            clientData.province.toUpperCase()
+            ] || [];
+        this.selectedTaxBracket = this.taxBrackets.find(
+          (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
+        );
+      }
     }
     this.updateSelectedTaxBracket();
   }

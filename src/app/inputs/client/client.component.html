@@ -87,7 +87,7 @@
             *ngFor="let bracket of taxBrackets; let i = index"
             [ngValue]="bracket"
           >
-            ${{ bracket.minIncome }} and up - {{ bracket.taxRate }}%
+            {{ bracket.minIncome | currency }} and up - {{ bracket.taxRate }}%
           </option>
         </select>
       </td>
