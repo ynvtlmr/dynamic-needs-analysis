@@ -180,7 +180,8 @@ export class AssetComponent implements OnChanges {
   // Load beneficiaries from local storage or asset
   loadBeneficiaries(): void {
     if (!this.beneficiaries.length) {
-      this.beneficiaries = this.localStorageService.getItem('beneficiaries') || [];
+      this.beneficiaries =
+        this.localStorageService.getItem('beneficiaries') || [];
     }
     this.addEmptyBeneficiaryIfNeeded();
     this.checkDefinedBeneficiaries();
@@ -188,7 +189,8 @@ export class AssetComponent implements OnChanges {
 
   // Check if beneficiaries are defined in local storage
   checkDefinedBeneficiaries(): void {
-    const definedBeneficiaries = this.localStorageService.getItem('beneficiaries');
+    const definedBeneficiaries =
+      this.localStorageService.getItem('beneficiaries');
     if (definedBeneficiaries.length === 0) {
       alert('Please add beneficiaries in beneficiary component');
     }
@@ -196,7 +198,7 @@ export class AssetComponent implements OnChanges {
 
   // Add an empty beneficiary if the list is not empty
   addEmptyBeneficiaryIfNeeded(): void {
-    if (this.beneficiaries.length && !this.beneficiaries.some(b => !b.name)) {
+    if (this.beneficiaries.length && !this.beneficiaries.some((b) => !b.name)) {
       this.beneficiaries.push({ name: '', allocation: 0 });
     }
   }
@@ -227,7 +229,9 @@ export class AssetComponent implements OnChanges {
   }
 
   get currentGrowthPercentage(): number {
-    return this.initialValue === 0 ? 0 : ((this.currentValue / this.initialValue - 1) * 100);
+    return this.initialValue === 0
+      ? 0
+      : (this.currentValue / this.initialValue - 1) * 100;
   }
 
   get futureValueDollars(): number {
@@ -236,6 +240,8 @@ export class AssetComponent implements OnChanges {
 
   get futureValueGrowthPercentage(): number {
     let futureValue = this.futureValueDollars;
-    return this.initialValue === 0 ? 0 : ((futureValue / this.initialValue - 1) * 100);
+    return this.initialValue === 0
+      ? 0
+      : (futureValue / this.initialValue - 1) * 100;
   }
 }

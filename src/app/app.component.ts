@@ -51,5 +51,6 @@ export class AppComponent {
     { path: 'debt-manager', label: 'Debts' },
     { path: 'business-manager', label: 'Businesses' },
     { path: 'goal', label: 'Goals' },
+    { path: 'diversification', label: 'Diversification' },
   ];
 }
