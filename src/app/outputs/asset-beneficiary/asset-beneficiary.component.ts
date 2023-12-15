@@ -10,23 +10,40 @@ import { colorSets, Color, NgxChartsModule } from '@swimlane/ngx-charts';
   standalone: true,
 })
 export class AssetBeneficiaryComponent implements OnInit {
-  beneficiaryChartData: any[] = [];
+  valueChartData: any[] = [];
+  percentageChartData: any[] = [];
   colorScheme: Color = colorSets.find((s) => s.name === 'cool') || colorSets[0];
+  assets: Asset[] = this.localStorageService.getItem('assets') || [];
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.prepareChartData();
+    this.prepareValueData();
+    this.preparePercentageData();
   }
 
-  prepareChartData(): void {
-    const assets: Asset[] = this.localStorageService.getItem('assets') || [];
-
-    this.beneficiaryChartData = assets.map((asset) => {
+  prepareValueData(): void {
+    this.valueChartData = this.assets.map((asset) => {
       const series = asset.beneficiaries.map((beneficiary) => {
         return {
           name: beneficiary.name,
           value: (beneficiary.allocation / 100) * asset.currentValue,
+        };
+      });
+
+      return {
+        name: asset.name,
+        series: series,
+      };
+    });
+  }
+
+  preparePercentageData(): void {
+    this.percentageChartData = this.assets.map((asset) => {
+      const series = asset.beneficiaries.map((beneficiary) => {
+        return {
+          name: beneficiary.name,
+          value: beneficiary.allocation,
         };
       });
 

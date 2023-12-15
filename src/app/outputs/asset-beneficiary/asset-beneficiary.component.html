@@ -1,10 +1,28 @@
-<ngx-charts-bar-horizontal-stacked
-  [results]="beneficiaryChartData"
-  [xAxis]="true"
-  [yAxis]="true"
-  [legend]="true"
-  [showXAxisLabel]="true"
-  [showYAxisLabel]="true"
-  [xAxisLabel]="'Value'"
->
-</ngx-charts-bar-horizontal-stacked>
+<div>
+  <ngx-charts-bar-horizontal-stacked
+    [results]="valueChartData"
+    [scheme]="colorScheme"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [animations]="false"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'$ Value'"
+  >
+  </ngx-charts-bar-horizontal-stacked>
+</div>
+<div>
+  <ngx-charts-bar-horizontal-stacked
+    [results]="percentageChartData"
+    [scheme]="colorScheme"
+    [xAxis]="true"
+    [yAxis]="true"
+    [legend]="true"
+    [animations]="false"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'% Percent'"
+  >
+  </ngx-charts-bar-horizontal-stacked>
+</div>
