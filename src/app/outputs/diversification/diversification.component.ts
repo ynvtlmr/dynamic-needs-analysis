@@ -6,7 +6,7 @@ import { colorSets, Color, NgxChartsModule } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-diversification',
   templateUrl: './diversification.component.html',
-  imports: [NgxChartsModule], // Add NgxChartsModule here
+  imports: [NgxChartsModule],
   standalone: true,
 })
 export class DiversificationComponent implements OnInit {

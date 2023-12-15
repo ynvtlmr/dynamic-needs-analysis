@@ -10,5 +10,6 @@ export const FIN_INSTR_TYPES = new Map<string, FinTypeAttributes>([
   ['Real Estate', { taxable: true, liquid: false }],
   ['Mutual Funds', { taxable: true, liquid: true }],
   ['Retirement Account', { taxable: false, liquid: false }],
+  ['Crypto', { taxable: true, liquid: true }],
   ['Life Insurance', { taxable: false, liquid: false }],
 ]);

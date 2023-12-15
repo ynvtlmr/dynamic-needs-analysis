@@ -183,7 +183,7 @@ export class AssetComponent implements OnChanges {
       this.beneficiaries =
         this.localStorageService.getItem('beneficiaries') || [];
     }
-    this.addEmptyBeneficiaryIfNeeded();
+    // this.addEmptyBeneficiaryIfNeeded();
     this.checkDefinedBeneficiaries();
   }
 
