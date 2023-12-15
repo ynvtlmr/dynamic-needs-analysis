@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -30,18 +30,6 @@ export class AppComponent {
     private router: Router,
   ) {
     this.selectedTab = localStorageService.getItem('selectedTab') || 'client';
-  }
-
-  ngOnInit() {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Extract the path and set the selectedTab
-        const currentPath = event.urlAfterRedirects.split('/')[1];
-        this.selectedTab = currentPath;
-        // Optionally save the selectedTab to localStorage
-        this.localStorageService.setItem('selectedTab', currentPath);
-      }
-    });
   }
 
   clearAllLocalStorage() {
