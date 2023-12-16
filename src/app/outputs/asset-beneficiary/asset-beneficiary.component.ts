@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Asset } from '../../inputs/asset/asset.component';
+import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
 import { colorSets, Color, NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
@@ -24,7 +25,7 @@ export class AssetBeneficiaryComponent implements OnInit {
 
   prepareValueData(): void {
     this.valueChartData = this.assets.map((asset) => {
-      const series = asset.beneficiaries.map((beneficiary) => {
+      const series = asset.beneficiaries.map((beneficiary: Beneficiary) => {
         return {
           name: beneficiary.name,
           value: (beneficiary.allocation / 100) * asset.currentValue,
@@ -39,8 +40,8 @@ export class AssetBeneficiaryComponent implements OnInit {
   }
 
   preparePercentageData(): void {
-    this.percentageChartData = this.assets.map((asset) => {
-      const series = asset.beneficiaries.map((beneficiary) => {
+    this.percentageChartData = this.assets.map((asset: Asset) => {
+      const series = asset.beneficiaries.map((beneficiary: Beneficiary) => {
         return {
           name: beneficiary.name,
           value: beneficiary.allocation,
