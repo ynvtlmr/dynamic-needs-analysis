@@ -8,13 +8,14 @@ import {
   ApexYAxis,
   ApexTitleSubtitle,
   ApexLegend,
+  ApexNonAxisChartSeries,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { Asset } from '../../inputs/asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 export type ChartOptions = {
-  series: ApexAxisChartSeries;
+  series: ApexAxisChartSeries | ApexNonAxisChartSeries;
   chart: ApexChart;
   xaxis: ApexXAxis;
   yaxis: ApexYAxis;
@@ -22,6 +23,7 @@ export type ChartOptions = {
   plotOptions: ApexPlotOptions;
   title: ApexTitleSubtitle;
   legend: ApexLegend;
+  labels: string[];
 };
 
 @Component({
@@ -33,11 +35,13 @@ export type ChartOptions = {
 export class AssetBeneficiaryComponent implements OnInit {
   public valueChartOptions: ChartOptions;
   public percentageChartOptions: ChartOptions;
+  public beneficiaryValuePieChartOptions: ChartOptions;
 
   constructor(private localStorageService: LocalStorageService) {
-    // Initialize ChartOptions with default values
+    // Initialize ChartOptions with default values for all charts
     this.valueChartOptions = this.initializeChartOptions();
     this.percentageChartOptions = this.initializeChartOptions();
+    this.beneficiaryValuePieChartOptions = this.initializePieChartOptions();
   }
 
   ngOnInit(): void {
@@ -45,15 +49,33 @@ export class AssetBeneficiaryComponent implements OnInit {
   }
 
   private initializeChartOptions(): ChartOptions {
+    // Ensure all properties are defined for bar charts
     return {
       series: [],
-      chart: { type: 'bar', height: 350, stacked: true },
+      chart: { type: 'bar', height: 350 },
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
       xaxis: { type: 'category', categories: [] },
       yaxis: { title: { text: '' } },
       title: { text: '' },
       legend: { position: 'bottom' },
+      labels: [], // Initialize labels even though not used for bar charts
+    };
+  }
+
+  private initializePieChartOptions(): ChartOptions {
+    // Ensure all properties are defined for pie charts
+    return {
+      series: [],
+      chart: { type: 'pie', height: 350 },
+      dataLabels: { enabled: true },
+      title: { text: 'Beneficiary Value Distribution' },
+      legend: { position: 'bottom' },
+      labels: [], // Required for pie charts
+      // Initialize properties not used for pie charts
+      xaxis: { type: 'category', categories: [] },
+      yaxis: { title: { text: '' } },
+      plotOptions: { bar: { horizontal: true } },
     };
   }
 
@@ -62,6 +84,22 @@ export class AssetBeneficiaryComponent implements OnInit {
     const beneficiaryNames: string[] = [];
     const valueSeriesData: { name: string; data: number[] }[] = [];
     const percentageSeriesData: { name: string; data: number[] }[] = [];
+    const beneficiaryTotals: Record<string, number> = {};
+
+    // pie chart of beneficiaries
+    assets.forEach((asset) => {
+      asset.beneficiaries.forEach((beneficiary) => {
+        if (!beneficiaryTotals[beneficiary.name]) {
+          beneficiaryTotals[beneficiary.name] = 0;
+        }
+        beneficiaryTotals[beneficiary.name] +=
+          (beneficiary.allocation / 100) * asset.currentValue;
+      });
+    });
+    this.beneficiaryValuePieChartOptions.series =
+      Object.values(beneficiaryTotals);
+    this.beneficiaryValuePieChartOptions.labels =
+      Object.keys(beneficiaryTotals);
 
     // Collect all unique beneficiary names and initialize series data
     assets.forEach((asset) => {
@@ -129,6 +167,7 @@ export class AssetBeneficiaryComponent implements OnInit {
           : 'Asset Value Distribution',
       },
       legend: { position: 'bottom' },
+      labels: [], // Initialize labels even though not used for bar charts
     };
   }
 }
