@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from '../../services/local-storage.service';
 import { Asset } from '../../inputs/asset/asset.component';
 import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { colorSets, Color, NgxChartsModule } from '@swimlane/ngx-charts';
 
 @Component({
@@ -19,39 +19,34 @@ export class AssetBeneficiaryComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.prepareValueData();
-    this.preparePercentageData();
+    this.prepareChartData();
   }
 
-  prepareValueData(): void {
-    this.valueChartData = this.assets.map((asset) => {
-      const series = asset.beneficiaries.map((beneficiary: Beneficiary) => {
-        return {
+  prepareChartData(): void {
+    this.assets.forEach((asset: Asset) => {
+      const valueSeries: any[] = [];
+      const percentageSeries: any[] = [];
+
+      asset.beneficiaries.forEach((beneficiary: Beneficiary) => {
+        valueSeries.push({
           name: beneficiary.name,
           value: (beneficiary.allocation / 100) * asset.currentValue,
-        };
-      });
-
-      return {
-        name: asset.name,
-        series: series,
-      };
-    });
-  }
-
-  preparePercentageData(): void {
-    this.percentageChartData = this.assets.map((asset: Asset) => {
-      const series = asset.beneficiaries.map((beneficiary: Beneficiary) => {
-        return {
+        });
+        percentageSeries.push({
           name: beneficiary.name,
           value: beneficiary.allocation,
-        };
+        });
       });
 
-      return {
+      this.valueChartData.push({
         name: asset.name,
-        series: series,
-      };
+        series: valueSeries,
+      });
+
+      this.percentageChartData.push({
+        name: asset.name,
+        series: percentageSeries,
+      });
     });
   }
 }
