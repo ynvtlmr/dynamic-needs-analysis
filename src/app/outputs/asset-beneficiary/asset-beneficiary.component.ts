@@ -1,52 +1,134 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexDataLabels,
+  ApexPlotOptions,
+  ApexXAxis,
+  ApexYAxis,
+  ApexTitleSubtitle,
+  ApexLegend,
+  NgApexchartsModule,
+} from 'ng-apexcharts';
 import { Asset } from '../../inputs/asset/asset.component';
-import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { colorSets, Color, NgxChartsModule } from '@swimlane/ngx-charts';
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  yaxis: ApexYAxis;
+  dataLabels: ApexDataLabels;
+  plotOptions: ApexPlotOptions;
+  title: ApexTitleSubtitle;
+  legend: ApexLegend;
+};
 
 @Component({
   selector: 'app-asset-beneficiary',
   templateUrl: './asset-beneficiary.component.html',
-  imports: [NgxChartsModule],
+  imports: [NgApexchartsModule],
   standalone: true,
 })
 export class AssetBeneficiaryComponent implements OnInit {
-  valueChartData: any[] = [];
-  percentageChartData: any[] = [];
-  colorScheme: Color = colorSets.find((s) => s.name === 'cool') || colorSets[0];
-  assets: Asset[] = this.localStorageService.getItem('assets') || [];
+  public valueChartOptions: ChartOptions;
+  public percentageChartOptions: ChartOptions;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(private localStorageService: LocalStorageService) {
+    // Initialize ChartOptions with default values
+    this.valueChartOptions = this.initializeChartOptions();
+    this.percentageChartOptions = this.initializeChartOptions();
+  }
 
   ngOnInit(): void {
     this.prepareChartData();
   }
 
-  prepareChartData(): void {
-    this.assets.forEach((asset: Asset) => {
-      const valueSeries: any[] = [];
-      const percentageSeries: any[] = [];
+  private initializeChartOptions(): ChartOptions {
+    return {
+      series: [],
+      chart: { type: 'bar', height: 350, stacked: true },
+      plotOptions: { bar: { horizontal: true } },
+      dataLabels: { enabled: false },
+      xaxis: { type: 'category', categories: [] },
+      yaxis: { title: { text: '' } },
+      title: { text: '' },
+      legend: { position: 'bottom' },
+    };
+  }
 
-      asset.beneficiaries.forEach((beneficiary: Beneficiary) => {
-        valueSeries.push({
-          name: beneficiary.name,
-          value: (beneficiary.allocation / 100) * asset.currentValue,
-        });
-        percentageSeries.push({
-          name: beneficiary.name,
-          value: beneficiary.allocation,
-        });
-      });
+  private prepareChartData(): void {
+    const assets: Asset[] = this.localStorageService.getItem('assets') || [];
+    const beneficiaryNames: string[] = [];
+    const valueSeriesData: { name: string; data: number[] }[] = [];
+    const percentageSeriesData: { name: string; data: number[] }[] = [];
 
-      this.valueChartData.push({
-        name: asset.name,
-        series: valueSeries,
-      });
-
-      this.percentageChartData.push({
-        name: asset.name,
-        series: percentageSeries,
+    // Collect all unique beneficiary names and initialize series data
+    assets.forEach((asset) => {
+      asset.beneficiaries.forEach((beneficiary) => {
+        if (!beneficiaryNames.includes(beneficiary.name)) {
+          beneficiaryNames.push(beneficiary.name);
+          valueSeriesData.push({ name: beneficiary.name, data: [] });
+          percentageSeriesData.push({ name: beneficiary.name, data: [] });
+        }
       });
     });
+
+    // Populate series data for value and percentage charts
+    assets.forEach((asset) => {
+      valueSeriesData.forEach((series) => {
+        const beneficiary = asset.beneficiaries.find(
+          (b) => b.name === series.name,
+        );
+        series.data.push(
+          beneficiary ? (beneficiary.allocation / 100) * asset.currentValue : 0,
+        );
+      });
+
+      percentageSeriesData.forEach((series) => {
+        const beneficiary = asset.beneficiaries.find(
+          (b) => b.name === series.name,
+        );
+        series.data.push(beneficiary ? beneficiary.allocation : 0);
+      });
+    });
+
+    // Extract asset names for the x-axis categories
+    const assetNames: string[] = assets.map((asset) => asset.name);
+
+    // Update chart options for value and percentage
+    this.valueChartOptions = this.createChartOptions(
+      valueSeriesData,
+      '$ Value',
+      assetNames,
+    );
+    this.percentageChartOptions = this.createChartOptions(
+      percentageSeriesData,
+      '% Percentage',
+      assetNames,
+      true,
+    );
+  }
+
+  private createChartOptions(
+    seriesData: { name: string; data: number[] }[],
+    yAxisTitle: string,
+    assetNames: string[],
+    usePercentage: boolean = false,
+  ): ChartOptions {
+    return {
+      series: seriesData,
+      chart: { type: 'bar', height: 350, stacked: true },
+      plotOptions: { bar: { horizontal: true } },
+      dataLabels: { enabled: false },
+      xaxis: { type: 'category', categories: assetNames },
+      yaxis: { title: { text: yAxisTitle } },
+      title: {
+        text: usePercentage
+          ? 'Beneficiary Allocation Percentage'
+          : 'Asset Value Distribution',
+      },
+      legend: { position: 'bottom' },
+    };
   }
 }
