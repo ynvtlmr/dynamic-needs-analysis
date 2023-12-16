@@ -1,13 +1,9 @@
-<ngx-charts-pie-chart
-  *ngIf="data && data.length > 0"
-  [view]="[700, 400]"
-  [scheme]="colorScheme"
-  [results]="data"
-  [legend]="true"
-  [labels]="true"
-  [doughnut]="false"
-  [animations]="false"
-  [tooltipDisabled]="false"
-  [legendTitle]="'Diversification'"
->
-</ngx-charts-pie-chart>
+<div>
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [labels]="chartOptions.labels"
+    [responsive]="chartOptions.responsive"
+  >
+  </apx-chart>
+</div>
