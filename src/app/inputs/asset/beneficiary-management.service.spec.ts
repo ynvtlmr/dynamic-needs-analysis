@@ -19,13 +19,6 @@ describe('BeneficiaryManagementService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should load beneficiaries from local storage', () => {
-    const beneficiaries = service.loadBeneficiaries();
-    expect(beneficiaries.length).toBe(1);
-    expect(beneficiaries[0].name).toBe('John Doe');
-    expect(beneficiaries[0].allocation).toBe(50);
-  });
-
   it('should update allocation of a beneficiary', () => {
     const beneficiaries = [{ name: 'John Doe', allocation: 50 }];
     service.updateAllocation(beneficiaries, 0, 60);

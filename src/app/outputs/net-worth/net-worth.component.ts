@@ -1,0 +1,139 @@
+import { Component, OnInit } from '@angular/core';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexDataLabels,
+  ApexFill,
+  ApexLegend,
+  ApexXAxis,
+  ApexYAxis,
+  NgApexchartsModule,
+} from 'ng-apexcharts';
+import { Asset } from '../../inputs/asset/asset.component';
+import { LocalStorageService } from '../../services/local-storage.service';
+
+export type ChartOptions = {
+  series: ApexAxisChartSeries;
+  chart: ApexChart;
+  xaxis: ApexXAxis;
+  dataLabels: ApexDataLabels;
+  yaxis: ApexYAxis;
+  fill: ApexFill;
+  legend: ApexLegend;
+};
+
+interface YearValue {
+  year: number;
+  value: number;
+}
+
+@Component({
+  selector: 'app-net-worth',
+  templateUrl: './net-worth.component.html',
+  imports: [NgApexchartsModule],
+  standalone: true,
+})
+export class NetWorthComponent implements OnInit {
+  public chartOptions: Partial<ChartOptions>; // Definite assignment assertion
+  private assets: Asset[] = [];
+
+  constructor(private localStorageService: LocalStorageService) {
+    this.chartOptions = {
+      series: [], // Initialize as empty array
+      chart: {
+        type: 'area',
+        height: 350,
+        stacked: true,
+      } as ApexChart, // Type assertion
+      xaxis: {
+        type: 'numeric',
+        tickAmount: 0,
+        min: 0,
+        max: 0,
+      } as ApexXAxis, // Type assertion
+      dataLabels: {
+        enabled: false,
+      } as ApexDataLabels, // Type assertion
+      fill: {
+        type: 'gradient',
+        gradient: {
+          opacityFrom: 0.6,
+          opacityTo: 0.8,
+        },
+      } as ApexFill, // Type assertion
+    };
+  }
+
+  ngOnInit(): void {
+    this.loadAssets();
+  }
+
+  private loadAssets(): void {
+    this.assets = this.localStorageService.getItem('assets') || [];
+    this.prepareChartData();
+  }
+
+  private prepareChartData(): void {
+    // Calculate startYear and endYear
+    const startYear: number = Math.min(
+      ...this.assets.map((a) => a.yearAcquired),
+    );
+    const endYear: number = Math.max(
+      ...this.assets.map((a) => a.yearAcquired + a.term),
+    );
+
+    // Configure x-axis range
+    if (this.chartOptions && this.chartOptions.xaxis) {
+      this.chartOptions.xaxis.min = startYear;
+      this.chartOptions.xaxis.max = endYear;
+      this.chartOptions.xaxis.tickAmount = endYear - startYear + 1;
+    }
+
+    // Aggregate series data for each asset
+    this.chartOptions.series = this.assets.map((asset) => ({
+      name: asset.name,
+      data: this.valueSeries(asset, startYear, endYear).map((yv) => [
+        yv.year,
+        yv.value,
+      ]),
+    }));
+  }
+
+  private valueAtYear(asset: Asset, yearGiven: number): number {
+    const currentYear: number = new Date().getFullYear();
+    if (
+      yearGiven < asset.yearAcquired ||
+      yearGiven > currentYear + asset.term
+    ) {
+      return 0;
+    }
+    if (currentYear - asset.yearAcquired === 0 && yearGiven <= currentYear) {
+      return asset.initialValue;
+    }
+    if (asset.yearAcquired <= yearGiven && yearGiven <= currentYear) {
+      return (
+        asset.initialValue *
+        Math.pow(
+          asset.currentValue / asset.initialValue,
+          (yearGiven - asset.yearAcquired) / (currentYear - asset.yearAcquired),
+        )
+      );
+    }
+    return (
+      asset.currentValue *
+      Math.pow(1 + asset.rate / 100, yearGiven - currentYear)
+    );
+  }
+
+  private valueSeries(
+    asset: Asset,
+    startYear: number,
+    endYear: number,
+  ): YearValue[] {
+    const series: YearValue[] = [];
+    for (let year: number = startYear; year <= endYear; year++) {
+      series.push({ year: year, value: this.valueAtYear(asset, year) });
+    }
+    return series;
+  }
+}

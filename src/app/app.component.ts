@@ -46,5 +46,6 @@ export class AppComponent {
     { path: 'goal', label: 'Goals' },
     { path: 'diversification', label: 'Diversification' },
     { path: 'asset-beneficiary', label: 'Asset-Beneficiary' },
+    { path: 'net-worth', label: 'Net-Worth' },
   ];
 }
