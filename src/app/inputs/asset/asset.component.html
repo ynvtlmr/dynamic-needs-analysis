@@ -106,7 +106,7 @@
   <!-- Beneficiaries Table -->
   <ng-container *ngIf="beneficiaries.length > 0">
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
-      <td><input type="text" [(ngModel)]="beneficiary.name" /></td>
+      <td>{{ beneficiary.name }}</td>
       <td>
         <input
           type="number"

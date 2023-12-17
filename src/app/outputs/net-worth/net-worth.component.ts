@@ -64,7 +64,9 @@ export class NetWorthComponent implements OnInit {
           formatter: (value: string) => {
             // Convert string to number, round it, then back to string
             const valAsNumber = parseFloat(value);
-            return isNaN(valAsNumber) ? value : Math.round(valAsNumber).toString();
+            return isNaN(valAsNumber)
+              ? value
+              : Math.round(valAsNumber).toString();
           },
         },
       } as ApexXAxis,
@@ -97,8 +99,12 @@ export class NetWorthComponent implements OnInit {
 
   private prepareChartData(): void {
     // Calculate startYear and endYear
-    const startYear: number = Math.min(...this.assets.map((a) => a.yearAcquired));
-    const endYear: number = Math.max(...this.assets.map((a) => a.yearAcquired + a.term));
+    const startYear: number = Math.min(
+      ...this.assets.map((a) => a.yearAcquired),
+    );
+    const endYear: number = Math.max(
+      ...this.assets.map((a) => a.yearAcquired + a.term),
+    );
 
     // Configure x-axis range
     if (this.chartOptions && this.chartOptions.xaxis) {
@@ -110,16 +116,19 @@ export class NetWorthComponent implements OnInit {
     // Aggregate series data for each asset
     this.chartOptions.series = this.assets.map((asset) => ({
       name: asset.name,
-      data: this.valueSeries(asset, startYear, endYear).map((yv) => [yv.year, yv.value]),
+      data: this.valueSeries(asset, startYear, endYear).map((yv) => [
+        yv.year,
+        yv.value,
+      ]),
     }));
   }
 
   private valueAtYear(asset: Asset, yearGiven: number): number {
     const currentYear: number = new Date().getFullYear();
-    if (yearGiven < asset.yearAcquired || yearGiven > currentYear + asset.term) {
+    if (yearGiven < asset.yearAcquired) {
       return 0;
     }
-    if (currentYear - asset.yearAcquired === 0 && yearGiven <= currentYear) {
+    if (currentYear === asset.yearAcquired) {
       return asset.initialValue;
     }
     if (asset.yearAcquired <= yearGiven && yearGiven <= currentYear) {

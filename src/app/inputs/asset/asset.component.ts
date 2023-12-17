@@ -27,7 +27,6 @@ export interface Asset {
   isTaxable: boolean;
   isLiquid: boolean;
   isToBeSold: boolean;
-  financialInstrumentTypes: string[];
   beneficiaries: Beneficiary[];
   selectedTaxBracket: TaxBracket | undefined;
   capitalGainsTaxRate: number;
@@ -112,7 +111,6 @@ export class AssetComponent implements OnChanges {
       isToBeSold: this.isToBeSold,
       selectedTaxBracket: this.selectedTaxBracket,
       capitalGainsTaxRate: this.capitalGainsTaxRate,
-      financialInstrumentTypes: this.financialInstrumentTypes,
       beneficiaries: this.beneficiaries,
     };
     this.save.emit(asset);

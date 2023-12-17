@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Asset, AssetComponent } from '../asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
-import { FIN_INSTR_TYPES } from '../constants/asset-types.constant';
 
 @Component({
   selector: 'app-asset-manager',
@@ -40,7 +39,6 @@ export class AssetManagerComponent {
       isTaxable: false,
       isLiquid: false,
       isToBeSold: false,
-      financialInstrumentTypes: Array.from(FIN_INSTR_TYPES.keys()),
       beneficiaries: [],
       selectedTaxBracket: undefined,
       capitalGainsTaxRate: 0,
