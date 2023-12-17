@@ -7,6 +7,7 @@ import {
   ApexLegend,
   ApexXAxis,
   ApexYAxis,
+  ApexTooltip,
   NgApexchartsModule,
 } from 'ng-apexcharts';
 import { Asset } from '../../inputs/asset/asset.component';
@@ -20,6 +21,7 @@ export type ChartOptions = {
   yaxis: ApexYAxis;
   fill: ApexFill;
   legend: ApexLegend;
+  tooltip: ApexTooltip;
 };
 
 interface YearValue {
@@ -34,38 +36,58 @@ interface YearValue {
   standalone: true,
 })
 export class NetWorthComponent implements OnInit {
-  public chartOptions: Partial<ChartOptions>; // Definite assignment assertion
+  public chartOptions!: Partial<ChartOptions>;
   private assets: Asset[] = [];
 
   constructor(private localStorageService: LocalStorageService) {
+    this.initializeChart();
+  }
+
+  ngOnInit(): void {
+    this.loadAssets();
+  }
+
+  private initializeChart(): void {
     this.chartOptions = {
       series: [], // Initialize as empty array
       chart: {
         type: 'area',
         height: 350,
         stacked: true,
-      } as ApexChart, // Type assertion
+      } as ApexChart,
       xaxis: {
         type: 'numeric',
         tickAmount: 0,
         min: 0,
         max: 0,
-      } as ApexXAxis, // Type assertion
+        labels: {
+          formatter: (value: string) => {
+            // Convert string to number, round it, then back to string
+            const valAsNumber = parseFloat(value);
+            return isNaN(valAsNumber) ? value : Math.round(valAsNumber).toString();
+          },
+        },
+      } as ApexXAxis,
       dataLabels: {
         enabled: false,
-      } as ApexDataLabels, // Type assertion
+      } as ApexDataLabels,
       fill: {
         type: 'gradient',
         gradient: {
           opacityFrom: 0.6,
           opacityTo: 0.8,
         },
-      } as ApexFill, // Type assertion
+      } as ApexFill,
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left',
+      } as ApexLegend,
+      tooltip: {
+        y: {
+          formatter: (val: number) => `$${val.toFixed(0)}`, // Format as currency
+        },
+      },
     };
-  }
-
-  ngOnInit(): void {
-    this.loadAssets();
   }
 
   private loadAssets(): void {
@@ -75,12 +97,8 @@ export class NetWorthComponent implements OnInit {
 
   private prepareChartData(): void {
     // Calculate startYear and endYear
-    const startYear: number = Math.min(
-      ...this.assets.map((a) => a.yearAcquired),
-    );
-    const endYear: number = Math.max(
-      ...this.assets.map((a) => a.yearAcquired + a.term),
-    );
+    const startYear: number = Math.min(...this.assets.map((a) => a.yearAcquired));
+    const endYear: number = Math.max(...this.assets.map((a) => a.yearAcquired + a.term));
 
     // Configure x-axis range
     if (this.chartOptions && this.chartOptions.xaxis) {
@@ -92,19 +110,13 @@ export class NetWorthComponent implements OnInit {
     // Aggregate series data for each asset
     this.chartOptions.series = this.assets.map((asset) => ({
       name: asset.name,
-      data: this.valueSeries(asset, startYear, endYear).map((yv) => [
-        yv.year,
-        yv.value,
-      ]),
+      data: this.valueSeries(asset, startYear, endYear).map((yv) => [yv.year, yv.value]),
     }));
   }
 
   private valueAtYear(asset: Asset, yearGiven: number): number {
     const currentYear: number = new Date().getFullYear();
-    if (
-      yearGiven < asset.yearAcquired ||
-      yearGiven > currentYear + asset.term
-    ) {
+    if (yearGiven < asset.yearAcquired || yearGiven > currentYear + asset.term) {
       return 0;
     }
     if (currentYear - asset.yearAcquired === 0 && yearGiven <= currentYear) {
