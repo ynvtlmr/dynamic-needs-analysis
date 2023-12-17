@@ -22,14 +22,15 @@ export class BeneficiaryComponent {
   }
 
   get totalAllocation(): number {
-    return this.beneficiaries.reduce(
-      (total, beneficiary) => total + beneficiary.allocation,
-      0,
-    );
+    return this.beneficiaries.reduce((total, beneficiary) => total + beneficiary.allocation, 0,);
   }
 
-  addBeneficiary(): void {
+  addEmptyBeneficiary(): void {
     this.beneficiaries.push({ name: '', allocation: 0 });
+  }
+
+  addBeneficiary(name: string, allocation: number): void {
+    this.beneficiaries.push({name: name, allocation: allocation});
   }
 
   deleteBeneficiary(index: number): void {
