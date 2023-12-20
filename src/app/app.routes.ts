@@ -11,16 +11,18 @@ import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-ben
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 
 export const routes: Routes = [
-  { path: 'client', component: ClientComponent },
-  { path: 'beneficiaries', component: BeneficiaryComponent },
-  { path: 'business-manager', component: BusinessManagerComponent },
-  { path: 'asset-manager', component: AssetManagerComponent },
-  { path: 'debt-manager', component: DebtManagerComponent },
-  { path: 'goal', component: GoalComponent },
-  { path: 'diversification', component: DiversificationComponent },
-  { path: 'asset-beneficiary', component: AssetBeneficiaryComponent },
-  { path: 'net-worth', component: NetWorthComponent },
-  { path: '', redirectTo: '/client', pathMatch: 'full' },
+  { path: 'inputs/client', component: ClientComponent },
+  { path: 'inputs/beneficiaries', component: BeneficiaryComponent },
+  { path: 'inputs/business-manager', component: BusinessManagerComponent },
+  { path: 'inputs/asset-manager', component: AssetManagerComponent },
+  { path: 'inputs/debt-manager', component: DebtManagerComponent },
+  { path: 'inputs/goal', component: GoalComponent },
+
+  { path: 'outputs/diversification', component: DiversificationComponent },
+  { path: 'outputs/asset-beneficiary', component: AssetBeneficiaryComponent },
+  { path: 'outputs/net-worth', component: NetWorthComponent },
+
+  { path: '', redirectTo: '/inputs/client', pathMatch: 'full' },
 ];
 
 @NgModule({

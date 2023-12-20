@@ -3,9 +3,20 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LocalStorageService } from './services/local-storage.service';
 
+import { ClientComponent } from './inputs/client/client.component';
+import { BeneficiaryComponent } from './inputs/beneficiary/beneficiary.component';
+import { GoalComponent } from './inputs/goal/goal.component';
+import { BusinessManagerComponent } from './inputs/business-manager/business-manager.component';
+import { DebtManagerComponent } from './inputs/debt-manager/debt-manager.component';
+import { AssetManagerComponent } from './inputs/asset-manager/asset-manager.component';
+import { DiversificationComponent } from './outputs/diversification/diversification.component';
+import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
+import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
+
 interface NavLink {
   path: string;
   label: string;
+  component: any;
 }
 
 @Component({
@@ -16,13 +27,61 @@ interface NavLink {
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'dynamic-needs-analysis';
-  selectedTab: string = 'client';
+  // existing properties
+  selectedInputComponent: any = null;
+  selectedOutputComponent: any = null;
+  constructor(private localStorageService: LocalStorageService) {}
 
-  constructor(private localStorageService: LocalStorageService) {
-    console.log(this.selectedTab);
-    console.log(localStorageService.getItem('selectedTab'));
-    this.selectedTab = localStorageService.getItem('selectedTab') || 'client';
+  // Update with the actual component classes
+  inputLinks: NavLink[] = [
+    { path: 'inputs/client', label: 'Client', component: ClientComponent },
+    {
+      path: 'inputs/beneficiaries',
+      label: 'Beneficiaries',
+      component: BeneficiaryComponent,
+    },
+    {
+      path: 'inputs/asset-manager',
+      label: 'Assets',
+      component: AssetManagerComponent,
+    },
+    {
+      path: 'inputs/debt-manager',
+      label: 'Debts',
+      component: DebtManagerComponent,
+    },
+    {
+      path: 'inputs/business-manager',
+      label: 'Businesses',
+      component: BusinessManagerComponent,
+    },
+    { path: 'inputs/goal', label: 'Goals', component: GoalComponent },
+  ];
+
+  outputLinks: NavLink[] = [
+    {
+      path: 'outputs/net-worth',
+      label: 'Net Worth',
+      component: NetWorthComponent,
+    },
+    {
+      path: 'outputs/diversification',
+      label: 'Diversification',
+      component: DiversificationComponent,
+    },
+    {
+      path: 'outputs/asset-beneficiary',
+      label: 'Asset-Beneficiary',
+      component: AssetBeneficiaryComponent,
+    },
+  ];
+
+  onSelectInputComponent(component: any) {
+    this.selectedInputComponent = component;
+  }
+
+  onSelectOutputComponent(component: any) {
+    this.selectedOutputComponent = component;
   }
 
   clearAllLocalStorage() {
@@ -36,16 +95,4 @@ export class AppComponent {
   loadLocalStorageFromFile(event: Event) {
     this.localStorageService.loadFromFile(event);
   }
-
-  navLinks: NavLink[] = [
-    { path: 'client', label: 'Client' },
-    { path: 'beneficiaries', label: 'Beneficiaries' },
-    { path: 'asset-manager', label: 'Assets' },
-    { path: 'debt-manager', label: 'Debts' },
-    { path: 'business-manager', label: 'Businesses' },
-    { path: 'goal', label: 'Goals' },
-    { path: 'diversification', label: 'Diversification' },
-    { path: 'asset-beneficiary', label: 'Asset-Beneficiary' },
-    { path: 'net-worth', label: 'Net-Worth' },
-  ];
 }
