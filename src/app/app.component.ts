@@ -77,11 +77,21 @@ export class AppComponent {
   ];
 
   onSelectInputComponent(component: any) {
-    this.selectedInputComponent = component;
+    if (this.selectedInputComponent === component) {
+      this.selectedInputComponent = null; // Hide if it's the same component
+    } else {
+      this.selectedInputComponent = component;
+      this.selectedOutputComponent = null; // Optionally hide the other section
+    }
   }
 
   onSelectOutputComponent(component: any) {
-    this.selectedOutputComponent = component;
+    if (this.selectedOutputComponent === component) {
+      this.selectedOutputComponent = null;
+    } else {
+      this.selectedOutputComponent = component;
+      this.selectedInputComponent = null; // Optionally hide the other section
+    }
   }
 
   clearAllLocalStorage() {
