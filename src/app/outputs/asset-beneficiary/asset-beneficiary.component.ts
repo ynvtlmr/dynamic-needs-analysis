@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -32,7 +33,8 @@ export type ChartOptions = {
   imports: [NgApexchartsModule],
   standalone: true,
 })
-export class AssetBeneficiaryComponent implements OnInit {
+export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
+  private storageSub!: Subscription;
   public valueChartOptions: ChartOptions;
   public percentageChartOptions: ChartOptions;
   public beneficiaryValuePieChartOptions: ChartOptions;
@@ -45,7 +47,22 @@ export class AssetBeneficiaryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.prepareChartData();
+    this.prepareChartData(); // Prepare initial chart data
+
+    // Subscribe to the localStorage changes
+    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
+      // If the change is related to assets or something that affects the chart
+      if (key === 'assets' || key === 'all') {
+        this.prepareChartData(); // Update the chart data
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    // Clean up the subscription to prevent memory leaks
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
+    }
   }
 
   private initializeChartOptions(): ChartOptions {

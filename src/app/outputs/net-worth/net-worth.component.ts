@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -35,7 +36,8 @@ interface YearValue {
   imports: [NgApexchartsModule],
   standalone: true,
 })
-export class NetWorthComponent implements OnInit {
+export class NetWorthComponent implements OnInit, OnDestroy {
+  private storageSub!: Subscription;
   public chartOptions!: Partial<ChartOptions>;
   private assets: Asset[] = [];
 
@@ -44,7 +46,19 @@ export class NetWorthComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAssets();
+    this.loadAssets(); // Load initial assets
+
+    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
+      if (key === 'assets' || key === 'all') {
+        this.loadAssets(); // Reload and update chart if assets change
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
+    }
   }
 
   private initializeChart(): void {

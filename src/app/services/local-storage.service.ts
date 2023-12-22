@@ -1,10 +1,16 @@
-// src/app/services/local-storage.service.ts
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
+  private localStorageSubject = new BehaviorSubject<string>('');
+
+  watchStorage(): Observable<string> {
+    return this.localStorageSubject.asObservable();
+  }
+
   // Serialize data before storing
   private serialize(data: any): string {
     return JSON.stringify(data, null, 2);
@@ -21,6 +27,7 @@ export class LocalStorageService {
 
   setItem(key: string, value: any) {
     localStorage.setItem(key, this.serialize(value));
+    this.localStorageSubject.next(key); // Emit the key of the changed item
   }
 
   getItem(key: string): any {
@@ -30,6 +37,7 @@ export class LocalStorageService {
 
   clearAll() {
     localStorage.clear();
+    this.localStorageSubject.next('clear'); // Emit a special value for clearing all
     window.location.reload();
   }
 

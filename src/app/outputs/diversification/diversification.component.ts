@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ApexNonAxisChartSeries,
   ApexResponsive,
@@ -23,7 +24,8 @@ export type PieChartOptions = {
   imports: [NgApexchartsModule],
   standalone: true,
 })
-export class DiversificationComponent implements OnInit {
+export class DiversificationComponent implements OnInit, OnDestroy {
+  private storageSub!: Subscription;
   public chartOptions: PieChartOptions;
 
   constructor(private localStorageService: LocalStorageService) {
@@ -38,7 +40,19 @@ export class DiversificationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.prepareChartData();
+    this.prepareChartData(); // Prepare initial chart data
+
+    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
+      if (key === 'assets' || key === 'all') {
+        this.prepareChartData(); // Update chart data if assets change
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
+    }
   }
 
   private prepareChartData(): void {
