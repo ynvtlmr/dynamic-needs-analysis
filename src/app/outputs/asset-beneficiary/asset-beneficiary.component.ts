@@ -69,7 +69,11 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     // Ensure all properties are defined for bar charts
     return {
       series: [],
-      chart: { type: 'bar', height: 350 },
+      chart: { type: 'bar', height: 350,
+        animations: {
+          enabled: false // Disable animations
+        }
+      },
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
       xaxis: { type: 'category', categories: [] },
@@ -84,7 +88,11 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     // Ensure all properties are defined for pie charts
     return {
       series: [],
-      chart: { type: 'pie', height: 350 },
+      chart: { type: 'pie', height: 350,
+        animations: {
+          enabled: false // Disable animations
+        }
+      },
       dataLabels: { enabled: true },
       title: { text: 'Beneficiary Value Distribution' },
       legend: { position: 'bottom' },
@@ -173,7 +181,11 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   ): ChartOptions {
     return {
       series: seriesData,
-      chart: { type: 'bar', height: 350, stacked: true },
+      chart: { type: 'bar', height: 350, stacked: true,
+        animations: {
+          enabled: false // Disable animations
+        }
+      },
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
       xaxis: { type: 'category', categories: assetNames },

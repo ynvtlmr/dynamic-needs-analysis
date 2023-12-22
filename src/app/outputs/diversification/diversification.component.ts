@@ -32,7 +32,12 @@ export class DiversificationComponent implements OnInit, OnDestroy {
     // Initialize PieChartOptions with default values
     this.chartOptions = {
       series: [],
-      chart: { type: 'pie' },
+      chart: {
+        type: 'pie',
+        animations: {
+          enabled: false // Disable animations
+        }
+      },
       responsive: [{ breakpoint: 400, options: { chart: { width: 200 } } }],
       labels: [],
       legend: { position: 'bottom' },

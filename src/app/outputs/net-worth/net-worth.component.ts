@@ -67,6 +67,9 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       chart: {
         type: 'area',
         height: 350,
+        animations: {
+          enabled: false // Disable animations
+        },
         stacked: true,
       } as ApexChart,
       xaxis: {
