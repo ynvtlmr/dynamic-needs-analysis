@@ -1,35 +1,35 @@
 <div class="app-container">
-<!-- Save app state -->
-<button (click)="clearAllLocalStorage()">Clear All Data</button>
-<button (click)="downloadLocalStorageAsFile()">Save Client</button>
-<input type="file" (change)="loadLocalStorageFromFile($event)" />
-<br />
+  <!-- Save app state -->
+  <button (click)="clearAllLocalStorage()">Clear All Data</button>
+  <button (click)="downloadLocalStorageAsFile()">Save Client</button>
+  <input type="file" (change)="loadLocalStorageFromFile($event)" />
+  <br />
 
-<!-- Input Navigation -->
-<div>
-  <button
-    *ngFor="let link of inputLinks"
-    (click)="onSelectInputComponent(link.component)"
-  >
-    {{ link.label }}
-  </button>
-</div>
+  <!-- Input Navigation -->
+  <div>
+    <button
+      *ngFor="let link of inputLinks"
+      (click)="onSelectInputComponent(link.component)"
+    >
+      {{ link.label }}
+    </button>
+  </div>
 
-<!-- Output Navigation -->
-<div>
-  <button
-    *ngFor="let link of outputLinks"
-    (click)="onSelectOutputComponent(link.component)"
-  >
-    {{ link.label }}
-  </button>
-</div>
+  <!-- Output Navigation -->
+  <div>
+    <button
+      *ngFor="let link of outputLinks"
+      (click)="onSelectOutputComponent(link.component)"
+    >
+      {{ link.label }}
+    </button>
+  </div>
 
-<!-- Conditionally Render Selected Components -->
-<div *ngIf="selectedInputComponent">
-  <ng-container *ngComponentOutlet="selectedInputComponent"></ng-container>
-</div>
-<div *ngIf="selectedOutputComponent">
-  <ng-container *ngComponentOutlet="selectedOutputComponent"></ng-container>
-</div>
+  <!-- Conditionally Render Selected Components -->
+  <div *ngIf="selectedInputComponent">
+    <ng-container *ngComponentOutlet="selectedInputComponent"></ng-container>
+  </div>
+  <div *ngIf="selectedOutputComponent">
+    <ng-container *ngComponentOutlet="selectedOutputComponent"></ng-container>
+  </div>
 </div>
