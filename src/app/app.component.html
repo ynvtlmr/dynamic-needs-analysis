@@ -1,3 +1,4 @@
+<div class="app-container">
 <!-- Save app state -->
 <button (click)="clearAllLocalStorage()">Clear All Data</button>
 <button (click)="downloadLocalStorageAsFile()">Save Client</button>
@@ -30,4 +31,5 @@
 </div>
 <div *ngIf="selectedOutputComponent">
   <ng-container *ngComponentOutlet="selectedOutputComponent"></ng-container>
+</div>
 </div>

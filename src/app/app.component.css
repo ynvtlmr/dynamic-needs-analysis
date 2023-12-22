@@ -1,3 +1,20 @@
 .active {
   color: blue;
 }
+
+
+/* Base styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media only screen{
+  .app-container {
+    max-width: 768px; /* Adjust this value as needed */
+    margin: 0 auto; /* Center the container */
+    padding: 0; /* Optional: for some padding around the app */
+  }
+}
