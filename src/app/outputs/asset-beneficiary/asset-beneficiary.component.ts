@@ -84,12 +84,12 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
           show: false, // Hide the toolbar
         },
       },
-      plotOptions: {bar: {horizontal: true}},
-      dataLabels: {enabled: false},
-      xaxis: {type: 'category', categories: []},
-      yaxis: {title: {text: ''}},
-      title: {text: ''},
-      legend: {position: 'bottom'},
+      plotOptions: { bar: { horizontal: true } },
+      dataLabels: { enabled: false },
+      xaxis: { type: 'category', categories: [] },
+      yaxis: { title: { text: '' } },
+      title: { text: '' },
+      legend: { position: 'bottom' },
       labels: [], // Initialize labels even though not used for bar charts
     };
   }
@@ -108,13 +108,13 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
           show: false, // Hide the toolbar
         },
       },
-      dataLabels: {enabled: true},
-      title: {text: 'Beneficiary Distribution'},
-      legend: {position: 'bottom'},
+      dataLabels: { enabled: true },
+      title: { text: 'Beneficiary Distribution' },
+      legend: { position: 'bottom' },
       labels: [],
-      xaxis: {type: 'category', categories: []},
-      yaxis: {title: {text: ''}},
-      plotOptions: {bar: {horizontal: true}},
+      xaxis: { type: 'category', categories: [] },
+      yaxis: { title: { text: '' } },
+      plotOptions: { bar: { horizontal: true } },
     };
   }
 
@@ -145,8 +145,8 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
       asset.beneficiaries.forEach((beneficiary) => {
         if (!beneficiaryNames.includes(beneficiary.name)) {
           beneficiaryNames.push(beneficiary.name);
-          valueSeriesData.push({name: beneficiary.name, data: []});
-          percentageSeriesData.push({name: beneficiary.name, data: []});
+          valueSeriesData.push({ name: beneficiary.name, data: [] });
+          percentageSeriesData.push({ name: beneficiary.name, data: [] });
         }
       });
     });
@@ -207,21 +207,21 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
           show: false, // Hide the toolbar
         },
       },
-      plotOptions: {bar: {horizontal: true}},
-      dataLabels: {enabled: false},
+      plotOptions: { bar: { horizontal: true } },
+      dataLabels: { enabled: false },
       xaxis: {
         type: 'category',
         categories: assetNames,
         // Additional configuration for percentage chart
         max: usePercentage ? 100 : undefined, // Set max to 100% for percentage chart
       },
-      yaxis: {title: {text: yAxisTitle}},
+      yaxis: { title: { text: yAxisTitle } },
       title: {
         text: usePercentage
           ? 'Beneficiary Allocation Percentage'
           : 'Asset Value Distribution',
       },
-      legend: {position: 'bottom'},
+      legend: { position: 'bottom' },
       labels: [], // Initialize labels even though not used for bar charts
     };
 
@@ -229,7 +229,8 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   }
 
   private prepareBeneficiaryPercentageChartData(): void {
-    const beneficiaries = this.localStorageService.getItem('beneficiaries') || [];
+    const beneficiaries =
+      this.localStorageService.getItem('beneficiaries') || [];
     const beneficiaryTotals: Record<string, number> = {};
 
     // Calculate the total allocation for each beneficiary
@@ -241,7 +242,9 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     });
 
     // Set the series and labels for the chart
-    this.beneficiaryPercentageChartOptions.series = Object.values(beneficiaryTotals);
-    this.beneficiaryPercentageChartOptions.labels = Object.keys(beneficiaryTotals);
+    this.beneficiaryPercentageChartOptions.series =
+      Object.values(beneficiaryTotals);
+    this.beneficiaryPercentageChartOptions.labels =
+      Object.keys(beneficiaryTotals);
   }
 }
