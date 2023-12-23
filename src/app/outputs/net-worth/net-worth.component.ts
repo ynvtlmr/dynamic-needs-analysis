@@ -70,6 +70,9 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         animations: {
           enabled: false // Disable animations
         },
+        toolbar: {
+          show: false  // Hide the toolbar
+        },
         stacked: true,
       } as ApexChart,
       xaxis: {

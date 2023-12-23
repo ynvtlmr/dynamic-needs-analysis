@@ -72,7 +72,10 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
       chart: { type: 'bar', height: 350,
         animations: {
           enabled: false // Disable animations
-        }
+        },
+        toolbar: {
+          show: false  // Hide the toolbar
+        },
       },
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
@@ -91,7 +94,10 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
       chart: { type: 'pie', height: 350,
         animations: {
           enabled: false // Disable animations
-        }
+        },
+        toolbar: {
+          show: false  // Hide the toolbar
+        },
       },
       dataLabels: { enabled: true },
       title: { text: 'Beneficiary Value Distribution' },
@@ -184,7 +190,10 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
       chart: { type: 'bar', height: 350, stacked: true,
         animations: {
           enabled: false // Disable animations
-        }
+        },
+        toolbar: {
+          show: false  // Hide the toolbar
+        },
       },
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
