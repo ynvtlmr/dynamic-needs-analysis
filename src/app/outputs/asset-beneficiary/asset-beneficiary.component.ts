@@ -50,12 +50,14 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     this.prepareChartData(); // Prepare initial chart data
 
     // Subscribe to the localStorage changes
-    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
-      // If the change is related to assets or something that affects the chart
-      if (key === 'assets' || key === 'all') {
-        this.prepareChartData(); // Update the chart data
-      }
-    });
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key) => {
+        // If the change is related to assets or something that affects the chart
+        if (key === 'assets' || key === 'all') {
+          this.prepareChartData(); // Update the chart data
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -69,12 +71,14 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     // Ensure all properties are defined for bar charts
     return {
       series: [],
-      chart: { type: 'bar', height: 350,
+      chart: {
+        type: 'bar',
+        height: 350,
         animations: {
-          enabled: false // Disable animations
+          enabled: false, // Disable animations
         },
         toolbar: {
-          show: false  // Hide the toolbar
+          show: false, // Hide the toolbar
         },
       },
       plotOptions: { bar: { horizontal: true } },
@@ -91,12 +95,14 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     // Ensure all properties are defined for pie charts
     return {
       series: [],
-      chart: { type: 'pie', height: 350,
+      chart: {
+        type: 'pie',
+        height: 350,
         animations: {
-          enabled: false // Disable animations
+          enabled: false, // Disable animations
         },
         toolbar: {
-          show: false  // Hide the toolbar
+          show: false, // Hide the toolbar
         },
       },
       dataLabels: { enabled: true },
@@ -187,12 +193,15 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   ): ChartOptions {
     return {
       series: seriesData,
-      chart: { type: 'bar', height: 350, stacked: true,
+      chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
         animations: {
-          enabled: false // Disable animations
+          enabled: false, // Disable animations
         },
         toolbar: {
-          show: false  // Hide the toolbar
+          show: false, // Hide the toolbar
         },
       },
       plotOptions: { bar: { horizontal: true } },

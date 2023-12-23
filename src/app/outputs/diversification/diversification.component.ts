@@ -35,8 +35,8 @@ export class DiversificationComponent implements OnInit, OnDestroy {
       chart: {
         type: 'pie',
         animations: {
-          enabled: false // Disable animations
-        }
+          enabled: false, // Disable animations
+        },
       },
       responsive: [{ breakpoint: 400, options: { chart: { width: 200 } } }],
       labels: [],
@@ -47,11 +47,13 @@ export class DiversificationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.prepareChartData(); // Prepare initial chart data
 
-    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
-      if (key === 'assets' || key === 'all') {
-        this.prepareChartData(); // Update chart data if assets change
-      }
-    });
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key) => {
+        if (key === 'assets' || key === 'all') {
+          this.prepareChartData(); // Update chart data if assets change
+        }
+      });
   }
 
   ngOnDestroy(): void {

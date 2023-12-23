@@ -81,7 +81,6 @@ export class AppComponent {
       this.selectedInputComponent = null; // Hide if it's the same component
     } else {
       this.selectedInputComponent = component;
-      // this.selectedOutputComponent = null; // Optionally hide the other section
     }
   }
 
@@ -90,7 +89,6 @@ export class AppComponent {
       this.selectedOutputComponent = null;
     } else {
       this.selectedOutputComponent = component;
-      // this.selectedInputComponent = null; // Optionally hide the other section
     }
   }
 

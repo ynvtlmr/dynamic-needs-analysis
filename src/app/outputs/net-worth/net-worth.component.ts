@@ -48,11 +48,13 @@ export class NetWorthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadAssets(); // Load initial assets
 
-    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
-      if (key === 'assets' || key === 'all') {
-        this.loadAssets(); // Reload and update chart if assets change
-      }
-    });
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key) => {
+        if (key === 'assets' || key === 'all') {
+          this.loadAssets(); // Reload and update chart if assets change
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -68,10 +70,10 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         type: 'area',
         height: 350,
         animations: {
-          enabled: false // Disable animations
+          enabled: false, // Disable animations
         },
         toolbar: {
-          show: false  // Hide the toolbar
+          show: false, // Hide the toolbar
         },
         stacked: true,
       } as ApexChart,
