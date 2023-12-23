@@ -10,7 +10,36 @@
 /*@import 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css';*/
 /*@import 'https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js';*/
 
+/* Limit input size */
 input {
   width: 120px;
+}
+
+/* Right aligns number inputs */
+input[type="number"] {
   text-align: right;
+}
+
+/* Hide spinners for WebKit browsers */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide spinners for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Container to hold pie charts */
+.pie-chart-container {
+  display: flex;                  /* Enable flexbox */
+  justify-content: space-around;  /* Distribute space between charts */
+  align-items: center;            /* Align charts vertically */
+}
+
+/* Style for each chart */
+.chart {
+  flex: 1;                /* Each chart takes equal width */
 }
