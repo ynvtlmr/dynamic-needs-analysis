@@ -59,4 +59,8 @@ export class BusinessManagerComponent {
     this.editingBusiness = null;
     this.editingBusinessIndex = null;
   }
+
+  isEditing(index: number): boolean {
+    return this.editingBusinessIndex === index;
+  }
 }

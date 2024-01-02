@@ -66,4 +66,8 @@ export class DebtManagerComponent {
     this.editingDebt = null;
     this.editingDebtIndex = null;
   }
+
+  isEditing(index: number): boolean {
+    return this.editingDebtIndex === index;
+  }
 }

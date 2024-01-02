@@ -74,4 +74,8 @@ export class AssetManagerComponent {
     this.editingAsset = null;
     this.editingAssetIndex = null;
   }
+
+  isEditing(index: number): boolean {
+    return this.editingAssetIndex === index;
+  }
 }

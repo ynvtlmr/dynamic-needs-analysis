@@ -9,7 +9,7 @@
     <tr *ngFor="let debt of debts; let i = index">
       <td>{{ debt.name }}</td>
       <td>{{ debt.initialValue | currency }}</td>
-      <td><button (click)="editDebt(i)">Edit</button></td>
+      <td><button [class.active]="isEditing(i)" (click)="editDebt(i)">Edit</button></td>
       <td><button (click)="deleteDebt(i)">Delete</button></td>
     </tr>
   </table>
