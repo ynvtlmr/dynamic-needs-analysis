@@ -11,8 +11,13 @@
     <tr *ngFor="let asset of assets; let i = index">
       <td>{{ asset.name }}</td>
       <td>{{ asset.currentValue | currency }}</td>
-      <td><button (click)="editAsset(i)">Edit</button></td>
+      <td>
+        <button [class.active]="isEditing(i)" (click)="editAsset(i)">
+          {{ isEditing(i) ? 'Save' : 'Edit' }}
+        </button>
+      </td>
       <td><button (click)="deleteAsset(i)">Delete</button></td>
+      <td><button *ngIf="isEditing(i)" (click)="onCancelEditing()">Cancel</button></td>
     </tr>
   </table>
 

@@ -54,9 +54,15 @@ export class AssetManagerComponent {
     this.editingAsset = null;
     this.editingAssetIndex = null;
     this.updateStorage();
+    this.editingAssetIndex = null;  // Reset the editing index after saving
   }
 
   editAsset(index: number): void {
+    if (this.editingAssetIndex !== null && this.editingAssetIndex !== index) {
+      // Cancel the current editing if another asset's edit button is clicked
+      this.onCancelEditing();
+    }
+
     this.editingAsset = { ...this.assets[index] };
     this.editingAssetIndex = index;
   }
@@ -73,5 +79,9 @@ export class AssetManagerComponent {
   onCancelEditing(): void {
     this.editingAsset = null;
     this.editingAssetIndex = null;
+  }
+
+  isEditing(index: number): boolean {
+    return this.editingAssetIndex === index;
   }
 }
