@@ -1,56 +1,17 @@
-<!-- Container for the pie charts -->
-<div class="pie-chart-container">
-  <!-- First Pie Chart -->
-  <div class="chart">
-    <apx-chart
-      [series]="beneficiaryValuePieChartOptions.series"
-      [chart]="beneficiaryValuePieChartOptions.chart"
-      [labels]="beneficiaryValuePieChartOptions.labels"
-      [dataLabels]="beneficiaryValuePieChartOptions.dataLabels"
-      [title]="beneficiaryValuePieChartOptions.title"
-      [legend]="beneficiaryValuePieChartOptions.legend"
-    >
-    </apx-chart>
+<!-- asset-beneficiary.component.html -->
+<div class="asset-beneficiary-container">
+  <!-- Container for the pie charts -->
+  <div class="pie-chart-container">
+    <!-- Beneficiary Value Pie Chart Component -->
+    <app-beneficiary-value-pie-chart [assets]="assets"></app-beneficiary-value-pie-chart>
+
+    <!-- Beneficiary Percentage Pie Chart Component -->
+    <app-beneficiary-percentage-pie-chart [beneficiaries]="beneficiaries"></app-beneficiary-percentage-pie-chart>
   </div>
 
-  <!-- Second Pie Chart -->
-  <div class="chart">
-    <apx-chart
-      [series]="beneficiaryPercentageChartOptions.series"
-      [chart]="beneficiaryPercentageChartOptions.chart"
-      [labels]="beneficiaryPercentageChartOptions.labels"
-      [dataLabels]="beneficiaryPercentageChartOptions.dataLabels"
-      [title]="beneficiaryPercentageChartOptions.title"
-      [legend]="beneficiaryPercentageChartOptions.legend"
-    >
-    </apx-chart>
-  </div>
-</div>
+  <!-- Asset Value Bar Chart Component -->
+  <app-asset-value-bar-chart [assets]="assets"></app-asset-value-bar-chart>
 
-<div>
-  <apx-chart
-    [series]="valueChartOptions.series"
-    [chart]="valueChartOptions.chart"
-    [xaxis]="valueChartOptions.xaxis"
-    [yaxis]="valueChartOptions.yaxis"
-    [dataLabels]="valueChartOptions.dataLabels"
-    [plotOptions]="valueChartOptions.plotOptions"
-    [title]="valueChartOptions.title"
-    [legend]="valueChartOptions.legend"
-  >
-  </apx-chart>
-</div>
-
-<div>
-  <apx-chart
-    [series]="percentageChartOptions.series"
-    [chart]="percentageChartOptions.chart"
-    [xaxis]="percentageChartOptions.xaxis"
-    [yaxis]="percentageChartOptions.yaxis"
-    [dataLabels]="percentageChartOptions.dataLabels"
-    [plotOptions]="percentageChartOptions.plotOptions"
-    [title]="percentageChartOptions.title"
-    [legend]="percentageChartOptions.legend"
-  >
-  </apx-chart>
+  <!-- Asset Percentage Bar Chart Component -->
+  <app-asset-percentage-bar-chart [assets]="assets"></app-asset-percentage-bar-chart>
 </div>
