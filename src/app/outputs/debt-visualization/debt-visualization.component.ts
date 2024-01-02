@@ -36,6 +36,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
   public chartOptions!: Partial<ChartOptions>;
   private debts: Debt[] = [];
+  private debtValuesCache = new Map<string, number>(); // Cache to store computed debt values
 
   constructor(private localStorageService: LocalStorageService) {
     this.initializeChart();
@@ -135,28 +136,29 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private debtValueOverTime(debt: Debt, year: number): number {
-    // If the year is before the debt was acquired, return 0
+    const cacheKey = `${debt.name}-${year}`; // Unique key for the debt and year
+    if (this.debtValuesCache.has(cacheKey)) {
+      return this.debtValuesCache.get(cacheKey)!; // Return cached value if available
+    }
+
     if (year < debt.yearAcquired) {
       return 0;
     }
 
-    // Initialize remaining debt as the initial value for the year the debt was acquired
     let remainingDebt =
       year === debt.yearAcquired
         ? debt.initialValue
         : this.debtValueOverTime(debt, year - 1);
 
-    // If the debt was already paid off last year, it remains 0
     if (remainingDebt <= 0) {
+      this.debtValuesCache.set(cacheKey, 0);
       return 0;
     }
 
-    // Apply the interest rate to the remaining debt from the previous year
     remainingDebt *= Math.pow(1 + debt.rate / 100, 1);
-
-    // Subtract this year's payment, but don't let the debt go below 0
     remainingDebt = Math.max(0, remainingDebt - debt.annualPayment);
 
+    this.debtValuesCache.set(cacheKey, remainingDebt); // Store the calculated value in the cache
     return remainingDebt;
   }
 }
