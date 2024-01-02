@@ -65,7 +65,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
     this.chartOptions = {
       series: [], // Will be populated with debt data
       chart: {
-        type: 'area', // Line chart to show the progression of debts over time
+        type: 'line', // Line chart to show the progression of debts over time
         height: 350,
         animations: {
           enabled: false, // Disable animations
@@ -73,7 +73,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         toolbar: {
           show: false, // Hide the toolbar
         },
-        stacked: true,
+        stacked: false,
       },
       xaxis: {
         type: 'numeric', // Numeric x-axis to represent years
@@ -88,14 +88,6 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         },
       },
       dataLabels: { enabled: false },
-      fill: {
-        type: 'gradient',
-        gradient: {
-          shadeIntensity: 1,
-          opacityFrom: 0.7,
-          opacityTo: 0.9,
-        },
-      },
       legend: {
         position: 'top', // Place legend at the top of the chart
       },
@@ -116,13 +108,6 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       ...this.debts.map((d) => d.yearAcquired + d.term),
     );
 
-    // Update x-axis with the year range
-    this.chartOptions.xaxis = {
-      ...this.chartOptions.xaxis,
-      min: startYear,
-      max: endYear,
-    };
-
     // Map each debt to a series in the chart
     this.chartOptions.series = this.debts.map((debt) => {
       return {
@@ -133,6 +118,19 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         ).map((year) => [year, this.debtValueOverTime(debt, year)]),
       };
     });
+
+    // Update x-axis with the year range and formatter for labels
+    this.chartOptions.xaxis = {
+      ...this.chartOptions.xaxis,
+      min: startYear,
+      max: endYear,
+      labels: {
+        formatter: (value) => {
+          // Extract the last two digits and prepend with a quote
+          return `'${value.toString().slice(-2)}`;
+        },
+      },
+    };
   }
 
   private debtValueOverTime(debt: Debt, year: number): number {
