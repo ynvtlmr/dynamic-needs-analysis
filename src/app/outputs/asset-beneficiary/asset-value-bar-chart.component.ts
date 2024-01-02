@@ -78,6 +78,9 @@ export class AssetValueBarChartComponent implements OnInit {
     // Update chart options for value
     this.chartOptions = this.initializeChartOptions();
     this.chartOptions.series = seriesData;
-    this.chartOptions.xaxis = { ...this.chartOptions.xaxis, categories: assetNames };
+    this.chartOptions.xaxis = {
+      ...this.chartOptions.xaxis,
+      categories: assetNames,
+    };
   }
 }

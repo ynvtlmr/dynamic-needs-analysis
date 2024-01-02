@@ -3,15 +3,21 @@
   <!-- Container for the pie charts -->
   <div class="pie-chart-container">
     <!-- Beneficiary Value Pie Chart Component -->
-    <app-beneficiary-value-pie-chart [assets]="assets"></app-beneficiary-value-pie-chart>
+    <app-beneficiary-value-pie-chart
+      [assets]="assets"
+    ></app-beneficiary-value-pie-chart>
 
     <!-- Beneficiary Percentage Pie Chart Component -->
-    <app-beneficiary-percentage-pie-chart [beneficiaries]="beneficiaries"></app-beneficiary-percentage-pie-chart>
+    <app-beneficiary-percentage-pie-chart
+      [beneficiaries]="beneficiaries"
+    ></app-beneficiary-percentage-pie-chart>
   </div>
 
   <!-- Asset Value Bar Chart Component -->
   <app-asset-value-bar-chart [assets]="assets"></app-asset-value-bar-chart>
 
   <!-- Asset Percentage Bar Chart Component -->
-  <app-asset-percentage-bar-chart [assets]="assets"></app-asset-percentage-bar-chart>
+  <app-asset-percentage-bar-chart
+    [assets]="assets"
+  ></app-asset-percentage-bar-chart>
 </div>

@@ -77,7 +77,11 @@
     </tr>
     <tr>
       <td>Amount Insured for Income ($):</td>
-      <td>{{ annualIncome * incomeReplacementMultiplier | currency:'USD':true }}</td>
+      <td>
+        {{
+          annualIncome * incomeReplacementMultiplier | currency: "USD" : true
+        }}
+      </td>
     </tr>
     <tr>
       <td><label for="taxBracket">Tax Bracket:</label></td>

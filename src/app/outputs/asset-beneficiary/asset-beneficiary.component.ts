@@ -3,10 +3,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Asset } from '../../inputs/asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
-import {BeneficiaryValuePieChartComponent} from "./beneficiary-value-pie-chart.component";
-import {BeneficiaryPercentagePieChartComponent} from "./beneficiary-percentage-pie-chart.component";
-import {AssetValueBarChartComponent} from "./asset-value-bar-chart.component";
-import {AssetPercentageBarChartComponent} from "./asset-percentage-bar-chart.component";
+import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart.component';
+import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
+import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
+import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
 
 @Component({
   selector: 'app-asset-beneficiary',
@@ -15,9 +15,9 @@ import {AssetPercentageBarChartComponent} from "./asset-percentage-bar-chart.com
     BeneficiaryValuePieChartComponent,
     BeneficiaryPercentagePieChartComponent,
     AssetValueBarChartComponent,
-    AssetPercentageBarChartComponent
+    AssetPercentageBarChartComponent,
   ],
-  standalone: true
+  standalone: true,
 })
 export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
@@ -30,12 +30,14 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     this.loadAssetsAndBeneficiaries(); // Load initial assets and beneficiaries
 
     // Subscribe to the localStorage changes
-    this.storageSub = this.localStorageService.watchStorage().subscribe((key) => {
-      // If the change is related to assets or beneficiaries or something that affects the charts
-      if (key === 'assets' || key === 'beneficiaries' || key === 'all') {
-        this.loadAssetsAndBeneficiaries(); // Reload the data
-      }
-    });
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key) => {
+        // If the change is related to assets or beneficiaries or something that affects the charts
+        if (key === 'assets' || key === 'beneficiaries' || key === 'all') {
+          this.loadAssetsAndBeneficiaries(); // Reload the data
+        }
+      });
   }
 
   ngOnDestroy(): void {
@@ -48,6 +50,7 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   private loadAssetsAndBeneficiaries(): void {
     // Retrieve assets and beneficiaries from local storage or set to empty if none
     this.assets = this.localStorageService.getItem('assets') || [];
-    this.beneficiaries = this.localStorageService.getItem('beneficiaries') || [];
+    this.beneficiaries =
+      this.localStorageService.getItem('beneficiaries') || [];
   }
 }

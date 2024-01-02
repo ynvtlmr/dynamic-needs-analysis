@@ -9,7 +9,11 @@
     <tr *ngFor="let business of businesses; let i = index">
       <td>{{ business.businessName }}</td>
       <td>{{ business.valuation | currency }}</td>
-      <td><button [class.active]="isEditing(i)" (click)="editBusiness(i)">Edit</button></td>
+      <td>
+        <button [class.active]="isEditing(i)" (click)="editBusiness(i)">
+          Edit
+        </button>
+      </td>
       <td><button (click)="deleteBusiness(i)">Delete</button></td>
     </tr>
   </table>

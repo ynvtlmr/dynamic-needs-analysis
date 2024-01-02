@@ -76,6 +76,9 @@ export class AssetPercentageBarChartComponent implements OnInit {
     // Update chart options for percentage
     this.chartOptions = this.initializeChartOptions();
     this.chartOptions.series = seriesData;
-    this.chartOptions.xaxis = { ...this.chartOptions.xaxis, categories: assetNames };
+    this.chartOptions.xaxis = {
+      ...this.chartOptions.xaxis,
+      categories: assetNames,
+    };
   }
 }

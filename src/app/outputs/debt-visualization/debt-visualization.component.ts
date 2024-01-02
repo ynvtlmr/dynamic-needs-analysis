@@ -76,10 +76,10 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       },
       xaxis: {
         type: 'numeric', // Numeric x-axis to represent years
-        title: { text: "Years" },
+        title: { text: 'Years' },
       },
       yaxis: {
-        title: { text: "Debt Value ($)" },
+        title: { text: 'Debt Value ($)' },
       },
       tooltip: {
         y: {
@@ -108,18 +108,28 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
   private prepareChartData(): void {
     // Find the earliest year and the latest possible term across all debts
-    const startYear: number = Math.min(...this.debts.map(d => d.yearAcquired));
-    const endYear: number = Math.max(...this.debts.map(d => d.yearAcquired + d.term));
+    const startYear: number = Math.min(
+      ...this.debts.map((d) => d.yearAcquired),
+    );
+    const endYear: number = Math.max(
+      ...this.debts.map((d) => d.yearAcquired + d.term),
+    );
 
     // Update x-axis with the year range
-    this.chartOptions.xaxis = { ...this.chartOptions.xaxis, min: startYear, max: endYear };
+    this.chartOptions.xaxis = {
+      ...this.chartOptions.xaxis,
+      min: startYear,
+      max: endYear,
+    };
 
     // Map each debt to a series in the chart
-    this.chartOptions.series = this.debts.map(debt => {
+    this.chartOptions.series = this.debts.map((debt) => {
       return {
         name: debt.name,
-        data: Array.from({length: endYear - startYear + 1}, (_, i) => startYear + i)
-          .map(year => [year, this.debtValueOverTime(debt, year)])
+        data: Array.from(
+          { length: endYear - startYear + 1 },
+          (_, i) => startYear + i,
+        ).map((year) => [year, this.debtValueOverTime(debt, year)]),
       };
     });
   }
@@ -131,7 +141,10 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
     }
 
     // Initialize remaining debt as the initial value for the year the debt was acquired
-    let remainingDebt = year === debt.yearAcquired ? debt.initialValue : this.debtValueOverTime(debt, year - 1);
+    let remainingDebt =
+      year === debt.yearAcquired
+        ? debt.initialValue
+        : this.debtValueOverTime(debt, year - 1);
 
     // If the debt was already paid off last year, it remains 0
     if (remainingDebt <= 0) {

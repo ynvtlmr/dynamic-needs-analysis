@@ -79,7 +79,7 @@ export class AppComponent {
       path: 'outputs/debt-visualization',
       label: 'Debt Visualization',
       component: DebtVisualizationComponent,
-    }
+    },
   ];
 
   onSelectInputComponent(component: any) {
