@@ -10,6 +10,7 @@
     <button
       *ngFor="let link of inputLinks"
       (click)="onSelectInputComponent(link.component)"
+      [class.active]="selectedInputComponent === link.component"
     >
       {{ link.label }}
     </button>
@@ -20,6 +21,7 @@
     <button
       *ngFor="let link of outputLinks"
       (click)="onSelectOutputComponent(link.component)"
+      [class.active]="selectedOutputComponent === link.component"
     >
       {{ link.label }}
     </button>

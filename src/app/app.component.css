@@ -1,5 +1,6 @@
 .active {
-  color: blue;
+  color: white;
+  background-color: #007bff;
 }
 
 @media only screen {
