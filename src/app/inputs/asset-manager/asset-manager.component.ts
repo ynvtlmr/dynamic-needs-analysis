@@ -57,8 +57,12 @@ export class AssetManagerComponent {
   }
 
   editAsset(index: number): void {
-    this.editingAsset = { ...this.assets[index] };
-    this.editingAssetIndex = index;
+    if (this.editingAssetIndex !== null && this.editingAssetIndex === index) {
+      this.onCancelEditing();
+    } else {
+      this.editingAsset = { ...this.assets[index] };
+      this.editingAssetIndex = index;
+    }
   }
 
   deleteAsset(index: number): void {

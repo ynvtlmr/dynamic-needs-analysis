@@ -42,8 +42,12 @@ export class BusinessManagerComponent {
   }
 
   editBusiness(index: number): void {
-    this.editingBusiness = { ...this.businesses[index] };
-    this.editingBusinessIndex = index; // Add this line
+    if(this.editingBusinessIndex !== null && this.editingBusinessIndex === index) {
+      this.onCancelEditing();
+    } else {
+      this.editingBusiness = { ...this.businesses[index] };
+      this.editingBusinessIndex = index; // Add this line
+    }
   }
 
   deleteBusiness(index: number): void {

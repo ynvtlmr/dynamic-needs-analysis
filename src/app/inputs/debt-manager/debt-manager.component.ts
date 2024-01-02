@@ -49,8 +49,12 @@ export class DebtManagerComponent {
   }
 
   editDebt(index: number): void {
-    this.editingDebt = { ...this.debts[index] };
-    this.editingDebtIndex = index;
+    if (this.editingDebtIndex !== null && this.editingDebtIndex === index) {
+      this.onCancelEditing();
+    } else {
+      this.editingDebt = { ...this.debts[index] };
+      this.editingDebtIndex = index;
+    }
   }
 
   deleteDebt(index: number): void {
