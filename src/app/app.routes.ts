@@ -9,6 +9,7 @@ import { AssetManagerComponent } from './inputs/asset-manager/asset-manager.comp
 import { DiversificationComponent } from './outputs/diversification/diversification.component';
 import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
+import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
 
 export const routes: Routes = [
   { path: 'inputs/client', component: ClientComponent },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'outputs/diversification', component: DiversificationComponent },
   { path: 'outputs/asset-beneficiary', component: AssetBeneficiaryComponent },
   { path: 'outputs/net-worth', component: NetWorthComponent },
+  { path: 'outputs/debt-visualization', component: DebtVisualizationComponent },
 
   { path: '', redirectTo: '/inputs/client', pathMatch: 'full' },
 ];

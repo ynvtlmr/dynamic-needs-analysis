@@ -12,6 +12,7 @@ import { AssetManagerComponent } from './inputs/asset-manager/asset-manager.comp
 import { DiversificationComponent } from './outputs/diversification/diversification.component';
 import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
+import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
 
 interface NavLink {
   path: string;
@@ -74,6 +75,11 @@ export class AppComponent {
       label: 'Asset-Beneficiary',
       component: AssetBeneficiaryComponent,
     },
+    {
+      path: 'outputs/debt-visualization',
+      label: 'Debt Visualization',
+      component: DebtVisualizationComponent,
+    }
   ];
 
   onSelectInputComponent(component: any) {
