@@ -10,7 +10,7 @@ export interface ProvinceTaxBrackets {
 }
 
 export const TAX_BRACKETS: ProvinceTaxBrackets = {
-  2023: {
+  2024: {
     AB: [
       {
         minIncome: 0,
