@@ -96,6 +96,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
   private loadDebts(): void {
     this.debts = this.localStorageService.getItem('debts') || [];
+    this.debtValuesCache.clear(); // Clear the cache
     this.prepareChartData();
   }
 
