@@ -31,8 +31,23 @@
       <td>{{ birthdateModel.age }}</td>
     </tr>
     <tr>
+      <td>
+        <label for="expectedRetirementAge">Expected Retirement Age:</label>
+      </td>
+      <td>
+        <input
+          id="expectedRetirementAge"
+          [(ngModel)]="expectedRetirementAge"
+          (ngModelChange)="updateClientData()"
+          type="number"
+          min="0"
+        />
+      </td>
+    </tr>
+
+    <tr>
       <td>Years of Active Income:</td>
-      <td>{{ birthdateModel.yearsToRetirement }}</td>
+      <td>{{ Math.max(expectedRetirementAge - birthdateModel.age, 0) }}</td>
     </tr>
 
     <tr>

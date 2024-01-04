@@ -6,10 +6,13 @@ import { CurrencyPipe, NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
 
+const DEFAULT_RETIREMENT_AGE = 65;
+
 export interface Client {
   name: string;
   province: string;
   annualIncome: number;
+  expectedRetirementAge: number;
   incomeReplacementMultiplier: number;
   birthdate?: string | null;
   selectedBracket?: TaxBracket | undefined;
@@ -26,6 +29,7 @@ export class ClientComponent implements OnInit {
   birthdateModel: Birthdate = new Birthdate(
     this.localStorageService.getItem('birthdate'),
   );
+  expectedRetirementAge: number = DEFAULT_RETIREMENT_AGE; // Default retirement age.
 
   constructor(private localStorageService: LocalStorageService) {}
 
@@ -52,6 +56,8 @@ export class ClientComponent implements OnInit {
       this.annualIncome = client.annualIncome;
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
       this.selectedBracket = client.selectedBracket;
+      this.expectedRetirementAge =
+        clientData.expectedRetirementAge || DEFAULT_RETIREMENT_AGE;
     }
   }
 
@@ -65,6 +71,7 @@ export class ClientComponent implements OnInit {
       annualIncome: this.annualIncome,
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
       selectedBracket: this.selectedBracket,
+      expectedRetirementAge: this.expectedRetirementAge,
     };
     this.localStorageService.setItem('client', client);
   }
@@ -101,8 +108,13 @@ export class ClientComponent implements OnInit {
   updateBirthdateAndMultiplier(newBirthdate: string | null): void {
     this.birthdateModel.birthdate = newBirthdate;
     // Update incomeReplacementMultiplier based on the new years to retirement
-    this.incomeReplacementMultiplier = this.birthdateModel.yearsToRetirement;
+    this.incomeReplacementMultiplier = Math.max(
+      this.expectedRetirementAge - this.birthdateModel.age,
+      0,
+    );
     // Update the client data in localStorage
     this.updateClientData();
   }
+
+  protected readonly Math: Math = Math;
 }
