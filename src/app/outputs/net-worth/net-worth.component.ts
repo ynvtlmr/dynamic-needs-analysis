@@ -67,7 +67,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     this.chartOptions = {
       series: [], // Initialize as empty array
       chart: {
-        type: 'area',
+        type: 'line',
         height: 350,
         animations: {
           enabled: false, // Disable animations
@@ -75,7 +75,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         toolbar: {
           show: false, // Hide the toolbar
         },
-        stacked: true,
+        stacked: false,
       } as ApexChart,
       xaxis: {
         type: 'numeric',
@@ -88,10 +88,15 @@ export class NetWorthComponent implements OnInit, OnDestroy {
             const valAsNumber = parseFloat(value);
             return isNaN(valAsNumber)
               ? value
-              : Math.round(valAsNumber).toString();
+              : Math.round(valAsNumber).toString().slice(-2);
           },
         },
       } as ApexXAxis,
+      yaxis: {
+        labels: {
+          formatter: (value: number) => `$${(value/1000).toFixed(0)}k`, // Format as currency
+        },
+      } as ApexYAxis,
       dataLabels: {
         enabled: false,
       } as ApexDataLabels,
