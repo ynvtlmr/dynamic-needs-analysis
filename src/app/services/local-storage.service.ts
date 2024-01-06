@@ -1,5 +1,5 @@
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -7,63 +7,82 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class LocalStorageService {
   private localStorageSubject = new BehaviorSubject<string>('');
 
-  watchStorage(): Observable<string> {
-    return this.localStorageSubject.asObservable();
-  }
-
   // Serialize data before storing
   private serialize(data: any): string {
-    return JSON.stringify(data, null, 2);
+    return JSON.stringify(data);
   }
 
   // Deserialize data when retrieving
   private deserialize(data: string): any {
     try {
       return JSON.parse(data);
-    } catch {
-      return data;
+    } catch (error) {
+      console.error(`Error parsing data from localStorage: ${error}`);
+      return null;
     }
   }
 
   setItem(key: string, value: any) {
-    localStorage.setItem(key, this.serialize(value));
-    this.localStorageSubject.next(key); // Emit the key of the changed item
+    try {
+      localStorage.setItem(key, this.serialize(value));
+      this.localStorageSubject.next(key); // Notify of change
+    } catch (error) {
+      console.error(`Error setting item in localStorage: ${error}`);
+    }
   }
 
   getItem(key: string): any {
-    const value = localStorage.getItem(key);
-    return value ? this.deserialize(value) : null;
+    try {
+      const value = localStorage.getItem(key);
+      return value ? this.deserialize(value) : null;
+    } catch (error) {
+      console.error(`Error retrieving item from localStorage: ${error}`);
+      return null;
+    }
   }
 
   clearAll() {
-    localStorage.clear();
-    this.localStorageSubject.next('clear'); // Emit a special value for clearing all
-    window.location.reload();
+    try {
+      localStorage.clear();
+      this.localStorageSubject.next('clear');
+      window.location.reload();
+    } catch (error) {
+      console.error(`Error clearing localStorage: ${error}`);
+    }
   }
 
   downloadAsFile() {
-    const data = this.serialize(this.getAllItems());
-    const blob = new Blob([data], { type: 'application/json' });
-    const fileName = 'dna-local-storage.json';
-    const downloadURL = window.URL.createObjectURL(blob);
+    try {
+      const data = this.serialize(this.getAllItems());
+      const blob = new Blob([data], { type: 'application/json' });
+      const fileName = 'dna-local-storage.json';
+      const downloadURL = window.URL.createObjectURL(blob);
 
-    const link = document.createElement('a');
-    link.href = downloadURL;
-    link.download = fileName;
-    link.click();
+      const link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = fileName;
+      link.click();
 
-    window.URL.revokeObjectURL(downloadURL);
+      window.URL.revokeObjectURL(downloadURL);
+    } catch (error) {
+      console.error(`Error downloading data as file: ${error}`);
+    }
   }
 
   getAllItems(): Record<string, any> {
-    const items: Record<string, any> = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (key) {
-        items[key] = this.getItem(key);
+    try {
+      const items: Record<string, any> = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key) {
+          items[key] = this.getItem(key);
+        }
       }
+      return items;
+    } catch (error) {
+      console.error(`Error getting all items from localStorage: ${error}`);
+      return {};
     }
-    return items;
   }
 
   loadFromFile(event: Event) {
@@ -73,11 +92,15 @@ export class LocalStorageService {
     }
     const reader = new FileReader();
     reader.onload = () => {
-      const data = this.deserialize(reader.result as string);
-      Object.entries(data).forEach(([key, value]) => {
-        this.setItem(key, value);
-      });
-      window.location.reload();
+      try {
+        const data = this.deserialize(reader.result as string);
+        Object.entries(data).forEach(([key, value]) => {
+          this.setItem(key, value);
+        });
+        window.location.reload();
+      } catch (error) {
+        console.error(`Error loading data from file: ${error}`);
+      }
     };
     reader.readAsText(file);
   }
