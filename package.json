@@ -6,7 +6,23 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "eslint . --ext .ts",
+    "prettier": "prettier --write \"src/**/*.ts\" \"src/**/*.html\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.html": [
+      "prettier --write"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -23,6 +39,7 @@
     "@angular/service-worker": "^17.0.0",
     "@swimlane/ngx-charts": "^20.5.0",
     "chart.js": "^4.4.0",
+    "d3": "^7.8.5",
     "ng-apexcharts": "^1.8.0",
     "ng2-charts": "^5.0.3",
     "rxjs": "~7.8.0",
@@ -31,18 +48,26 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.0.5",
+    "@angular-eslint/eslint-plugin": "^17.2.0",
     "@angular/cli": "^17.0.5",
     "@angular/compiler-cli": "^17.0.0",
+    "@types/d3": "^7.4.3",
     "@types/d3-scale": "^4.0.8",
     "@types/d3-selection": "^3.0.10",
     "@types/d3-shape": "^3.1.6",
     "@types/jasmine": "~5.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "eslint": "^8.56.0",
+    "husky": "^8.0.3",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
     "typescript": "~5.2.2"
   }
 }

@@ -94,7 +94,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       } as ApexXAxis,
       yaxis: {
         labels: {
-          formatter: (value: number) => `$${(value/1000).toFixed(0)}k`, // Format as currency
+          formatter: (value: number) => `$${(value / 1000).toFixed(0)}k`, // Format as currency
         },
       } as ApexYAxis,
       dataLabels: {
