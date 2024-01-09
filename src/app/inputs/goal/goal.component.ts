@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export interface Goal {
   goalName: string;
@@ -12,7 +13,8 @@ export interface Goal {
 @Component({
   selector: 'app-goal',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxMaskPipe, NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './goal.component.html',
 })
 export class GoalComponent {

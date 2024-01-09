@@ -10,6 +10,7 @@ import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Client } from '../client/client.component';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export class Business {
   constructor(
@@ -24,7 +25,8 @@ export class Business {
 @Component({
   selector: 'app-business',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, NgxMaskPipe, NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './business.component.html',
 })
 export class BusinessComponent implements OnChanges {

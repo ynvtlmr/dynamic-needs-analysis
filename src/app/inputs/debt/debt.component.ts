@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 export interface Debt {
   name: string;
@@ -21,7 +22,14 @@ export interface Debt {
   selector: 'app-debt',
   templateUrl: './debt.component.html',
   standalone: true,
-  imports: [FormsModule, DecimalPipe, CommonModule],
+  imports: [
+    FormsModule,
+    DecimalPipe,
+    CommonModule,
+    NgxMaskPipe,
+    NgxMaskDirective,
+  ],
+  providers: [provideNgxMask()],
 })
 export class DebtComponent implements OnChanges {
   name: string = '';

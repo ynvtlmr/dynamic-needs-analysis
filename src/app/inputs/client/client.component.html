@@ -71,7 +71,12 @@
           id="annualIncome"
           [(ngModel)]="annualIncome"
           (ngModelChange)="updateClientData()"
-          type="number"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="123,456.78"
+          style="text-align: right"
         />
       </td>
     </tr>

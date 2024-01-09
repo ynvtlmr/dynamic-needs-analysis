@@ -16,7 +16,16 @@
   <tr>
     <td><label for="initialValue">Initial Value ($):</label></td>
     <td>
-      <input id="initialValue" [(ngModel)]="initialValue" type="number" />
+      <input
+        id="initialValue"
+        [(ngModel)]="initialValue"
+        type="text"
+        mask="separator.2"
+        thousandSeparator=","
+        prefix="$"
+        placeholder="123,456.78"
+        style="text-align: right"
+      />
     </td>
   </tr>
 
@@ -44,7 +53,16 @@
   <tr>
     <td><label for="annualPayment">Annual Payment ($):</label></td>
     <td>
-      <input id="annualPayment" [(ngModel)]="annualPayment" type="number" />
+      <input
+        id="annualPayment"
+        [(ngModel)]="annualPayment"
+        type="text"
+        mask="separator.2"
+        thousandSeparator=","
+        prefix="$"
+        placeholder="123,456.78"
+        style="text-align: right"
+      />
     </td>
   </tr>
 

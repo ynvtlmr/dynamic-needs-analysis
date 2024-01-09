@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
@@ -36,7 +37,14 @@ export interface Asset {
   selector: 'app-asset',
   templateUrl: './asset.component.html',
   standalone: true,
-  imports: [FormsModule, DecimalPipe, CommonModule],
+  imports: [
+    FormsModule,
+    DecimalPipe,
+    CommonModule,
+    NgxMaskPipe,
+    NgxMaskDirective,
+  ],
+  providers: [provideNgxMask()],
 })
 export class AssetComponent implements OnChanges {
   // Asset properties

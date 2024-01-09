@@ -19,7 +19,12 @@
         <input
           [(ngModel)]="goal.dollarAmount"
           (ngModelChange)="onGoalChange()"
-          type="number"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="123,456.78"
+          style="text-align: right"
         />
       </td>
       <td>

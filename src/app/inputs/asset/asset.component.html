@@ -55,7 +55,16 @@
   <tr>
     <td><label for="initialValue">Initial Value ($):</label></td>
     <td>
-      <input id="initialValue" [(ngModel)]="initialValue" type="number" />
+      <input
+        id="initialValue"
+        [(ngModel)]="initialValue"
+        type="text"
+        mask="separator.2"
+        thousandSeparator=","
+        prefix="$"
+        placeholder="123,456.78"
+        style="text-align: right"
+      />
     </td>
   </tr>
 
@@ -63,7 +72,16 @@
   <tr>
     <td><label for="currentValue">Current Value ($):</label></td>
     <td>
-      <input id="currentValue" [(ngModel)]="currentValue" type="number" />
+      <input
+        id="currentValue"
+        [(ngModel)]="currentValue"
+        type="text"
+        mask="separator.2"
+        thousandSeparator=","
+        prefix="$"
+        placeholder="123,456.78"
+        style="text-align: right"
+      />
     </td>
   </tr>
 

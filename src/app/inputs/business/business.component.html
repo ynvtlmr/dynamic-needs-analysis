@@ -13,7 +13,18 @@
     </tr>
     <tr>
       <td><label for="valuation">Valuation ($):</label></td>
-      <td><input id="valuation" [(ngModel)]="valuation" type="number" /></td>
+      <td>
+        <input
+          id="valuation"
+          [(ngModel)]="valuation"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="123,456.78"
+          style="text-align: right"
+        />
+      </td>
     </tr>
     <tr>
       <td><label for="rate">Appreciation Rate (%):</label></td>
@@ -43,7 +54,15 @@
         <input [(ngModel)]="shareholder.sharePercentage" type="number" />
       </td>
       <td>
-        <input [(ngModel)]="shareholder.insuranceCoverage" type="number" />
+        <input
+          [(ngModel)]="shareholder.insuranceCoverage"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="123,456.78"
+          style="text-align: right"
+        />
       </td>
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>

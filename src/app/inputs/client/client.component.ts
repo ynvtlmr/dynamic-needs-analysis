@@ -5,6 +5,7 @@ import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
 import { CurrencyPipe, NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 
 const DEFAULT_RETIREMENT_AGE = 65;
 
@@ -22,7 +23,8 @@ export interface Client {
   selector: 'app-client',
   templateUrl: './client.component.html',
   standalone: true,
-  imports: [FormsModule, NgForOf, CurrencyPipe],
+  imports: [FormsModule, NgForOf, CurrencyPipe, NgxMaskDirective, NgxMaskPipe],
+  providers: [provideNgxMask()],
 })
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
