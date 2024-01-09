@@ -65,9 +65,24 @@ export class LocalStorageService {
 
   downloadAsFile(): void {
     try {
-      const data = this.serialize(this.getAllItems());
+      const allData = this.getAllItems();
+      const clientName =
+        typeof allData['client']?.['name'] === 'string'
+          ? allData['client']['name'].split(' ').join('')
+          : 'DNA';
+
+      // Format the current date
+      const currentDate = new Date()
+        .toISOString()
+        .split('T')[0]
+        .replace(/-/g, '.');
+
+      // Construct file name
+      const fileName = `${clientName}_${currentDate}.json`;
+
+      // Rest of the code for creating and downloading the file
+      const data = this.serialize(allData);
       const blob = new Blob([data], { type: 'application/json' });
-      const fileName = 'dna-local-storage.json';
       const downloadURL = window.URL.createObjectURL(blob);
 
       const link = document.createElement('a');
