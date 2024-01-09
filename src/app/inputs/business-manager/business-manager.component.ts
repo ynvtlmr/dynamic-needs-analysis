@@ -28,7 +28,7 @@ export class BusinessManagerComponent {
   }
 
   addNewBusiness(): void {
-    this.editingBusiness = new Business('', 0, 0, 0, []);
+    this.editingBusiness = new Business('', 0, 0, 0, 0, []);
   }
 
   saveBusiness(updatedBusiness: Business): void {

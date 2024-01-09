@@ -16,6 +16,7 @@ export class Business {
   constructor(
     public businessName: string,
     public valuation: number,
+    public ebita: number,
     public rate: number,
     public term: number,
     public shareholders: Shareholder[], // Assuming Shareholder is already defined
@@ -32,6 +33,7 @@ export class Business {
 export class BusinessComponent implements OnChanges {
   businessName: string = '';
   valuation: number = 0;
+  ebita: number = 0;
   rate: number = 0;
   term: number = 0;
   shareholders: Shareholder[] = [];
@@ -67,6 +69,7 @@ export class BusinessComponent implements OnChanges {
     const business: Business = {
       businessName: this.businessName,
       valuation: this.valuation,
+      ebita: this.ebita,
       rate: this.rate,
       term: this.term,
       shareholders: this.shareholders,

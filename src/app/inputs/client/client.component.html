@@ -47,7 +47,9 @@
 
     <tr>
       <td>Years of Active Income:</td>
-      <td class="number">{{ Math.max(expectedRetirementAge - birthdateModel.age, 0) }}</td>
+      <td class="number">
+        {{ Math.max(expectedRetirementAge - birthdateModel.age, 0) }}
+      </td>
     </tr>
 
     <tr>
@@ -98,9 +100,7 @@
     <tr>
       <td>Amount Insured for Income ($):</td>
       <td class="number">
-        {{
-          annualIncome * incomeReplacementMultiplier | currency
-        }}
+        {{ annualIncome * incomeReplacementMultiplier | currency }}
       </td>
     </tr>
     <tr>
