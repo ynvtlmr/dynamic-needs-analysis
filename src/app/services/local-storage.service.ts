@@ -12,7 +12,12 @@ export class LocalStorageService {
 
   // Serialize data before storing
   private serialize<T>(data: T): string {
-    return JSON.stringify(data);
+    try {
+      return JSON.stringify(data);
+    } catch (error) {
+      console.error(`Error serializing data for localStorage: ${error}`);
+      return '';
+    }
   }
 
   // Deserialize data when retrieving
@@ -52,6 +57,10 @@ export class LocalStorageService {
     } catch (error) {
       console.error(`Error clearing localStorage: ${error}`);
     }
+  }
+
+  exists(key: string): boolean {
+    return localStorage.getItem(key) !== null;
   }
 
   downloadAsFile(): void {
