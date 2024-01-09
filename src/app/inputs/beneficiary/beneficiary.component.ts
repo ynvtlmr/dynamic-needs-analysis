@@ -50,7 +50,8 @@ export class BeneficiaryComponent {
   }
 
   private loadBeneficiariesFromStorage(): void {
-    const data = this.localStorageService.getItem('beneficiaries');
+    const data =
+      this.localStorageService.getItem<Beneficiary[]>('beneficiaries');
     this.beneficiaries = data ? data : [];
   }
 }

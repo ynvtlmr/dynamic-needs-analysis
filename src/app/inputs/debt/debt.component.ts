@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -38,7 +37,7 @@ export class DebtComponent implements OnChanges {
 
   constructor() {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.debt) {
       this.populateDebtData(this.debt);
     }

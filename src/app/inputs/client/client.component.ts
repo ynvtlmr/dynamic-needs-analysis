@@ -47,7 +47,7 @@ export class ClientComponent implements OnInit {
   selectedBracket: TaxBracket | undefined;
 
   private loadClientFromStorage(): void {
-    const clientData = this.localStorageService.getItem('client');
+    const clientData = this.localStorageService.getItem<Client>('client');
     if (clientData) {
       const client: Client = clientData;
       this.name = client.name;
@@ -57,7 +57,7 @@ export class ClientComponent implements OnInit {
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
       this.selectedBracket = client.selectedBracket;
       this.expectedRetirementAge =
-        clientData.expectedRetirementAge || DEFAULT_RETIREMENT_AGE;
+        client.expectedRetirementAge || DEFAULT_RETIREMENT_AGE;
     }
   }
 
@@ -77,7 +77,7 @@ export class ClientComponent implements OnInit {
   }
 
   private loadSelectedBracket(): void {
-    const clientData = this.localStorageService.getItem('client');
+    const clientData = this.localStorageService.getItem<Client>('client');
     if (clientData && clientData.selectedBracket) {
       const storedBracket = clientData.selectedBracket;
       this.selectedBracket = this.taxBrackets.find(
@@ -100,7 +100,7 @@ export class ClientComponent implements OnInit {
 
   saveSelectedBracket() {
     this.localStorageService.setItem('client', {
-      ...this.localStorageService.getItem('client'),
+      ...this.localStorageService.getItem<Client>('client'),
       selectedBracket: this.selectedBracket,
     });
   }

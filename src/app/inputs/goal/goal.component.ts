@@ -40,7 +40,7 @@ export class GoalComponent {
   }
 
   private loadGoalsFromStorage(): void {
-    const data = this.localStorageService.getItem('goals');
+    const data = this.localStorageService.getItem<Goal[]>('goals');
     this.goals = data ? data : [];
   }
 }

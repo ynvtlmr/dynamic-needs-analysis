@@ -20,7 +20,8 @@ export class BusinessManagerComponent {
   }
 
   loadBusinessesFromStorage(): void {
-    const storedBusinesses = this.localStorageService.getItem('businesses');
+    const storedBusinesses =
+      this.localStorageService.getItem<Business[]>('businesses');
     if (storedBusinesses) {
       this.businesses = storedBusinesses;
     }

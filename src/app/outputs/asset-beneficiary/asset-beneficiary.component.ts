@@ -7,6 +7,7 @@ import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart
 import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
 import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
 import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
+import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
 
 @Component({
   selector: 'app-asset-beneficiary',
@@ -22,7 +23,7 @@ import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.c
 export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
   public assets: Asset[] = [];
-  public beneficiaries: any[] = []; // You might want to define a proper type for beneficiaries
+  public beneficiaries: Beneficiary[] = []; // You might want to define a proper type for beneficiaries
 
   constructor(private localStorageService: LocalStorageService) {}
 

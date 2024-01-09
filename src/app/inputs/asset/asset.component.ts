@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
@@ -15,6 +14,7 @@ import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
 } from '../constants/asset-types.constant';
+import { Client } from '../client/client.component';
 
 export interface Asset {
   name: string;
@@ -63,10 +63,7 @@ export class AssetComponent implements OnChanges {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnInit(): void {
-    this.loadClientTaxBracket();
-  }
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.asset) {
       this.populateAssetData(this.asset);
     }
@@ -81,7 +78,7 @@ export class AssetComponent implements OnChanges {
 
   setTaxBracketsAndSelected(asset: Asset): void {
     const currentYear = new Date().getFullYear();
-    const clientData = this.localStorageService.getItem('client');
+    const clientData = this.localStorageService.getItem<Client>('client');
 
     // Set tax brackets based on client's province
     this.taxBrackets =
@@ -125,23 +122,6 @@ export class AssetComponent implements OnChanges {
     return currentYear - this.yearAcquired;
   }
 
-  private loadClientTaxBracket(): void {
-    if (!this.selectedTaxBracket) {
-      const clientData = this.localStorageService.getItem('client');
-      if (clientData?.selectedBracket) {
-        const clientBracketMinIncome = clientData.selectedBracket.minIncome;
-        this.taxBrackets =
-          TAX_BRACKETS[new Date().getFullYear()]?.[
-            clientData.province.toUpperCase()
-          ] || [];
-        this.selectedTaxBracket = this.taxBrackets.find(
-          (bracket: TaxBracket) => bracket.minIncome === clientBracketMinIncome,
-        );
-      }
-    }
-    this.updateSelectedTaxBracket();
-  }
-
   updateSelectedTaxBracket(): void {
     if (this.selectedTaxBracket) {
       this.capitalGainsTaxRate = this.selectedTaxBracket.taxRate * 0.5;
@@ -179,7 +159,7 @@ export class AssetComponent implements OnChanges {
   loadBeneficiaries(): void {
     if (!this.beneficiaries.length) {
       this.beneficiaries =
-        this.localStorageService.getItem('beneficiaries') || [];
+        this.localStorageService.getItem<Beneficiary[]>('beneficiaries') || [];
     }
     // this.addEmptyBeneficiaryIfNeeded();
     this.checkDefinedBeneficiaries();
@@ -187,17 +167,10 @@ export class AssetComponent implements OnChanges {
 
   // Check if beneficiaries are defined in local storage
   checkDefinedBeneficiaries(): void {
-    const definedBeneficiaries =
-      this.localStorageService.getItem('beneficiaries');
-    if (definedBeneficiaries.length === 0) {
+    const definedBeneficiaries: Beneficiary[] | null =
+      this.localStorageService.getItem<Beneficiary[]>('beneficiaries');
+    if (definedBeneficiaries && definedBeneficiaries.length === 0) {
       alert('Please add beneficiaries in beneficiary component');
-    }
-  }
-
-  // Add an empty beneficiary if the list is not empty
-  addEmptyBeneficiaryIfNeeded(): void {
-    if (this.beneficiaries.length && !this.beneficiaries.some((b) => !b.name)) {
-      this.beneficiaries.push({ name: '', allocation: 0 });
     }
   }
 
@@ -237,7 +210,7 @@ export class AssetComponent implements OnChanges {
   }
 
   get futureValueGrowthPercentage(): number {
-    let futureValue = this.futureValueDollars;
+    const futureValue = this.futureValueDollars;
     return this.initialValue === 0
       ? 0
       : (futureValue / this.initialValue - 1) * 100;

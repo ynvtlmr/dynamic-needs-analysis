@@ -1,16 +1,15 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
   OnChanges,
-  SimpleChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Client } from '../client/client.component';
 
 export class Business {
   constructor(
@@ -41,7 +40,7 @@ export class BusinessComponent implements OnChanges {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.business) {
       this.populateBusinessData(this.business);
     }
@@ -79,7 +78,8 @@ export class BusinessComponent implements OnChanges {
 
   addEmptyShareholder(): void {
     if (this.shareholders.length === 0) {
-      const clientName = this.localStorageService.getItem('client').name;
+      const clientName: string =
+        this.localStorageService.getItem<Client>('client')!.name;
       this.shareholders.push(new Shareholder(clientName, 0, 0));
     } else {
       this.shareholders.push(new Shareholder('', 0, 0));

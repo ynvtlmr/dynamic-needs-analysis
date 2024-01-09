@@ -20,7 +20,7 @@ export class DebtManagerComponent {
   }
 
   loadDebtsFromStorage(): void {
-    const storedDebts = this.localStorageService.getItem('debts');
+    const storedDebts = this.localStorageService.getItem<Debt[]>('debts');
     if (storedDebts) {
       this.debts = storedDebts;
     }

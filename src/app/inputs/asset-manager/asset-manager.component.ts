@@ -20,7 +20,7 @@ export class AssetManagerComponent {
   }
 
   loadAssetsFromStorage(): void {
-    const storedAssets = this.localStorageService.getItem('assets');
+    const storedAssets = this.localStorageService.getItem<Asset[]>('assets');
     if (storedAssets) {
       this.assets = storedAssets;
     }

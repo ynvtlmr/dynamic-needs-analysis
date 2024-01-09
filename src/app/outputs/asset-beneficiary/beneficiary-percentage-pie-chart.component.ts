@@ -1,8 +1,8 @@
-// beneficiary-percentage-pie-chart.component.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
 
 @Component({
   selector: 'app-beneficiary-percentage-pie-chart',
@@ -11,7 +11,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
   imports: [NgApexchartsModule],
 })
 export class BeneficiaryPercentagePieChartComponent implements OnInit {
-  @Input() beneficiaries: any[] = []; // Expect beneficiaries to be passed in from parent
+  @Input() beneficiaries: Beneficiary[] = []; // Expect beneficiaries to be passed in from parent
   public chartOptions!: ChartOptions;
 
   constructor(private localStorageService: LocalStorageService) {}

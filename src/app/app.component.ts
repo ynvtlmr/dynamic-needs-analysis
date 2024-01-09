@@ -14,10 +14,25 @@ import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-ben
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
 
+import { Type } from '@angular/core';
+
+type ComponentType = Type<
+  | ClientComponent
+  | BeneficiaryComponent
+  | GoalComponent
+  | BusinessManagerComponent
+  | DebtManagerComponent
+  | AssetManagerComponent
+  | DiversificationComponent
+  | AssetBeneficiaryComponent
+  | NetWorthComponent
+  | DebtVisualizationComponent
+>;
+
 interface NavLink {
   path: string;
   label: string;
-  component: any;
+  component: ComponentType;
 }
 
 @Component({
@@ -29,8 +44,8 @@ interface NavLink {
 })
 export class AppComponent {
   // existing properties
-  selectedInputComponent: any = null;
-  selectedOutputComponent: any = null;
+  selectedInputComponent: ComponentType | null = null;
+  selectedOutputComponent: ComponentType | null = null;
   constructor(private localStorageService: LocalStorageService) {}
 
   // Update with the actual component classes
@@ -82,7 +97,7 @@ export class AppComponent {
     },
   ];
 
-  onSelectInputComponent(component: any) {
+  onSelectInputComponent(component: ComponentType | null) {
     if (this.selectedInputComponent === component) {
       this.selectedInputComponent = null; // Hide if it's the same component
     } else {
@@ -90,7 +105,7 @@ export class AppComponent {
     }
   }
 
-  onSelectOutputComponent(component: any) {
+  onSelectOutputComponent(component: ComponentType | null) {
     if (this.selectedOutputComponent === component) {
       this.selectedOutputComponent = null;
     } else {
