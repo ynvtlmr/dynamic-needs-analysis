@@ -23,9 +23,9 @@
   <button (click)="addNewAsset()">Add New Asset</button>
 
   <!-- Asset editing UI -->
-  <div *ngIf="editingAsset">
+  <div *ngIf="editingState.asset">
     <app-asset
-      [asset]="editingAsset"
+      [asset]="editingState.asset"
       (save)="saveAsset($event)"
       (cancel)="onCancelEditing()"
     ></app-asset>

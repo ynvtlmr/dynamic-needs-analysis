@@ -4,6 +4,11 @@ import { Asset, AssetComponent } from '../asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
 
+interface EditingState {
+  asset: Asset | null;
+  index: number | null;
+}
+
 @Component({
   selector: 'app-asset-manager',
   standalone: true,
@@ -12,23 +17,14 @@ import { CurrencyPipe } from '@angular/common';
 })
 export class AssetManagerComponent {
   assets: Asset[] = [];
-  editingAsset: Asset | null = null;
-  editingAssetIndex: number | null = null;
+  editingState: EditingState = { asset: null, index: null };
 
   constructor(private localStorageService: LocalStorageService) {
     this.loadAssetsFromStorage();
   }
 
-  loadAssetsFromStorage(): void {
-    const storedAssets = this.localStorageService.getItem<Asset[]>('assets');
-    if (storedAssets) {
-      this.assets = storedAssets;
-    }
-  }
-
-  addNewAsset(): void {
-    // Initialize a new asset with default values
-    this.editingAsset = {
+  private createEmptyAsset(): Asset {
+    return {
       name: '',
       initialValue: 0,
       currentValue: 0,
@@ -45,23 +41,33 @@ export class AssetManagerComponent {
     };
   }
 
+  loadAssetsFromStorage(): void {
+    const storedAssets = this.localStorageService.getItem<Asset[]>('assets');
+    this.assets = storedAssets || [];
+  }
+
+  addNewAsset(): void {
+    this.editingState = { asset: this.createEmptyAsset(), index: null };
+  }
+
   saveAsset(updatedAsset: Asset): void {
-    if (this.editingAssetIndex !== null) {
-      this.assets[this.editingAssetIndex] = updatedAsset;
+    if (this.editingState.index != null) {
+      this.assets[this.editingState.index] = updatedAsset;
     } else {
       this.assets.push(updatedAsset);
     }
-    this.editingAsset = null;
-    this.editingAssetIndex = null;
+    this.editingState = { asset: null, index: null };
     this.updateStorage();
   }
 
   editAsset(index: number): void {
-    if (this.editingAssetIndex !== null && this.editingAssetIndex === index) {
+    if (this.editingState.index === index) {
       this.onCancelEditing();
     } else {
-      this.editingAsset = { ...this.assets[index] };
-      this.editingAssetIndex = index;
+      this.editingState = {
+        asset: { ...this.assets[index] },
+        index: index,
+      };
     }
   }
 
@@ -75,11 +81,10 @@ export class AssetManagerComponent {
   }
 
   onCancelEditing(): void {
-    this.editingAsset = null;
-    this.editingAssetIndex = null;
+    this.editingState = { asset: null, index: null };
   }
 
   isEditing(index: number): boolean {
-    return this.editingAssetIndex === index;
+    return this.editingState.index === index;
   }
 }
