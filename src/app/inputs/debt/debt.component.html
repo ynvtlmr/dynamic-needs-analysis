@@ -69,29 +69,29 @@
   <!-- Display Calculated Values -->
   <tr>
     <td>Current Years Held:</td>
-    <td>{{ currentYearsHeld }}</td>
+    <td class="number">{{ currentYearsHeld }}</td>
   </tr>
 
   <!-- Calculated Values -->
   <tr>
     <td>Amount Paid Off ($):</td>
-    <td>{{ amountPaidOffDollars | currency }}</td>
+    <td class="number">{{ amountPaidOffDollars | currency }}</td>
   </tr>
   <tr>
     <td>Current Value of Debt ($):</td>
-    <td>{{ currentValueOfDebtDollars | currency }}</td>
+    <td class="number">{{ currentValueOfDebtDollars | currency }}</td>
   </tr>
   <tr>
     <td>Debt Remaining ($):</td>
-    <td>{{ debtRemainingDollars | currency }}</td>
+    <td class="number">{{ debtRemainingDollars | currency }}</td>
   </tr>
   <tr>
     <td>Years to be Paid Off:</td>
-    <td>{{ yearsToBePaidOff | number: "1.0-2" }}</td>
+    <td class="number">{{ yearsToBePaidOff | number: "1.0-2" }}</td>
   </tr>
   <tr>
     <td>Insurable Future Value ($):</td>
-    <td>{{ insurableFutureValueDollars | currency }}</td>
+    <td class="number">{{ insurableFutureValueDollars | currency }}</td>
   </tr>
 </table>
 <button class="active" (click)="onSave()">Save</button>

@@ -8,7 +8,7 @@
     </tr>
     <tr *ngFor="let debt of debts; let i = index">
       <td>{{ debt.name }}</td>
-      <td>{{ debt.initialValue | currency }}</td>
+      <td class="number">{{ debt.initialValue | currency }}</td>
       <td>
         <button [class.active]="isEditing(i)" (click)="editDebt(i)">
           Edit

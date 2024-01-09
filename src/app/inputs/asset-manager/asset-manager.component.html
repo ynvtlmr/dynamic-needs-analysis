@@ -10,7 +10,7 @@
     <!-- Loop through assets -->
     <tr *ngFor="let asset of assets; let i = index">
       <td>{{ asset.name }}</td>
-      <td>{{ asset.currentValue | currency }}</td>
+      <td class="number">{{ asset.currentValue | currency }}</td>
       <td>
         <button [class.active]="isEditing(i)" (click)="editAsset(i)">
           Edit

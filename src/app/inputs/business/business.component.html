@@ -67,9 +67,9 @@
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>
       </td>
-      <td>{{ shareholder.shareValue(valuation) | number: "1.2-2" }}</td>
-      <td>
-        {{ shareholder.liquidationDisparity(valuation) | number: "1.2-2" }}
+      <td class="number">{{ shareholder.shareValue(valuation) | currency }}</td>
+      <td class="number">
+        {{ shareholder.liquidationDisparity(valuation) | currency }}
       </td>
     </tr>
     <tr>
@@ -82,19 +82,19 @@
   <table>
     <tr>
       <td>Total Shareholder Percentage Owned (%):</td>
-      <td>{{ totalMajorShareholderPercentage | number: "1.2-2" }}</td>
+      <td class="number">{{ totalMajorShareholderPercentage | currency }}</td>
     </tr>
     <tr>
       <td>Total Major Shareholder Value ($):</td>
-      <td>{{ totalMajorShareholderValue | number: "1.2-2" }}</td>
+      <td class="number">{{ totalMajorShareholderValue | currency }}</td>
     </tr>
     <tr>
       <td>Total Major Shareholder Insurance ($):</td>
-      <td>{{ totalMajorShareholderInsurance | number: "1.2-2" }}</td>
+      <td class="number">{{ totalMajorShareholderInsurance | currency }}</td>
     </tr>
     <tr>
       <td>Total Major Shareholder Disparity ($):</td>
-      <td>{{ totalMajorShareholderDisparity | number: "1.2-2" }}</td>
+      <td class="number">{{ totalMajorShareholderDisparity | currency }}</td>
     </tr>
   </table>
   <button class="active" (click)="onSave()">Save</button>

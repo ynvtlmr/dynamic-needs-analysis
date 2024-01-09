@@ -38,6 +38,10 @@ input[type="number"] {
   text-align: right;
 }
 
+.number {
+  text-align: right;
+}
+
 /* Hide spinners for WebKit browsers */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {

@@ -145,33 +145,33 @@
   <!-- Display Calculated Values -->
   <tr>
     <td>Current Years Held:</td>
-    <td>{{ currentYearsHeld }}</td>
+    <td class="number">{{ currentYearsHeld }}</td>
   </tr>
   <tr>
     <td>Current Growth Dollars ($):</td>
-    <td>{{ currentGrowthDollars | currency }}</td>
+    <td class="number">{{ currentGrowthDollars | currency }}</td>
   </tr>
   <tr>
     <td>Current Growth Percentage (%):</td>
-    <td>{{ currentGrowthPercentage | number: "1.0-2" }}%</td>
+    <td class="number">{{ currentGrowthPercentage | percent }}</td>
   </tr>
   <tr>
     <td>Future Value Dollars ($):</td>
-    <td>{{ futureValueDollars | currency }}</td>
+    <td class="number">{{ futureValueDollars | currency }}</td>
   </tr>
   <tr>
     <td>Future Value Growth Percentage (%):</td>
-    <td>{{ futureValueGrowthPercentage | number: "1.0-2" }}%</td>
+    <td class="number">{{ futureValueGrowthPercentage | percent }}</td>
   </tr>
 
   <!-- Display Calculated Values -->
   <tr>
     <td>Current Tax Liability ($):</td>
-    <td>{{ currentTaxLiabilityDollars | currency }}</td>
+    <td class="number">{{ currentTaxLiabilityDollars | currency }}</td>
   </tr>
   <tr>
     <td>Future Tax Liability ($):</td>
-    <td>{{ futureTaxLiabilityDollars | currency }}</td>
+    <td class="number">{{ futureTaxLiabilityDollars | currency }}</td>
   </tr>
 </table>
 <button class="active" (click)="onSave()">Save</button>
