@@ -7,9 +7,9 @@ import {
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Client } from '../../models/client.model';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { Business, Shareholder } from '../../models/business.model';
 
 @Component({
@@ -75,7 +75,6 @@ export class BusinessComponent implements OnChanges {
     this.shareholders.push(newShareholder);
   }
 
-  // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);
   }
@@ -90,31 +89,30 @@ export class BusinessComponent implements OnChanges {
     );
   }
 
-  // Calculate total percentage owned by all shareholders
   get totalMajorShareholderPercentage(): number {
     return this.shareholders.reduce(
-      (acc, shareholder) => acc + shareholder.sharePercentage,
+      (acc: number, shareholder: Shareholder) =>
+        acc + shareholder.sharePercentage,
       0,
     );
   }
 
-  // Calculate total value of major shareholders' shares
   get totalMajorShareholderValue(): number {
     return this.shareholders.reduce(
-      (acc, shareholder) => acc + this.calculateShareValue(shareholder),
+      (acc: number, shareholder: Shareholder) =>
+        acc + this.calculateShareValue(shareholder),
       0,
     );
   }
 
-  // Calculate total insurance coverage of major shareholders
   get totalMajorShareholderInsurance(): number {
     return this.shareholders.reduce(
-      (acc, shareholder) => acc + shareholder.insuranceCoverage,
+      (acc: number, shareholder: Shareholder) =>
+        acc + shareholder.insuranceCoverage,
       0,
     );
   }
 
-  // Calculate total disparity between share value and insurance coverage
   get totalMajorShareholderDisparity(): number {
     return (
       this.totalMajorShareholderValue - this.totalMajorShareholderInsurance

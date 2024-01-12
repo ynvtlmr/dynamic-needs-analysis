@@ -19,7 +19,8 @@ export class BeneficiaryComponent {
 
   get totalAllocation(): number {
     return this.beneficiaries.reduce(
-      (total, beneficiary) => total + beneficiary.allocation,
+      (total: number, beneficiary: Beneficiary) =>
+        total + beneficiary.allocation,
       0,
     );
   }
@@ -28,17 +29,13 @@ export class BeneficiaryComponent {
     this.beneficiaries.push({ name: '', allocation: 0 });
   }
 
-  addBeneficiary(name: string, allocation: number): void {
-    this.beneficiaries.push({ name: name, allocation: allocation });
-  }
-
   deleteBeneficiary(index: number): void {
     this.beneficiaries.splice(index, 1);
     this.updateStorage();
   }
 
   onBeneficiaryChange(): void {
-    this.updateStorage(); // Update localStorage whenever there's a change
+    this.updateStorage();
   }
 
   private updateStorage(): void {
@@ -46,7 +43,7 @@ export class BeneficiaryComponent {
   }
 
   private loadBeneficiariesFromStorage(): void {
-    const data =
+    const data: Beneficiary[] | null =
       this.localStorageService.getItem<Beneficiary[]>('beneficiaries');
     this.beneficiaries = data ? data : [];
   }

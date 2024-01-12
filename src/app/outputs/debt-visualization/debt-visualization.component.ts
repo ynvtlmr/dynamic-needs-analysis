@@ -1,4 +1,3 @@
-// debt-visualization.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import {
@@ -36,21 +35,20 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
   public chartOptions!: Partial<ChartOptions>;
   private debts: Debt[] = [];
-  private debtValuesCache = new Map<string, number>(); // Cache to store computed debt values
+  private debtValuesCache: Map<string, number> = new Map<string, number>();
 
   constructor(private localStorageService: LocalStorageService) {
     this.initializeChart();
   }
 
   ngOnInit(): void {
-    this.loadDebts(); // Load initial debts
+    this.loadDebts();
 
-    // Subscribe to changes in localStorage
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key) => {
+      .subscribe((key: string): void => {
         if (key === 'debts' || key === 'all') {
-          this.loadDebts(); // Reload and update chart if debts change
+          this.loadDebts();
         }
       });
   }
@@ -63,20 +61,20 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
   private initializeChart(): void {
     this.chartOptions = {
-      series: [], // Will be populated with debt data
+      series: [],
       chart: {
-        type: 'line', // Line chart to show the progression of debts over time
+        type: 'line',
         height: 350,
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
         toolbar: {
-          show: false, // Hide the toolbar
+          show: false,
         },
         stacked: false,
       },
       xaxis: {
-        type: 'numeric', // Numeric x-axis to represent years
+        type: 'numeric',
         title: { text: 'Years' },
       },
       yaxis: {
@@ -84,50 +82,46 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       },
       tooltip: {
         y: {
-          formatter: (val: number) => `$${val.toFixed(2)}`, // Format tooltip values as currency
+          formatter: (val: number): string => `$${val.toFixed(2)}`,
         },
       },
       dataLabels: { enabled: false },
       legend: {
-        position: 'top', // Place legend at the top of the chart
+        position: 'top',
       },
     };
   }
 
   private loadDebts(): void {
     this.debts = this.localStorageService.getItem('debts') || [];
-    this.debtValuesCache.clear(); // Clear the cache
+    this.debtValuesCache.clear();
     this.prepareChartData();
   }
 
   private prepareChartData(): void {
-    // Find the earliest year and the latest possible term across all debts
     const startYear: number = Math.min(
-      ...this.debts.map((d) => d.yearAcquired),
+      ...this.debts.map((d: Debt) => d.yearAcquired),
     );
     const endYear: number = Math.max(
-      ...this.debts.map((d) => d.yearAcquired + d.term),
+      ...this.debts.map((d: Debt) => d.yearAcquired + d.term),
     );
 
-    // Map each debt to a series in the chart
-    this.chartOptions.series = this.debts.map((debt) => {
+    this.chartOptions.series = this.debts.map((debt: Debt) => {
       return {
         name: debt.name,
         data: Array.from(
           { length: endYear - startYear + 1 },
-          (_, i) => startYear + i,
-        ).map((year) => [year, this.debtValueOverTime(debt, year)]),
+          (_, i: number) => startYear + i,
+        ).map((year: number) => [year, this.debtValueOverTime(debt, year)]),
       };
     });
 
-    // Update x-axis with the year range and formatter for labels
     this.chartOptions.xaxis = {
       ...this.chartOptions.xaxis,
       min: startYear,
       max: endYear,
       labels: {
-        formatter: (value) => {
-          // Extract the last two digits and prepend with a quote
+        formatter: (value: string): string => {
           return `'${value.toString().slice(-2)}`;
         },
       },
@@ -135,16 +129,16 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private debtValueOverTime(debt: Debt, year: number): number {
-    const cacheKey = `${debt.name}-${year}`; // Unique key for the debt and year
+    const cacheKey: string = `${debt.name}-${year}`;
     if (this.debtValuesCache.has(cacheKey)) {
-      return this.debtValuesCache.get(cacheKey)!; // Return cached value if available
+      return this.debtValuesCache.get(cacheKey)!;
     }
 
     if (year < debt.yearAcquired) {
       return 0;
     }
 
-    let remainingDebt =
+    let remainingDebt: number =
       year === debt.yearAcquired
         ? debt.initialValue
         : this.debtValueOverTime(debt, year - 1);
@@ -157,7 +151,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
     remainingDebt *= Math.pow(1 + debt.rate / 100, 1);
     remainingDebt = Math.max(0, remainingDebt - debt.annualPayment);
 
-    this.debtValuesCache.set(cacheKey, remainingDebt); // Store the calculated value in the cache
+    this.debtValuesCache.set(cacheKey, remainingDebt);
     return remainingDebt;
   }
 }

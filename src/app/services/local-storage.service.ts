@@ -1,16 +1,15 @@
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-// Define a type for local storage items
 type LocalStorageItem = Record<string, unknown>;
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  private localStorageSubject = new BehaviorSubject<string>('');
+  private localStorageSubject: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
-  // Serialize data before storing
   private serialize<T>(data: T): string {
     try {
       return JSON.stringify(data);
@@ -20,7 +19,6 @@ export class LocalStorageService {
     }
   }
 
-  // Deserialize data when retrieving
   private deserialize<T>(data: string): T | null {
     try {
       return JSON.parse(data) as T;
@@ -33,7 +31,7 @@ export class LocalStorageService {
   setItem<T>(key: string, value: T): void {
     try {
       localStorage.setItem(key, this.serialize(value));
-      this.localStorageSubject.next(key); // Notify of change
+      this.localStorageSubject.next(key);
     } catch (error) {
       console.error(`Error setting item in localStorage: ${error}`);
     }
@@ -41,7 +39,7 @@ export class LocalStorageService {
 
   getItem<T>(key: string): T | null {
     try {
-      const value = localStorage.getItem(key);
+      const value: string | null = localStorage.getItem(key);
       return value ? this.deserialize<T>(value) : null;
     } catch (error) {
       console.error(`Error retrieving item from localStorage: ${error}`);
@@ -65,27 +63,24 @@ export class LocalStorageService {
 
   downloadAsFile(): void {
     try {
-      const allData = this.getAllItems();
-      const clientName =
+      const allData: Record<string, LocalStorageItem> = this.getAllItems();
+      const clientName: string =
         typeof allData['client']?.['name'] === 'string'
           ? allData['client']['name'].split(' ').join('')
           : 'DNA';
 
-      // Format the current date
       const currentDate = new Date()
         .toISOString()
         .split('T')[0]
         .replace(/-/g, '.');
 
-      // Construct file name
-      const fileName = `${clientName}_${currentDate}.json`;
+      const fileName: string = `${clientName}_${currentDate}.json`;
 
-      // Rest of the code for creating and downloading the file
-      const data = this.serialize(allData);
-      const blob = new Blob([data], { type: 'application/json' });
-      const downloadURL = window.URL.createObjectURL(blob);
+      const data: string = this.serialize(allData);
+      const blob: Blob = new Blob([data], { type: 'application/json' });
+      const downloadURL: string = window.URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
+      const link: HTMLAnchorElement = document.createElement('a');
       link.href = downloadURL;
       link.download = fileName;
       link.click();
@@ -99,8 +94,8 @@ export class LocalStorageService {
   getAllItems(): Record<string, LocalStorageItem> {
     try {
       const items: Record<string, LocalStorageItem> = {};
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
+      for (let i: number = 0; i < localStorage.length; i++) {
+        const key: string | null = localStorage.key(i);
         if (key) {
           items[key] = this.getItem(key) || {};
         }
@@ -113,16 +108,17 @@ export class LocalStorageService {
   }
 
   loadFromFile(event: Event): void {
-    const file = (event.target as HTMLInputElement)?.files?.[0];
+    const file: File | undefined = (event.target as HTMLInputElement)
+      ?.files?.[0];
     if (!file) {
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
+    const reader: FileReader = new FileReader();
+    reader.onload = (): void => {
       try {
         const data = this.deserialize(reader.result as string);
         if (data) {
-          Object.entries(data).forEach(([key, value]) => {
+          Object.entries(data).forEach(([key, value]): void => {
             this.setItem(key, value as LocalStorageItem);
           });
         }

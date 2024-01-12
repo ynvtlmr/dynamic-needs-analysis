@@ -29,13 +29,12 @@ export class DiversificationComponent implements OnInit, OnDestroy {
   public chartOptions: PieChartOptions;
 
   constructor(private localStorageService: LocalStorageService) {
-    // Initialize PieChartOptions with default values
     this.chartOptions = {
       series: [],
       chart: {
         type: 'pie',
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
       },
       responsive: [{ breakpoint: 400, options: { chart: { width: 200 } } }],
@@ -45,13 +44,13 @@ export class DiversificationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.prepareChartData(); // Prepare initial chart data
+    this.prepareChartData();
 
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key) => {
+      .subscribe((key: string): void => {
         if (key === 'assets' || key === 'all') {
-          this.prepareChartData(); // Update chart data if assets change
+          this.prepareChartData();
         }
       });
   }
@@ -66,7 +65,7 @@ export class DiversificationComponent implements OnInit, OnDestroy {
     const assets: Asset[] = this.localStorageService.getItem('assets') || [];
     const totalByType: Record<string, number> = {};
 
-    assets.forEach((asset) => {
+    assets.forEach((asset: Asset): void => {
       totalByType[asset.type] =
         (totalByType[asset.type] || 0) + asset.currentValue;
     });

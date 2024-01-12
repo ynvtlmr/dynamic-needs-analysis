@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { Debt } from '../../models/debt.model';
+
 @Component({
   selector: 'app-debt',
   templateUrl: './debt.component.html',
@@ -36,7 +37,7 @@ export class DebtComponent implements OnChanges {
 
   constructor() {}
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.debt) {
       this.populateDebtData(this.debt);
     }
@@ -109,18 +110,16 @@ export class DebtComponent implements OnChanges {
     annualPayment: number,
     presentValue: number,
   ): number {
-    rate = rate / 100; // Convert to decimal
+    rate = rate / 100;
 
-    // Ensure rate is positive and non-zero
     if (rate <= 0) {
       rate *= -1;
     }
 
-    // The formula to calculate nper
-    const numerator = Math.log(
+    const numerator: number = Math.log(
       annualPayment / (annualPayment - presentValue * rate),
     );
-    const denominator = Math.log(1 + rate);
+    const denominator: number = Math.log(1 + rate);
     return numerator / denominator;
   }
 }

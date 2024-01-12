@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { DebtComponent } from '../debt/debt.component';
-import { Debt } from '../../models/debt.model';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { CurrencyPipe } from '@angular/common';
+import { Debt } from '../../models/debt.model';
 
 @Component({
   selector: 'app-debt-manager',
@@ -21,7 +20,8 @@ export class DebtManagerComponent {
   }
 
   loadDebtsFromStorage(): void {
-    const storedDebts = this.localStorageService.getItem<Debt[]>('debts');
+    const storedDebts: Debt[] | null =
+      this.localStorageService.getItem<Debt[]>('debts');
     if (storedDebts) {
       this.debts = storedDebts;
     }

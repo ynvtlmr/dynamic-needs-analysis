@@ -3,7 +3,10 @@ export interface FinTypeAttributes {
   liquid: boolean;
 }
 
-export const FIN_INSTR_TYPES = new Map<string, FinTypeAttributes>([
+export const FIN_INSTR_TYPES: Map<string, FinTypeAttributes> = new Map<
+  string,
+  FinTypeAttributes
+>([
   ['Cash', { taxable: false, liquid: true }],
   ['Stocks', { taxable: true, liquid: true }],
   ['Bonds', { taxable: true, liquid: true }],

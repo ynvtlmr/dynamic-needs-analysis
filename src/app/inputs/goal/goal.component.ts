@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LocalStorageService } from '../../services/local-storage.service';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { Goal } from '../../models/goal.model';
+
 @Component({
   selector: 'app-goal',
   standalone: true,
@@ -28,7 +29,7 @@ export class GoalComponent {
   }
 
   onGoalChange(): void {
-    this.updateStorage(); // Update localStorage whenever there's a change
+    this.updateStorage();
   }
 
   private updateStorage(): void {
@@ -36,7 +37,8 @@ export class GoalComponent {
   }
 
   private loadGoalsFromStorage(): void {
-    const data = this.localStorageService.getItem<Goal[]>('goals');
+    const data: Goal[] | null =
+      this.localStorageService.getItem<Goal[]>('goals');
     this.goals = data ? data : [];
   }
 }

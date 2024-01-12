@@ -1,12 +1,11 @@
-// asset-beneficiary.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Asset } from '../../models/asset.model';
-import { LocalStorageService } from '../../services/local-storage.service';
 import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart.component';
 import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
 import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
 import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Asset } from '../../models/asset.model';
 import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
@@ -23,33 +22,29 @@ import { Beneficiary } from '../../models/beneficiary.model';
 export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
   public assets: Asset[] = [];
-  public beneficiaries: Beneficiary[] = []; // You might want to define a proper type for beneficiaries
+  public beneficiaries: Beneficiary[] = [];
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.loadAssetsAndBeneficiaries(); // Load initial assets and beneficiaries
+    this.loadAssetsAndBeneficiaries();
 
-    // Subscribe to the localStorage changes
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key) => {
-        // If the change is related to assets or beneficiaries or something that affects the charts
+      .subscribe((key: string): void => {
         if (key === 'assets' || key === 'beneficiaries' || key === 'all') {
-          this.loadAssetsAndBeneficiaries(); // Reload the data
+          this.loadAssetsAndBeneficiaries();
         }
       });
   }
 
   ngOnDestroy(): void {
-    // Clean up the subscription to prevent memory leaks
     if (this.storageSub) {
       this.storageSub.unsubscribe();
     }
   }
 
   private loadAssetsAndBeneficiaries(): void {
-    // Retrieve assets and beneficiaries from local storage or set to empty if none
     this.assets = this.localStorageService.getItem('assets') || [];
     this.beneficiaries =
       this.localStorageService.getItem('beneficiaries') || [];

@@ -1,9 +1,8 @@
-// beneficiary-value-pie-chart.component.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Asset } from '../../models/asset.model';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-beneficiary-value-pie-chart',
@@ -12,27 +11,26 @@ import { LocalStorageService } from '../../services/local-storage.service';
   imports: [NgApexchartsModule],
 })
 export class BeneficiaryValuePieChartComponent implements OnInit {
-  @Input() assets: Asset[] = []; // Expect assets to be passed in from parent
+  @Input() assets: Asset[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.prepareChartData();
   }
 
   private initializeChartOptions(): ChartOptions {
-    // Ensure all properties are defined for pie charts
     return {
       series: [],
       chart: {
         type: 'pie',
         height: 350,
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
         toolbar: {
-          show: false, // Hide the toolbar
+          show: false,
         },
       },
       dataLabels: { enabled: true },
@@ -48,9 +46,8 @@ export class BeneficiaryValuePieChartComponent implements OnInit {
   private prepareChartData(): void {
     const beneficiaryTotals: Record<string, number> = {};
 
-    // Calculate the total value for each beneficiary
-    this.assets.forEach((asset) => {
-      asset.beneficiaries.forEach((beneficiary) => {
+    this.assets.forEach((asset: Asset): void => {
+      asset.beneficiaries.forEach((beneficiary: Beneficiary): void => {
         if (!beneficiaryTotals[beneficiary.name]) {
           beneficiaryTotals[beneficiary.name] = 0;
         }
@@ -59,7 +56,6 @@ export class BeneficiaryValuePieChartComponent implements OnInit {
       });
     });
 
-    // Set the series and labels for the chart
     this.chartOptions = this.initializeChartOptions();
     this.chartOptions.series = Object.values(beneficiaryTotals);
     this.chartOptions.labels = Object.keys(beneficiaryTotals);

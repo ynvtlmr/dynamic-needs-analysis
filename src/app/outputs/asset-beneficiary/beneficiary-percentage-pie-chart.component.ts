@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { LocalStorageService } from '../../services/local-storage.service';
 import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
@@ -11,27 +10,26 @@ import { Beneficiary } from '../../models/beneficiary.model';
   imports: [NgApexchartsModule],
 })
 export class BeneficiaryPercentagePieChartComponent implements OnInit {
-  @Input() beneficiaries: Beneficiary[] = []; // Expect beneficiaries to be passed in from parent
+  @Input() beneficiaries: Beneficiary[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.prepareChartData();
   }
 
   private initializeChartOptions(): ChartOptions {
-    // Ensure all properties are defined for pie charts
     return {
       series: [],
       chart: {
         type: 'pie',
         height: 350,
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
         toolbar: {
-          show: false, // Hide the toolbar
+          show: false,
         },
       },
       dataLabels: { enabled: true },
@@ -47,15 +45,13 @@ export class BeneficiaryPercentagePieChartComponent implements OnInit {
   private prepareChartData(): void {
     const beneficiaryTotals: Record<string, number> = {};
 
-    // Calculate the total allocation percentage for each beneficiary
-    this.beneficiaries.forEach((beneficiary) => {
+    this.beneficiaries.forEach((beneficiary: Beneficiary): void => {
       if (!beneficiaryTotals[beneficiary.name]) {
         beneficiaryTotals[beneficiary.name] = 0;
       }
       beneficiaryTotals[beneficiary.name] += beneficiary.allocation;
     });
 
-    // Set the series and labels for the chart
     this.chartOptions = this.initializeChartOptions();
     this.chartOptions.series = Object.values(beneficiaryTotals);
     this.chartOptions.labels = Object.keys(beneficiaryTotals);

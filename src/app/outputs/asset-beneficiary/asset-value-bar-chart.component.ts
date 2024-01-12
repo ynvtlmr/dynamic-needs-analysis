@@ -1,9 +1,8 @@
-// asset-value-bar-chart.component.ts
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { Asset } from '../../models/asset.model';
-import { LocalStorageService } from '../../services/local-storage.service';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-asset-value-bar-chart',
@@ -12,17 +11,16 @@ import { LocalStorageService } from '../../services/local-storage.service';
   imports: [NgApexchartsModule],
 })
 export class AssetValueBarChartComponent implements OnInit {
-  @Input() assets: Asset[] = []; // Expect assets to be passed in from parent
+  @Input() assets: Asset[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.prepareChartData();
   }
 
   private initializeChartOptions(): ChartOptions {
-    // Ensure all properties are defined for bar charts
     return {
       series: [],
       chart: {
@@ -30,10 +28,10 @@ export class AssetValueBarChartComponent implements OnInit {
         height: 350,
         stacked: true,
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
         toolbar: {
-          show: false, // Hide the toolbar
+          show: false,
         },
       },
       plotOptions: { bar: { horizontal: true } },
@@ -42,7 +40,7 @@ export class AssetValueBarChartComponent implements OnInit {
       yaxis: { title: { text: 'Asset Value' } },
       title: { text: 'Asset Value Distribution' },
       legend: { position: 'bottom' },
-      labels: [], // Initialize labels even though not used for bar charts
+      labels: [],
     };
   }
 
@@ -50,9 +48,8 @@ export class AssetValueBarChartComponent implements OnInit {
     const beneficiaryNames: string[] = [];
     const seriesData: { name: string; data: number[] }[] = [];
 
-    // Collect all unique beneficiary names and initialize series data
-    this.assets.forEach((asset) => {
-      asset.beneficiaries.forEach((beneficiary) => {
+    this.assets.forEach((asset: Asset): void => {
+      asset.beneficiaries.forEach((beneficiary: Beneficiary): void => {
         if (!beneficiaryNames.includes(beneficiary.name)) {
           beneficiaryNames.push(beneficiary.name);
           seriesData.push({ name: beneficiary.name, data: [] });
@@ -60,11 +57,10 @@ export class AssetValueBarChartComponent implements OnInit {
       });
     });
 
-    // Populate series data for value chart
-    this.assets.forEach((asset) => {
-      seriesData.forEach((series) => {
-        const beneficiary = asset.beneficiaries.find(
-          (b) => b.name === series.name,
+    this.assets.forEach((asset: Asset): void => {
+      seriesData.forEach((series: { name: string; data: number[] }): void => {
+        const beneficiary: Beneficiary | undefined = asset.beneficiaries.find(
+          (b: Beneficiary): boolean => b.name === series.name,
         );
         series.data.push(
           beneficiary ? (beneficiary.allocation / 100) * asset.currentValue : 0,
@@ -72,10 +68,8 @@ export class AssetValueBarChartComponent implements OnInit {
       });
     });
 
-    // Extract asset names for the x-axis categories
-    const assetNames: string[] = this.assets.map((asset) => asset.name);
+    const assetNames: string[] = this.assets.map((asset: Asset) => asset.name);
 
-    // Update chart options for value
     this.chartOptions = this.initializeChartOptions();
     this.chartOptions.series = seriesData;
     this.chartOptions.xaxis = {

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CurrencyPipe, NgForOf } from '@angular/common';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { Birthdate } from './birthdate.model';
 import { CANADA_PROVINCES } from '../constants/canada-provinces.constant';
-import { CurrencyPipe, NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { Client } from '../../models/client.model';
 
-const DEFAULT_RETIREMENT_AGE = 65;
+const DEFAULT_RETIREMENT_AGE: number = 65;
 
 @Component({
   selector: 'app-client',
@@ -22,7 +22,7 @@ export class ClientComponent implements OnInit {
   birthdateModel: Birthdate = new Birthdate(
     this.localStorageService.getItem('birthdate'),
   );
-  expectedRetirementAge: number = DEFAULT_RETIREMENT_AGE; // Default retirement age.
+  expectedRetirementAge: number = DEFAULT_RETIREMENT_AGE;
 
   constructor(private localStorageService: LocalStorageService) {}
 
@@ -40,7 +40,8 @@ export class ClientComponent implements OnInit {
   selectedBracket: TaxBracket | undefined;
 
   private loadClientFromStorage(): void {
-    const clientData = this.localStorageService.getItem<Client>('client');
+    const clientData: Client | null =
+      this.localStorageService.getItem<Client>('client');
     if (clientData) {
       const client: Client = clientData;
       this.name = client.name;
@@ -70,28 +71,32 @@ export class ClientComponent implements OnInit {
   }
 
   private loadSelectedBracket(): void {
-    const clientData = this.localStorageService.getItem<Client>('client');
+    const clientData: Client | null =
+      this.localStorageService.getItem<Client>('client');
     if (clientData && clientData.selectedBracket) {
-      const storedBracket = clientData.selectedBracket;
+      const storedBracket: TaxBracket = clientData.selectedBracket;
       this.selectedBracket = this.taxBrackets.find(
-        (bracket: TaxBracket) => bracket.minIncome === storedBracket.minIncome,
+        (bracket: TaxBracket): boolean =>
+          bracket.minIncome === storedBracket.minIncome,
       );
     }
   }
 
   private updateTaxBrackets(): void {
-    const year = new Date().getFullYear(); // or a specific year if required
+    const year: number = new Date().getFullYear();
     this.taxBrackets = TAX_BRACKETS[year]?.[this.province.toUpperCase()] || [];
-    this.selectedBracket = this.taxBrackets.find((bracket, index, array) => {
-      const nextBracket = array[index + 1];
-      return (
-        this.annualIncome >= bracket.minIncome &&
-        (!nextBracket || this.annualIncome < nextBracket.minIncome)
-      );
-    });
+    this.selectedBracket = this.taxBrackets.find(
+      (bracket: TaxBracket, index: number, array: TaxBracket[]) => {
+        const nextBracket: TaxBracket = array[index + 1];
+        return (
+          this.annualIncome >= bracket.minIncome &&
+          (!nextBracket || this.annualIncome < nextBracket.minIncome)
+        );
+      },
+    );
   }
 
-  saveSelectedBracket() {
+  saveSelectedBracket(): void {
     this.localStorageService.setItem('client', {
       ...this.localStorageService.getItem<Client>('client'),
       selectedBracket: this.selectedBracket,
@@ -100,12 +105,12 @@ export class ClientComponent implements OnInit {
 
   updateBirthdateAndMultiplier(newBirthdate: string | null): void {
     this.birthdateModel.birthdate = newBirthdate;
-    // Update incomeReplacementMultiplier based on the new years to retirement
+
     this.incomeReplacementMultiplier = Math.max(
       this.expectedRetirementAge - this.birthdateModel.age,
       0,
     );
-    // Update the client data in localStorage
+
     this.updateClientData();
   }
 

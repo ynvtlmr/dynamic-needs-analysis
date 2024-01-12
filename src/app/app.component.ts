@@ -43,12 +43,10 @@ interface NavLink {
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  // existing properties
   selectedInputComponent: ComponentType | null = null;
   selectedOutputComponent: ComponentType | null = null;
   constructor(private localStorageService: LocalStorageService) {}
 
-  // Update with the actual component classes
   inputLinks: NavLink[] = [
     { path: 'inputs/client', label: 'Client', component: ClientComponent },
     {
@@ -99,7 +97,7 @@ export class AppComponent {
 
   onSelectInputComponent(component: ComponentType | null) {
     if (this.selectedInputComponent === component) {
-      this.selectedInputComponent = null; // Hide if it's the same component
+      this.selectedInputComponent = null;
     } else {
       this.selectedInputComponent = component;
     }

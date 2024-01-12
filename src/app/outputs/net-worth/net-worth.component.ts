@@ -46,13 +46,13 @@ export class NetWorthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.loadAssets(); // Load initial assets
+    this.loadAssets();
 
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key) => {
+      .subscribe((key: string): void => {
         if (key === 'assets' || key === 'all') {
-          this.loadAssets(); // Reload and update chart if assets change
+          this.loadAssets();
         }
       });
   }
@@ -65,15 +65,15 @@ export class NetWorthComponent implements OnInit, OnDestroy {
 
   private initializeChart(): void {
     this.chartOptions = {
-      series: [], // Initialize as empty array
+      series: [],
       chart: {
         type: 'line',
         height: 350,
         animations: {
-          enabled: false, // Disable animations
+          enabled: false,
         },
         toolbar: {
-          show: false, // Hide the toolbar
+          show: false,
         },
         stacked: false,
       } as ApexChart,
@@ -83,9 +83,8 @@ export class NetWorthComponent implements OnInit, OnDestroy {
         min: 0,
         max: 0,
         labels: {
-          formatter: (value: string) => {
-            // Convert string to number, round it, then back to string
-            const valAsNumber = parseFloat(value);
+          formatter: (value: string): string => {
+            const valAsNumber: number = parseFloat(value);
             return isNaN(valAsNumber)
               ? value
               : Math.round(valAsNumber).toString().slice(-2);
@@ -94,7 +93,8 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       } as ApexXAxis,
       yaxis: {
         labels: {
-          formatter: (value: number) => `$${(value / 1000).toFixed(0)}k`, // Format as currency
+          formatter: (value: number): string =>
+            `$${(value / 1000).toFixed(0)}k`,
         },
       } as ApexYAxis,
       dataLabels: {
@@ -113,7 +113,7 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       } as ApexLegend,
       tooltip: {
         y: {
-          formatter: (val: number) => `$${val.toFixed(0)}`, // Format as currency
+          formatter: (val: number): string => `$${val.toFixed(0)}`,
         },
       },
     };
@@ -125,25 +125,22 @@ export class NetWorthComponent implements OnInit, OnDestroy {
   }
 
   private prepareChartData(): void {
-    // Calculate startYear and endYear
     const startYear: number = Math.min(
-      ...this.assets.map((a) => a.yearAcquired),
+      ...this.assets.map((a: Asset) => a.yearAcquired),
     );
     const endYear: number = Math.max(
-      ...this.assets.map((a) => a.yearAcquired + a.term),
+      ...this.assets.map((a: Asset) => a.yearAcquired + a.term),
     );
 
-    // Configure x-axis range
     if (this.chartOptions && this.chartOptions.xaxis) {
       this.chartOptions.xaxis.min = startYear;
       this.chartOptions.xaxis.max = endYear;
       this.chartOptions.xaxis.tickAmount = endYear - startYear + 1;
     }
 
-    // Aggregate series data for each asset
-    this.chartOptions.series = this.assets.map((asset) => ({
+    this.chartOptions.series = this.assets.map((asset: Asset) => ({
       name: asset.name,
-      data: this.valueSeries(asset, startYear, endYear).map((yv) => [
+      data: this.valueSeries(asset, startYear, endYear).map((yv: YearValue) => [
         yv.year,
         yv.value,
       ]),

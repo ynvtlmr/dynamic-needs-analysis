@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AssetComponent } from '../asset/asset.component';
-import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { CurrencyPipe } from '@angular/common';
+import { Asset } from '../../models/asset.model';
 
 interface EditingState {
   asset: Asset | null;
@@ -43,7 +42,8 @@ export class AssetManagerComponent {
   }
 
   loadAssetsFromStorage(): void {
-    const storedAssets = this.localStorageService.getItem<Asset[]>('assets');
+    const storedAssets: Asset[] | null =
+      this.localStorageService.getItem<Asset[]>('assets');
     this.assets = storedAssets || [];
   }
 

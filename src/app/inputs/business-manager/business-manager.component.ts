@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { BusinessComponent } from '../business/business.component';
-import { Business } from '../../models/business.model';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { CurrencyPipe } from '@angular/common';
+import { Business } from '../../models/business.model';
 
 @Component({
   selector: 'app-business-manager',
@@ -21,7 +20,7 @@ export class BusinessManagerComponent {
   }
 
   loadBusinessesFromStorage(): void {
-    const storedBusinesses =
+    const storedBusinesses: Business[] | null =
       this.localStorageService.getItem<Business[]>('businesses');
     if (storedBusinesses) {
       this.businesses = storedBusinesses;

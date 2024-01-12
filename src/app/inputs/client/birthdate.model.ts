@@ -27,7 +27,7 @@ export class Birthdate {
   get age(): number {
     if (!this._birthdate) return 0;
     const today: Date = new Date();
-    let age = today.getFullYear() - this._birthdate.getFullYear();
+    let age: number = today.getFullYear() - this._birthdate.getFullYear();
 
     if (
       today.getMonth() < this._birthdate.getMonth() ||
@@ -37,9 +37,5 @@ export class Birthdate {
       age--;
     }
     return age;
-  }
-
-  get yearsToRetirement(): number {
-    return Math.max(65 - this.age, 0);
   }
 }
