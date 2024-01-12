@@ -5,7 +5,6 @@ import {
   EventEmitter,
   OnChanges,
 } from '@angular/core';
-import { Beneficiary } from '../beneficiary/beneficiary.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
@@ -15,23 +14,10 @@ import {
   FIN_INSTR_TYPES,
   FinTypeAttributes,
 } from '../constants/asset-types.constant';
-import { Client } from '../client/client.component';
 
-export interface Asset {
-  name: string;
-  initialValue: number;
-  currentValue: number;
-  yearAcquired: number;
-  rate: number;
-  term: number;
-  type: string;
-  isTaxable: boolean;
-  isLiquid: boolean;
-  isToBeSold: boolean;
-  beneficiaries: Beneficiary[];
-  selectedTaxBracket: TaxBracket | undefined;
-  capitalGainsTaxRate: number;
-}
+import { Client } from '../../models/client.model';
+import { Asset } from '../../models/asset.model';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-asset',

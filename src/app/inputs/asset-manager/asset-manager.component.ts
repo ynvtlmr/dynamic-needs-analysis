@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Asset, AssetComponent } from '../asset/asset.component';
+import { AssetComponent } from '../asset/asset.component';
+import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
 

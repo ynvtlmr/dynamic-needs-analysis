@@ -7,7 +7,7 @@ import {
   ApexLegend,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { Asset } from '../../inputs/asset/asset.component';
+import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 export type PieChartOptions = {

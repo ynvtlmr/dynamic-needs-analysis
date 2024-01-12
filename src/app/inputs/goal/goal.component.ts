@@ -3,13 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
-export interface Goal {
-  goalName: string;
-  dollarAmount: number;
-  isPhilanthropic: boolean;
-}
-
+import { Goal } from '../../models/goal.model';
 @Component({
   selector: 'app-goal',
   standalone: true,

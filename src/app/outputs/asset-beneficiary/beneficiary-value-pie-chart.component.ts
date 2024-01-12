@@ -2,7 +2,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Asset } from '../../inputs/asset/asset.component';
+import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({

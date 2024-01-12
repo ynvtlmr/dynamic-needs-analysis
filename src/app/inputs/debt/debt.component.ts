@@ -8,16 +8,7 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
-export interface Debt {
-  name: string;
-  initialValue: number;
-  yearAcquired: number;
-  rate: number;
-  term: number;
-  annualPayment: number;
-}
-
+import { Debt } from '../../models/debt.model';
 @Component({
   selector: 'app-debt',
   templateUrl: './debt.component.html',

@@ -6,18 +6,9 @@ import { CurrencyPipe, NgForOf } from '@angular/common';
 import { TAX_BRACKETS, TaxBracket } from '../constants/tax.constant';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { Client } from '../../models/client.model';
 
 const DEFAULT_RETIREMENT_AGE = 65;
-
-export interface Client {
-  name: string;
-  province: string;
-  annualIncome: number;
-  expectedRetirementAge: number;
-  incomeReplacementMultiplier: number;
-  birthdate?: string | null;
-  selectedBracket?: TaxBracket | undefined;
-}
 
 @Component({
   selector: 'app-client',

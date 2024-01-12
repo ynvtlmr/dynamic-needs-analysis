@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ChartOptions } from './chart-options.model';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-beneficiary-percentage-pie-chart',

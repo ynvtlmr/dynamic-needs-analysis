@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
-
-export interface Beneficiary {
-  name: string;
-  allocation: number;
-}
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-beneficiary',

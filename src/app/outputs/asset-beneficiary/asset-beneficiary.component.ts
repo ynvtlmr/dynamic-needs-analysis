@@ -1,13 +1,13 @@
 // asset-beneficiary.component.ts
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Asset } from '../../inputs/asset/asset.component';
+import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart.component';
 import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
 import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
 import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
-import { Beneficiary } from '../../inputs/beneficiary/beneficiary.component';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-asset-beneficiary',

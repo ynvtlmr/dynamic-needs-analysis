@@ -12,7 +12,7 @@ import {
   ApexTooltip,
   NgApexchartsModule,
 } from 'ng-apexcharts';
-import { Debt } from '../../inputs/debt/debt.component';
+import { Debt } from '../../models/debt.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 
 export type ChartOptions = {
