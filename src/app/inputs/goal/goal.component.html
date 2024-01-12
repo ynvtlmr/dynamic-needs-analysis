@@ -1,11 +1,14 @@
 <div>
   <table>
+    <!-- Table headings -->
     <tr>
       <th>Name</th>
       <th>Amount ($)</th>
       <th>Philanthropic</th>
       <th></th>
     </tr>
+
+    <!-- Loop through goals -->
     <tr *ngFor="let goal of goals; let i = index">
       <td>
         <input
@@ -15,6 +18,8 @@
           placeholder="Red Cross"
         />
       </td>
+
+      <!-- Goal Amount -->
       <td>
         <input
           [(ngModel)]="goal.dollarAmount"
@@ -27,6 +32,8 @@
           style="text-align: right"
         />
       </td>
+
+      <!-- Philanthropic -->
       <td>
         <input
           [(ngModel)]="goal.isPhilanthropic"
@@ -34,10 +41,14 @@
           type="checkbox"
         />
       </td>
+
+      <!-- Delete Goal -->
       <td>
         <button (click)="deleteGoal(i)">Delete</button>
       </td>
     </tr>
+
+    <!-- Add New Goal -->
     <tr>
       <td colspan="4">
         <button (click)="addEmptyGoal()">Add New Goal</button>

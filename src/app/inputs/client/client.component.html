@@ -14,7 +14,7 @@
       </td>
     </tr>
 
-    <!-- Birthdate Component Integration -->
+    <!-- Birthdate -->
     <tr>
       <td><label for="birthdate">Birthdate:</label></td>
       <td>
@@ -26,6 +26,8 @@
         />
       </td>
     </tr>
+
+    <!-- Age -->
     <tr>
       <td>Age:</td>
       <td class="number">{{ birthdateModel.age }}</td>
@@ -45,6 +47,7 @@
       </td>
     </tr>
 
+    <!-- Years of Active Income -->
     <tr>
       <td>Years of Active Income:</td>
       <td class="number">
@@ -52,6 +55,7 @@
       </td>
     </tr>
 
+    <!-- Province -->
     <tr>
       <td><label for="province">Province:</label></td>
       <td>
@@ -66,6 +70,8 @@
         </select>
       </td>
     </tr>
+
+    <!-- Annual Income -->
     <tr>
       <td><label for="annualIncome">Annual Income ($):</label></td>
       <td>
@@ -82,6 +88,8 @@
         />
       </td>
     </tr>
+
+    <!-- Income Replacement Multiplier -->
     <tr>
       <td>
         <label for="incomeReplacementMultiplier"
@@ -97,12 +105,16 @@
         />
       </td>
     </tr>
+
+    <!-- Amount Insured for Income -->
     <tr>
       <td>Amount Insured for Income ($):</td>
       <td class="number">
         {{ annualIncome * incomeReplacementMultiplier | currency }}
       </td>
     </tr>
+
+    <!-- Tax Bracket -->
     <tr>
       <td><label for="taxBracket">Tax Bracket:</label></td>
       <td>

@@ -113,7 +113,7 @@
     </td>
   </tr>
 
-  <!-- Button to Load Beneficiaries -->
+  <!-- Load Beneficiaries -->
   <tr>
     <td colspan="2">
       <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
@@ -163,8 +163,6 @@
     <td>Future Value Growth Percentage (%):</td>
     <td class="number">{{ futureValueGrowthPercentage | number: "1.0-2" }}%</td>
   </tr>
-
-  <!-- Display Calculated Values -->
   <tr>
     <td>Current Tax Liability ($):</td>
     <td class="number">{{ currentTaxLiabilityDollars | currency }}</td>

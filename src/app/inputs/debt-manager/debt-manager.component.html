@@ -1,11 +1,14 @@
 <div>
   <table>
+    <!-- Table headings -->
     <tr>
       <th>Name</th>
       <th>Initial Value ($)</th>
       <th></th>
       <th></th>
     </tr>
+
+    <!-- Loop through debts -->
     <tr *ngFor="let debt of debts; let i = index">
       <td>{{ debt.name }}</td>
       <td class="number">{{ debt.initialValue | currency }}</td>
@@ -18,6 +21,7 @@
     </tr>
   </table>
 
+  <!-- Debt editing UI -->
   <button (click)="addNewDebt()">Add New Debt</button>
   <div *ngIf="editingDebt">
     <app-debt

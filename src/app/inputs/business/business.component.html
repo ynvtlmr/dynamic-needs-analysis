@@ -1,5 +1,6 @@
 <div>
   <table>
+    <!-- Business Information -->
     <tr>
       <td><label for="businessName">Business Name:</label></td>
       <td>
@@ -40,6 +41,7 @@
     </tr>
   </table>
 
+  <!-- Shareholders -->
   <h3>Shareholders</h3>
   <table>
     <tr>
@@ -83,6 +85,7 @@
     </tr>
   </table>
 
+  <!-- Totals -->
   <table>
     <tr>
       <td>Total Shareholder Percentage Owned (%):</td>
@@ -101,6 +104,8 @@
       <td class="number">{{ totalMajorShareholderDisparity | currency }}</td>
     </tr>
   </table>
+
+  <!-- Buttons -->
   <button class="active" (click)="onSave()">Save</button>
   <button (click)="onCancel()">Cancel</button>
 </div>

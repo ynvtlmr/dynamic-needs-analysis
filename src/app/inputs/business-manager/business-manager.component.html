@@ -1,11 +1,14 @@
 <div>
   <table>
+    <!-- Table headings -->
     <tr>
       <th>Name</th>
       <th>Valuation ($)</th>
       <th></th>
       <th></th>
     </tr>
+
+    <!-- Loop through businesses -->
     <tr *ngFor="let business of businesses; let i = index">
       <td>{{ business.businessName }}</td>
       <td class="number">{{ business.valuation | currency }}</td>
@@ -20,6 +23,7 @@
 
   <button (click)="addNewBusiness()">Add New Business</button>
 
+  <!-- Business editing UI -->
   <div *ngIf="editingBusiness">
     <app-business
       [business]="editingBusiness"

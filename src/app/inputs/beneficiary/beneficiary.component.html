@@ -1,10 +1,12 @@
 <div>
   <table>
+    <!-- Table headings -->
     <tr>
       <th>Name</th>
       <th>Allocation</th>
       <th></th>
     </tr>
+    <!-- Loop through beneficiaries -->
     <tr *ngFor="let beneficiary of beneficiaries; let i = index">
       <td>
         <input
