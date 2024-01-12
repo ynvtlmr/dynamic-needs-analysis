@@ -29,7 +29,14 @@ export class BusinessManagerComponent {
   }
 
   addNewBusiness(): void {
-    this.editingBusiness = new Business('', 0, 0, 0, 0, []);
+    this.editingBusiness = {
+      businessName: '',
+      valuation: 0,
+      ebita: 0,
+      rate: 0,
+      term: 0,
+      shareholders: [],
+    };
   }
 
   saveBusiness(updatedBusiness: Business): void {
@@ -51,7 +58,7 @@ export class BusinessManagerComponent {
       this.onCancelEditing();
     } else {
       this.editingBusiness = { ...this.businesses[index] };
-      this.editingBusinessIndex = index; // Add this line
+      this.editingBusinessIndex = index;
     }
   }
 

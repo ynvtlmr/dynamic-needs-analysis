@@ -71,9 +71,9 @@
       <td>
         <button (click)="deleteShareholder(i)">Delete</button>
       </td>
-      <td class="number">{{ shareholder.shareValue(valuation) | currency }}</td>
+      <td class="number">{{ calculateShareValue(shareholder) | currency }}</td>
       <td class="number">
-        {{ shareholder.liquidationDisparity(valuation) | currency }}
+        {{ calculateLiquidationDisparity(shareholder) | currency }}
       </td>
     </tr>
     <tr>

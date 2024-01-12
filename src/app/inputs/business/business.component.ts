@@ -44,14 +44,7 @@ export class BusinessComponent implements OnChanges {
     this.valuation = business.valuation;
     this.rate = business.rate;
     this.term = business.term;
-    this.shareholders = business.shareholders.map(
-      (sh) =>
-        new Shareholder(
-          sh.shareholderName,
-          sh.sharePercentage,
-          sh.insuranceCoverage,
-        ),
-    );
+    this.shareholders = business.shareholders;
   }
 
   onSave(): void {
@@ -71,18 +64,30 @@ export class BusinessComponent implements OnChanges {
   }
 
   addEmptyShareholder(): void {
-    if (this.shareholders.length === 0) {
-      const clientName: string =
-        this.localStorageService.getItem<Client>('client')!.name;
-      this.shareholders.push(new Shareholder(clientName, 0, 0));
-    } else {
-      this.shareholders.push(new Shareholder('', 0, 0));
-    }
+    const newShareholder: Shareholder = {
+      shareholderName:
+        this.shareholders.length === 0
+          ? this.localStorageService.getItem<Client>('client')!.name
+          : '',
+      sharePercentage: 0,
+      insuranceCoverage: 0,
+    };
+    this.shareholders.push(newShareholder);
   }
 
   // Delete a shareholder by index
   deleteShareholder(index: number): void {
     this.shareholders.splice(index, 1);
+  }
+
+  calculateShareValue(shareholder: Shareholder): number {
+    return (shareholder.sharePercentage / 100) * this.valuation;
+  }
+
+  calculateLiquidationDisparity(shareholder: Shareholder): number {
+    return (
+      this.calculateShareValue(shareholder) - shareholder.insuranceCoverage
+    );
   }
 
   // Calculate total percentage owned by all shareholders
@@ -96,7 +101,7 @@ export class BusinessComponent implements OnChanges {
   // Calculate total value of major shareholders' shares
   get totalMajorShareholderValue(): number {
     return this.shareholders.reduce(
-      (acc, shareholder) => acc + shareholder.shareValue(this.valuation),
+      (acc, shareholder) => acc + this.calculateShareValue(shareholder),
       0,
     );
   }

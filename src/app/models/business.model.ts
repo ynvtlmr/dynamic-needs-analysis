@@ -1,26 +1,14 @@
-export class Shareholder {
-  constructor(
-    public shareholderName: string,
-    public sharePercentage: number,
-    public insuranceCoverage: number,
-  ) {}
-
-  shareValue(businessValuation: number): number {
-    return (this.sharePercentage / 100) * businessValuation;
-  }
-
-  liquidationDisparity(businessValuation: number): number {
-    return this.shareValue(businessValuation) - this.insuranceCoverage;
-  }
+export interface Shareholder {
+  shareholderName: string;
+  sharePercentage: number;
+  insuranceCoverage: number;
 }
 
-export class Business {
-  constructor(
-    public businessName: string,
-    public valuation: number,
-    public ebita: number,
-    public rate: number,
-    public term: number,
-    public shareholders: Shareholder[],
-  ) {}
+export interface Business {
+  businessName: string;
+  valuation: number;
+  ebita: number;
+  rate: number;
+  term: number;
+  shareholders: Shareholder[];
 }
