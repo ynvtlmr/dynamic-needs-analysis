@@ -6,22 +6,11 @@ import {
   OnChanges,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Shareholder } from './shareholder.model';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Client } from '../../models/client.model';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
-
-export class Business {
-  constructor(
-    public businessName: string,
-    public valuation: number,
-    public ebita: number,
-    public rate: number,
-    public term: number,
-    public shareholders: Shareholder[], // Assuming Shareholder is already defined
-  ) {}
-}
+import { Business, Shareholder } from '../../models/business.model';
 
 @Component({
   selector: 'app-business',
