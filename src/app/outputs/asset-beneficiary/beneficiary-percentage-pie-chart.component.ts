@@ -33,7 +33,7 @@ export class BeneficiaryPercentagePieChartComponent implements OnInit {
         },
       },
       dataLabels: { enabled: true },
-      title: { text: 'Beneficiary Percentage Distribution' },
+      title: { text: 'Beneficiary Ideal Allocation' },
       legend: { position: 'bottom' },
       labels: [],
       xaxis: { type: 'category', categories: [] },
