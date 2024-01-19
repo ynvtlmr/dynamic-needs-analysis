@@ -55,7 +55,13 @@ export class ShareholderEbitaContributionComponent implements OnInit {
 
     this.chartOptions = {
       series: series,
-      chart: { type: 'line', height: 350 },
+      chart: {
+        type: 'line',
+        height: 350,
+        animations: {
+          enabled: false,
+        },
+      },
       xaxis: { type: 'category', categories: this.generateYearsArray() },
       yaxis: { title: { text: 'EBITA Contribution ($)' } },
     };
