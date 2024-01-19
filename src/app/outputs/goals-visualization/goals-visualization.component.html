@@ -1,0 +1,49 @@
+<div>
+  <h2>Liquidity</h2>
+  <table>
+    <tr>
+      <td>Total Current Value of Fixed Assets:</td>
+      <td class="number">{{ totalCurrentValueFixed | currency }}</td>
+    </tr>
+    <tr>
+      <td>Total Future Value of Fixed Assets:</td>
+      <td class="number">{{ totalFutureValueFixed | currency }}</td>
+    </tr>
+    <tr>
+      <td>Total Current Value of Liquid Assets:</td>
+      <td class="number">{{ totalCurrentValueLiquid | currency }}</td>
+    </tr>
+    <tr>
+      <td>Total Future Value of Liquid Assets:</td>
+      <td class="number">{{ totalFutureValueLiquid | currency }}</td>
+    </tr>
+    <tr>
+      <td>Total Current Value of Assets to be Sold:</td>
+      <td class="number">{{ totalCurrentValueToBeSold | currency }}</td>
+    </tr>
+    <tr>
+      <td>Total Future Value of Assets to be Sold:</td>
+      <td class="number">{{ totalFutureValueToBeSold | currency }}</td>
+    </tr>
+    <tr>
+      <td>Percent Liquidity to Goals:</td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="percentLiquidityToGoals"
+          (change)="onPercentLiquidityChange()"
+          min="0"
+          max="100"
+        />
+      </td>
+    </tr>
+    <tr>
+      <td>Liquidity Preserved:</td>
+      <td class="number">{{ liquidityPreserved | currency }}</td>
+    </tr>
+    <tr>
+      <td>Liquidity Allocated Towards Goals:</td>
+      <td class="number">{{ liquidityAllocatedToGoals | currency }}</td>
+    </tr>
+  </table>
+</div>
