@@ -99,31 +99,36 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private prepareChartData(): void {
-    const startYear: number = Math.min(
-      ...this.debts.map((d: Debt) => d.yearAcquired),
-    );
-    const endYear: number = Math.max(
-      ...this.debts.map((d: Debt) => d.yearAcquired + d.term),
-    );
+    const series: ApexAxisChartSeries = [];
 
-    this.chartOptions.series = this.debts.map((debt: Debt) => {
-      return {
+    this.debts.forEach((debt: Debt) => {
+      const dataPoints = [];
+
+      for (
+        let year = debt.yearAcquired;
+        year <= debt.yearAcquired + debt.term;
+        year++
+      ) {
+        const value = this.debtValueOverTime(debt, year);
+        dataPoints.push([year, value]);
+      }
+
+      series.push({
         name: debt.name,
-        data: Array.from(
-          { length: endYear - startYear + 1 },
-          (_, i: number) => startYear + i,
-        ).map((year: number) => [year, this.debtValueOverTime(debt, year)]),
-      };
+        data: dataPoints,
+      });
     });
 
-    this.chartOptions.xaxis = {
-      ...this.chartOptions.xaxis,
-      min: startYear,
-      max: endYear,
-      labels: {
-        formatter: (value: string): string => {
-          return `'${value.toString().slice(-2)}`;
-        },
+    const minYear = Math.min(...this.debts.map((d) => d.yearAcquired));
+    const maxYear = Math.max(...this.debts.map((d) => d.yearAcquired + d.term));
+
+    this.chartOptions = {
+      ...this.chartOptions,
+      series: series,
+      xaxis: {
+        ...this.chartOptions.xaxis,
+        min: minYear,
+        max: maxYear,
       },
     };
   }
