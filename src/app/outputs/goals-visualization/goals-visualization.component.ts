@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset.model';
+import { Goal } from '../../models/goal.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,11 +23,15 @@ export class GoalsVisualizationComponent implements OnInit {
   liquidityPreserved: number = 0;
   liquidityAllocatedToGoals: number = 0;
 
+  totalSumOfGoals: number = 0;
+  shortfall: number = 0;
+
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadPercentLiquidityFromStorage();
     this.calculateTotals();
+    this.calculateGoals();
   }
 
   private calculateTotals(): void {
@@ -55,6 +60,18 @@ export class GoalsVisualizationComponent implements OnInit {
     this.calculateLiquidityValues();
   }
 
+  private calculateGoals(): void {
+    const goals: Goal[] =
+      this.localStorageService.getItem<Goal[]>('goals') || [];
+    this.totalSumOfGoals = goals.reduce(
+      (sum, goal) => sum + goal.dollarAmount,
+      0,
+    );
+
+    // Recalculate shortfall in case goals change
+    this.calculateShortfall();
+  }
+
   private calculateLiquidityValues(): void {
     const allocationFactor = this.percentLiquidityToGoals / 100;
     this.liquidityPreserved =
@@ -78,5 +95,10 @@ export class GoalsVisualizationComponent implements OnInit {
       this.percentLiquidityToGoals,
     );
     this.calculateLiquidityValues();
+  }
+
+  private calculateShortfall(): void {
+    // Assuming this.totalFutureValueLiquid already reflects liquidity allocated towards goals
+    this.shortfall = this.liquidityAllocatedToGoals - this.totalSumOfGoals;
   }
 }
