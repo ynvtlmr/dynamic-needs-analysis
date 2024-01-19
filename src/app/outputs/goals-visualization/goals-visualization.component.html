@@ -54,4 +54,14 @@
       <td class="number">{{ shortfall | currency }}</td>
     </tr>
   </table>
+
+  <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+    [dataLabels]="chartOptions.dataLabels"
+    [plotOptions]="chartOptions.plotOptions"
+  >
+  </apx-chart>
 </div>

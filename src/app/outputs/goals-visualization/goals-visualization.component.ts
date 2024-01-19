@@ -4,12 +4,14 @@ import { Goal } from '../../models/goal.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { getChartOptions, ChartOptions } from './goals-visualization-chart';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @Component({
   selector: 'app-goals-visualization',
   templateUrl: './goals-visualization.component.html',
   standalone: true,
-  imports: [CurrencyPipe, FormsModule],
+  imports: [CurrencyPipe, FormsModule, NgApexchartsModule],
 })
 export class GoalsVisualizationComponent implements OnInit {
   totalCurrentValueFixed: number = 0;
@@ -26,12 +28,15 @@ export class GoalsVisualizationComponent implements OnInit {
   totalSumOfGoals: number = 0;
   shortfall: number = 0;
 
+  chartOptions!: ChartOptions;
+
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
     this.loadPercentLiquidityFromStorage();
     this.calculateTotals();
     this.calculateGoals();
+    this.updateChart();
   }
 
   private calculateTotals(): void {
@@ -100,5 +105,16 @@ export class GoalsVisualizationComponent implements OnInit {
   private calculateShortfall(): void {
     // Assuming this.totalFutureValueLiquid already reflects liquidity allocated towards goals
     this.shortfall = this.liquidityAllocatedToGoals - this.totalSumOfGoals;
+  }
+
+  private updateChart(): void {
+    const chartValues = [
+      this.totalFutureValueLiquid,
+      this.liquidityPreserved,
+      this.liquidityAllocatedToGoals,
+      -this.totalSumOfGoals, // Display as negative
+      this.shortfall,
+    ];
+    this.chartOptions = getChartOptions(chartValues);
   }
 }
