@@ -100,6 +100,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
   private prepareChartData(): void {
     const series: ApexAxisChartSeries = [];
+    let latestYear = 0; // Variable to track the latest year across all debts
 
     this.debts.forEach((debt: Debt) => {
       const dataPoints = [];
@@ -110,9 +111,13 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         value = this.debtValueOverTime(debt, year);
         if (value > 0) {
           dataPoints.push([year, value]);
+        } else {
+          // When the debt value becomes zero or less, we record the year
+          latestYear = Math.max(latestYear, year);
+          break; // No need to calculate further for this debt
         }
         year++;
-      } while (value > 0);
+      } while (true); // Loop until debt is paid off
 
       series.push({
         name: debt.name,
@@ -121,7 +126,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
     });
 
     const minYear = Math.min(...this.debts.map((d) => d.yearAcquired));
-    const maxYear = Math.max(...this.debts.map((d) => d.yearAcquired + d.term));
+    const maxYear = latestYear; // Use latestYear as the maxYear
 
     this.chartOptions = {
       ...this.chartOptions,
