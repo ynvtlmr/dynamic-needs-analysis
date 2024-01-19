@@ -42,6 +42,7 @@ export class BusinessComponent implements OnChanges {
   populateBusinessData(business: Business): void {
     this.businessName = business.businessName;
     this.valuation = business.valuation;
+    this.ebita = business.ebita; // Add this line to set the EBITA value
     this.rate = business.rate;
     this.term = business.term;
     this.shareholders = business.shareholders;
@@ -91,15 +92,21 @@ export class BusinessComponent implements OnChanges {
   }
 
   calculateEbitaContribDollars(shareholder: Shareholder): number {
-    return (
-      this.business!.ebita * (shareholder.ebitaContributionPercentage / 100)
-    );
+    return this.ebita * (shareholder.ebitaContributionPercentage / 100);
   }
 
   get totalMajorShareholderPercentage(): number {
     return this.shareholders.reduce(
       (acc: number, shareholder: Shareholder) =>
         acc + shareholder.sharePercentage,
+      0,
+    );
+  }
+
+  get totalEbitaContribPercentage(): number {
+    return this.shareholders.reduce(
+      (acc: number, shareholder: Shareholder) =>
+        acc + shareholder.ebitaContributionPercentage,
       0,
     );
   }

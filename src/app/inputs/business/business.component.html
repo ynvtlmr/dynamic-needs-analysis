@@ -70,7 +70,15 @@
         <input [(ngModel)]="shareholder.shareholderName" type="text" />
       </td>
       <td>
-        <input [(ngModel)]="shareholder.sharePercentage" type="number" />
+        <input
+          [(ngModel)]="shareholder.sharePercentage"
+          type="text"
+          mask="separator.1"
+          thousandSeparator=","
+          suffix="%"
+          placeholder="37%"
+          style="text-align: right"
+        />
       </td>
       <td>
         <input
@@ -86,7 +94,12 @@
       <td>
         <input
           [(ngModel)]="shareholder.ebitaContributionPercentage"
-          type="number"
+          type="text"
+          mask="separator.1"
+          thousandSeparator=","
+          suffix="%"
+          placeholder="37%"
+          style="text-align: right"
         />
       </td>
       <td class="number">
@@ -111,7 +124,11 @@
   <table>
     <tr>
       <td>Total Shareholder Percentage Owned (%):</td>
-      <td class="number">{{ totalMajorShareholderPercentage | currency }}</td>
+      <td class="number">{{ totalMajorShareholderPercentage }}%</td>
+    </tr>
+    <tr>
+      <td>Total EBITA Contribution (%):</td>
+      <td class="number">{{ totalEbitaContribPercentage }}%</td>
     </tr>
     <tr>
       <td>Total Major Shareholder Value ($):</td>
