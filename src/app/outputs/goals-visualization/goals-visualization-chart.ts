@@ -17,8 +17,28 @@ export type ChartOptions = {
 };
 
 export function getChartOptions(values: number[]): ChartOptions {
+  const categories = [
+    'Future Liquidity',
+    'Preserved Liquidity',
+    'Allocated to Goals',
+    'Total Goals',
+    'Surplus / Shortfall',
+  ];
+
+  const positiveColor = '#00E396'; // Color for positive values
+  const negativeColor = '#FF4560'; // Color for negative values
+
+  // Map each value to an object with x as category name and color based on its value
+  const dataWithColors = values.map((value, index) => {
+    return {
+      x: categories[index], // Using category name
+      y: value,
+      fillColor: value >= 0 ? positiveColor : negativeColor,
+    };
+  });
+
   return {
-    series: [{ data: values }],
+    series: [{ data: dataWithColors }],
     chart: { type: 'bar', height: 350, animations: { enabled: false } },
     xaxis: {
       categories: [
