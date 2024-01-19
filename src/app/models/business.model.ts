@@ -2,6 +2,7 @@ export interface Shareholder {
   shareholderName: string;
   sharePercentage: number;
   insuranceCoverage: number;
+  ebitaContributionPercentage: number;
 }
 
 export interface Business {

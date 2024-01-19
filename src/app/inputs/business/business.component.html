@@ -59,9 +59,11 @@
       <th>Name</th>
       <th>Share Percentage (%)</th>
       <th>Insurance Coverage ($)</th>
-      <th>Actions</th>
+      <th>% EBITA Contribution</th>
+      <th>$ EBITA Contribution</th>
       <th>Share Value ($)</th>
       <th>Liquidation Disparity ($)</th>
+      <th>Actions</th>
     </tr>
     <tr *ngFor="let shareholder of shareholders; let i = index">
       <td>
@@ -82,11 +84,20 @@
         />
       </td>
       <td>
-        <button (click)="deleteShareholder(i)">Delete</button>
+        <input
+          [(ngModel)]="shareholder.ebitaContributionPercentage"
+          type="number"
+        />
+      </td>
+      <td class="number">
+        {{ calculateEbitaContribDollars(shareholder) | currency }}
       </td>
       <td class="number">{{ calculateShareValue(shareholder) | currency }}</td>
       <td class="number">
         {{ calculateLiquidationDisparity(shareholder) | currency }}
+      </td>
+      <td>
+        <button (click)="deleteShareholder(i)">Delete</button>
       </td>
     </tr>
     <tr>

@@ -71,6 +71,7 @@ export class BusinessComponent implements OnChanges {
           : '',
       sharePercentage: 0,
       insuranceCoverage: 0,
+      ebitaContributionPercentage: 0,
     };
     this.shareholders.push(newShareholder);
   }
@@ -86,6 +87,12 @@ export class BusinessComponent implements OnChanges {
   calculateLiquidationDisparity(shareholder: Shareholder): number {
     return (
       this.calculateShareValue(shareholder) - shareholder.insuranceCoverage
+    );
+  }
+
+  calculateEbitaContribDollars(shareholder: Shareholder): number {
+    return (
+      this.business!.ebita * (shareholder.ebitaContributionPercentage / 100)
     );
   }
 
