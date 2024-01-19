@@ -11,6 +11,7 @@ import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-ben
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
 import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
+import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 
 export const routes: Routes = [
   { path: 'inputs/client', component: ClientComponent },
@@ -28,7 +29,10 @@ export const routes: Routes = [
     path: 'shareholder-ebita-contribution',
     component: ShareholderEbitaContributionComponent,
   },
-
+  {
+    path: 'shareholder-share-value',
+    component: ShareholderShareValueComponent,
+  },
   { path: '', redirectTo: '/inputs/client', pathMatch: 'full' },
 ];
 

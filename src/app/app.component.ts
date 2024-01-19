@@ -14,7 +14,7 @@ import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-ben
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
 import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
-
+import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { Type } from '@angular/core';
 
 type ComponentType = Type<
@@ -29,6 +29,7 @@ type ComponentType = Type<
   | NetWorthComponent
   | DebtVisualizationComponent
   | ShareholderEbitaContributionComponent
+  | ShareholderShareValueComponent
 >;
 
 interface NavLink {
@@ -97,8 +98,13 @@ export class AppComponent {
     },
     {
       path: 'outputs/shareholder-ebita-contribution',
-      label: 'Shareholder Ebita Contribution',
+      label: 'Biz Ebita',
       component: ShareholderEbitaContributionComponent,
+    },
+    {
+      path: 'outputs/shareholder-share-value',
+      label: 'Biz Shares',
+      component: ShareholderShareValueComponent,
     },
   ];
 
