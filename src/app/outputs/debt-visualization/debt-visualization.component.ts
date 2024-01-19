@@ -32,8 +32,8 @@ export type ChartOptions = {
   standalone: true,
 })
 export class DebtVisualizationComponent implements OnInit, OnDestroy {
-  private storageSub!: Subscription;
   public chartOptions!: Partial<ChartOptions>;
+  private storageSub!: Subscription;
   private debts: Debt[] = [];
   private debtValuesCache: Map<string, number> = new Map<string, number>();
 
@@ -103,15 +103,16 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
     this.debts.forEach((debt: Debt) => {
       const dataPoints = [];
+      let year = debt.yearAcquired;
+      let value: number;
 
-      for (
-        let year = debt.yearAcquired;
-        year <= debt.yearAcquired + debt.term;
-        year++
-      ) {
-        const value = this.debtValueOverTime(debt, year);
-        dataPoints.push([year, value]);
-      }
+      do {
+        value = this.debtValueOverTime(debt, year);
+        if (value > 0) {
+          dataPoints.push([year, value]);
+        }
+        year++;
+      } while (value > 0);
 
       series.push({
         name: debt.name,
