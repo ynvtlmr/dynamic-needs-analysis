@@ -14,8 +14,6 @@ export class BeneficiaryValuePieChartComponent implements OnInit {
   @Input() assets: Asset[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.prepareChartData();
   }
@@ -34,7 +32,7 @@ export class BeneficiaryValuePieChartComponent implements OnInit {
         },
       },
       dataLabels: { enabled: true },
-      title: { text: 'Beneficiary Real Distribution' },
+      title: { text: 'Real Beneficiary Distribution' },
       legend: { position: 'bottom' },
       labels: [],
       xaxis: { type: 'category', categories: [] },

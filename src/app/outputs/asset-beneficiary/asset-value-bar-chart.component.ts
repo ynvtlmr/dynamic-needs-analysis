@@ -14,8 +14,6 @@ export class AssetValueBarChartComponent implements OnInit {
   @Input() assets: Asset[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.prepareChartData();
   }

@@ -35,8 +35,6 @@ export class DebtComponent implements OnChanges {
   @Output() save: EventEmitter<Debt> = new EventEmitter<Debt>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor() {}
-
   ngOnChanges(): void {
     if (this.debt) {
       this.populateDebtData(this.debt);

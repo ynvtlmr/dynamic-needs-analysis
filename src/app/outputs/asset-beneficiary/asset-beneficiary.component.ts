@@ -45,8 +45,8 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   }
 
   private loadAssetsAndBeneficiaries(): void {
-    this.assets = this.localStorageService.getItem('assets') || [];
+    this.assets = this.localStorageService.getItem('assets') ?? [];
     this.beneficiaries =
-      this.localStorageService.getItem('beneficiaries') || [];
+      this.localStorageService.getItem('beneficiaries') ?? [];
   }
 }

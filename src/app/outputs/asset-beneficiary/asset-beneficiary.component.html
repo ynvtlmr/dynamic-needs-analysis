@@ -1,23 +1,15 @@
 <!-- asset-beneficiary.component.html -->
 <div class="asset-beneficiary-container">
-  <!-- Container for the pie charts -->
-  <div class="pie-chart-container">
-    <!-- Beneficiary Value Pie Chart Component -->
-    <app-beneficiary-value-pie-chart
-      [assets]="assets"
-    ></app-beneficiary-value-pie-chart>
+  <!-- Beneficiary Percentage Pie Chart Component -->
+  <app-beneficiary-percentage-pie-chart
+    [beneficiaries]="beneficiaries"
+  ></app-beneficiary-percentage-pie-chart>
 
-    <!-- Beneficiary Percentage Pie Chart Component -->
-    <app-beneficiary-percentage-pie-chart
-      [beneficiaries]="beneficiaries"
-    ></app-beneficiary-percentage-pie-chart>
-  </div>
+  <!-- Beneficiary Value Pie Chart Component -->
+  <app-beneficiary-value-pie-chart
+    [assets]="assets"
+  ></app-beneficiary-value-pie-chart>
 
   <!-- Asset Value Bar Chart Component -->
   <app-asset-value-bar-chart [assets]="assets"></app-asset-value-bar-chart>
-
-  <!-- Asset Percentage Bar Chart Component -->
-  <!--  <app-asset-percentage-bar-chart-->
-  <!--    [assets]="assets"-->
-  <!--  ></app-asset-percentage-bar-chart>-->
 </div>

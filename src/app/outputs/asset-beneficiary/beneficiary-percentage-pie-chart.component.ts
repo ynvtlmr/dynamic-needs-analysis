@@ -13,8 +13,6 @@ export class BeneficiaryPercentagePieChartComponent implements OnInit {
   @Input() beneficiaries: Beneficiary[] = [];
   public chartOptions!: ChartOptions;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.prepareChartData();
   }
@@ -33,7 +31,7 @@ export class BeneficiaryPercentagePieChartComponent implements OnInit {
         },
       },
       dataLabels: { enabled: true },
-      title: { text: 'Beneficiary Ideal Allocation' },
+      title: { text: 'Desired Beneficiary Allocation' },
       legend: { position: 'bottom' },
       labels: [],
       xaxis: { type: 'category', categories: [] },
