@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -22,15 +23,30 @@ export type ChartOptions = {
   imports: [NgApexchartsModule],
   standalone: true,
 })
-export class ShareholderShareValueComponent implements OnInit {
+export class ShareholderShareValueComponent implements OnInit, OnDestroy {
   public chartOptions!: ChartOptions;
   private businesses: Business[] = [];
+  storageSub!: Subscription;
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key: string) => {
+        if (key === 'businesses' || key === 'shareholders' || key === 'all') {
+          this.loadBusinessData();
+          this.prepareChartData();
+        }
+      });
     this.loadBusinessData();
     this.prepareChartData();
+  }
+
+  ngOnDestroy() {
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
+    }
   }
 
   private loadBusinessData(): void {
