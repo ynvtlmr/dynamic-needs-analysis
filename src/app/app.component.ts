@@ -16,6 +16,7 @@ import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-vi
 import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
 import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
+import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
 import { Type } from '@angular/core';
 
 type ComponentType = Type<
@@ -32,6 +33,7 @@ type ComponentType = Type<
   | ShareholderEbitaContributionComponent
   | ShareholderShareValueComponent
   | GoalsVisualizationComponent
+  | TotalInsurableNeedsComponent
 >;
 
 interface NavLink {
@@ -112,6 +114,11 @@ export class AppComponent {
       path: 'outputs/goals-visualization',
       label: 'Goals Viz',
       component: GoalsVisualizationComponent,
+    },
+    {
+      path: 'outputs/total-insurable-needs',
+      label: 'Insurable Needs',
+      component: TotalInsurableNeedsComponent,
     },
   ];
 

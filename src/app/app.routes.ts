@@ -13,6 +13,7 @@ import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-vi
 import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
 import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
+import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
 
 export const routes: Routes = [
   { path: 'inputs/client', component: ClientComponent },
@@ -37,6 +38,10 @@ export const routes: Routes = [
   {
     path: 'outputs/goals-visualization',
     component: GoalsVisualizationComponent,
+  },
+  {
+    path: 'outputs/total-insurable-needs',
+    component: TotalInsurableNeedsComponent,
   },
   { path: '', redirectTo: '/inputs/client', pathMatch: 'full' },
 ];
