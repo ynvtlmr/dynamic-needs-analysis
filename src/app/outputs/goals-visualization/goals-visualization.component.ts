@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset.model';
 import { Goal } from '../../models/goal.model';
 import { LocalStorageService } from '../../services/local-storage.service';
@@ -6,6 +6,7 @@ import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getChartOptions, ChartOptions } from './goals-visualization-chart';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-goals-visualization',
@@ -13,7 +14,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
   standalone: true,
   imports: [CurrencyPipe, FormsModule, NgApexchartsModule],
 })
-export class GoalsVisualizationComponent implements OnInit {
+export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   totalCurrentValueFixed: number = 0;
   totalFutureValueFixed: number = 0;
   totalCurrentValueLiquid: number = 0;
@@ -29,14 +30,30 @@ export class GoalsVisualizationComponent implements OnInit {
   shortfall: number = 0;
 
   chartOptions!: ChartOptions;
+  private storageSub!: Subscription;
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key: string) => {
+        if (key === 'assets' || key === 'percentLiquidityToGoals') {
+          this.calculateTotals();
+          this.calculateGoals();
+          this.updateChart();
+        }
+      });
     this.loadPercentLiquidityFromStorage();
     this.calculateTotals();
     this.calculateGoals();
     this.updateChart();
+  }
+
+  ngOnDestroy(): void {
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
+    }
   }
 
   private calculateTotals(): void {
