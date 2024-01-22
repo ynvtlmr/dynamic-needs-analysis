@@ -38,6 +38,7 @@ export class ClientComponent implements OnInit {
   incomeReplacementMultiplier: number = 1;
   provinces: string[] = CANADA_PROVINCES;
   selectedBracket: TaxBracket | undefined;
+  insuredIncomeAmount: number = 0;
 
   private loadClientFromStorage(): void {
     const clientData: Client | null =
@@ -51,13 +52,18 @@ export class ClientComponent implements OnInit {
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
       this.selectedBracket = client.selectedBracket;
       this.expectedRetirementAge =
-        client.expectedRetirementAge || DEFAULT_RETIREMENT_AGE;
+        client.expectedRetirementAge ?? DEFAULT_RETIREMENT_AGE;
+      this.insuredIncomeAmount =
+        clientData?.insuredIncomeAmount ?? this.insuredIncomeAmount;
     }
   }
 
   updateClientData(): void {
     this.updateTaxBrackets();
     this.saveSelectedBracket();
+    this.insuredIncomeAmount =
+      this.annualIncome * this.incomeReplacementMultiplier;
+
     const client: Client = {
       name: this.name,
       birthdate: this.birthdateModel.birthdate,
@@ -66,6 +72,7 @@ export class ClientComponent implements OnInit {
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
       selectedBracket: this.selectedBracket,
       expectedRetirementAge: this.expectedRetirementAge,
+      insuredIncomeAmount: this.insuredIncomeAmount,
     };
     this.localStorageService.setItem('client', client);
   }

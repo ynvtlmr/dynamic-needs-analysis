@@ -12,7 +12,7 @@ export class LocalStorageService {
 
   private serialize<T>(data: T): string {
     try {
-      return JSON.stringify(data);
+      return JSON.stringify(data, null, 2);
     } catch (error) {
       console.error(`Error serializing data for localStorage: ${error}`);
       return '';

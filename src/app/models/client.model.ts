@@ -8,4 +8,5 @@ export interface Client {
   incomeReplacementMultiplier: number;
   birthdate?: string | null;
   selectedBracket?: TaxBracket | undefined;
+  insuredIncomeAmount?: number;
 }
