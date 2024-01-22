@@ -3,19 +3,26 @@
     <thead>
       <tr>
         <th>Liability Name</th>
-        <th>Maximum Insurable Need</th>
-        <th><!-- Future Column --></th>
-        <th><!-- Future Column --></th>
+        <th>Insurable Need</th>
+        <th>Priority</th>
+        <th>Coverage</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>Estate Tax Liability</td>
         <td>{{ estateTaxLiability | currency }}</td>
-        <td><!-- Future Data --></td>
-        <td><!-- Future Data --></td>
+        <td>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            [(ngModel)]="percentageAllocation"
+            (change)="onPercentageChange()"
+          />
+        </td>
+        <td>{{ desiredInsuranceCoverage | currency }}</td>
       </tr>
-      <!-- Additional rows can be added here as needed -->
     </tbody>
   </table>
 </div>
