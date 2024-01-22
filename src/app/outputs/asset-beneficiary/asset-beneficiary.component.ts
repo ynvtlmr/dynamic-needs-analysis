@@ -49,7 +49,7 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
 
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe(async (key: string) => {
+      .subscribe((key: string) => {
         if (key === 'assets' || key === 'beneficiaries' || key === 'all') {
           this.loadAssetsAndBeneficiaries();
           this.refreshCharts();
