@@ -77,7 +77,7 @@ export class ClientComponent implements OnInit {
     let totals: { [key: string]: number } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['insuredIncome'] = this.insuredIncomeAmount;
+    totals['incomeReplacement'] = this.insuredIncomeAmount;
     this.localStorageService.setItem('totals', totals);
   }
 

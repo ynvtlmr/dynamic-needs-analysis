@@ -57,6 +57,7 @@ export class DebtComponent implements OnChanges {
       rate: this.rate,
       term: this.term,
       annualPayment: this.annualPayment,
+      insurableFutureValueDollars: this.insurableFutureValueDollars,
     };
     this.save.emit(debt);
   }

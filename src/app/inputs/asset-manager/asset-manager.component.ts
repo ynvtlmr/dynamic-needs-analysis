@@ -83,7 +83,7 @@ export class AssetManagerComponent {
     let totals: { [key: string]: number } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['futureTaxLiability'] = this.totalFutureTaxLiability;
+    totals['estateTaxLiability'] = this.totalFutureTaxLiability;
     this.localStorageService.setItem('totals', totals);
   }
 

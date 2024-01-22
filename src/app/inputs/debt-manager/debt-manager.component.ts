@@ -65,6 +65,12 @@ export class DebtManagerComponent {
 
   updateStorage(): void {
     this.localStorageService.setItem('debts', this.debts);
+
+    let totals: { [key: string]: number } =
+      this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
+      {};
+    totals['debtFutureLiability'] = this.totalInsurableFutureValue;
+    this.localStorageService.setItem('totals', totals);
   }
 
   onCancelEditing(): void {
@@ -74,5 +80,16 @@ export class DebtManagerComponent {
 
   isEditing(index: number): boolean {
     return this.editingDebtIndex === index;
+  }
+
+  get totalInitialValue(): number {
+    return this.debts.reduce((sum, debt) => sum + debt.initialValue, 0);
+  }
+
+  get totalInsurableFutureValue(): number {
+    return this.debts.reduce(
+      (sum, debt) => sum + (debt.insurableFutureValueDollars ?? 0),
+      0,
+    );
   }
 }

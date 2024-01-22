@@ -5,4 +5,5 @@ export interface Debt {
   rate: number;
   term: number;
   annualPayment: number;
+  insurableFutureValueDollars?: number;
 }

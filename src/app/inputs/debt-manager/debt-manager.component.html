@@ -4,6 +4,7 @@
     <tr>
       <th>Name</th>
       <th>Initial Value ($)</th>
+      <th>Insurable Future Value ($)</th>
       <th></th>
       <th></th>
     </tr>
@@ -12,12 +13,20 @@
     <tr *ngFor="let debt of debts; let i = index">
       <td>{{ debt.name }}</td>
       <td class="number">{{ debt.initialValue | currency }}</td>
+      <td class="number">{{ debt.insurableFutureValueDollars | currency }}</td>
       <td>
         <button [class.active]="isEditing(i)" (click)="editDebt(i)">
           Edit
         </button>
       </td>
       <td><button (click)="deleteDebt(i)">Delete</button></td>
+    </tr>
+
+    <tr>
+      <td>Total</td>
+      <td class="number">{{ totalInitialValue | currency }}</td>
+      <td class="number">{{ totalInsurableFutureValue | currency }}</td>
+      <td colspan="2"></td>
     </tr>
   </table>
 
