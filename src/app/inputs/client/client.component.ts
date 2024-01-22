@@ -53,8 +53,6 @@ export class ClientComponent implements OnInit {
       this.selectedBracket = client.selectedBracket;
       this.expectedRetirementAge =
         client.expectedRetirementAge ?? DEFAULT_RETIREMENT_AGE;
-      this.insuredIncomeAmount =
-        clientData?.insuredIncomeAmount ?? this.insuredIncomeAmount;
     }
   }
 
@@ -72,9 +70,15 @@ export class ClientComponent implements OnInit {
       incomeReplacementMultiplier: this.incomeReplacementMultiplier,
       selectedBracket: this.selectedBracket,
       expectedRetirementAge: this.expectedRetirementAge,
-      insuredIncomeAmount: this.insuredIncomeAmount,
     };
     this.localStorageService.setItem('client', client);
+
+    // Save insuredIncomeAmount to totals
+    let totals: { [key: string]: number } =
+      this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
+      {};
+    totals['insuredIncome'] = this.insuredIncomeAmount;
+    this.localStorageService.setItem('totals', totals);
   }
 
   private loadSelectedBracket(): void {
