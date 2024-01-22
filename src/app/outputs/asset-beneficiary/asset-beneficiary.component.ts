@@ -1,12 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { Asset } from '../../models/asset.model';
+import { Beneficiary } from '../../models/beneficiary.model';
 import { Subscription } from 'rxjs';
 import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart.component';
 import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
 import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
 import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { Asset } from '../../models/asset.model';
-import { Beneficiary } from '../../models/beneficiary.model';
 
 @Component({
   selector: 'app-asset-beneficiary',
@@ -24,16 +30,29 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   public assets: Asset[] = [];
   public beneficiaries: Beneficiary[] = [];
 
-  constructor(private localStorageService: LocalStorageService) {}
+  @ViewChild(BeneficiaryValuePieChartComponent)
+  private beneficiaryValuePieChartComponent!: BeneficiaryValuePieChartComponent;
+  @ViewChild(BeneficiaryPercentagePieChartComponent)
+  private beneficiaryPercentagePieChartComponent!: BeneficiaryPercentagePieChartComponent;
+  @ViewChild(AssetValueBarChartComponent)
+  private assetValueBarChartComponent!: AssetValueBarChartComponent;
+  @ViewChild(AssetPercentageBarChartComponent)
+  private assetPercentageBarChartComponent!: AssetPercentageBarChartComponent;
+
+  constructor(
+    private localStorageService: LocalStorageService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.loadAssetsAndBeneficiaries();
 
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key: string): void => {
+      .subscribe(async (key: string) => {
         if (key === 'assets' || key === 'beneficiaries' || key === 'all') {
           this.loadAssetsAndBeneficiaries();
+          this.refreshCharts();
         }
       });
   }
@@ -48,5 +67,22 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     this.assets = this.localStorageService.getItem('assets') ?? [];
     this.beneficiaries =
       this.localStorageService.getItem('beneficiaries') ?? [];
+  }
+
+  private refreshCharts(): void {
+    this.changeDetectorRef.detectChanges();
+
+    if (this.beneficiaryValuePieChartComponent) {
+      this.beneficiaryValuePieChartComponent.refreshChart();
+    }
+    if (this.beneficiaryPercentagePieChartComponent) {
+      this.beneficiaryPercentagePieChartComponent.refreshChart();
+    }
+    if (this.assetValueBarChartComponent) {
+      this.assetValueBarChartComponent.refreshChart();
+    }
+    if (this.assetPercentageBarChartComponent) {
+      this.assetPercentageBarChartComponent.refreshChart();
+    }
   }
 }

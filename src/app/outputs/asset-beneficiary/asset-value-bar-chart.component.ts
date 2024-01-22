@@ -17,7 +17,9 @@ export class AssetValueBarChartComponent implements OnInit {
   ngOnInit(): void {
     this.prepareChartData();
   }
-
+  public refreshChart(): void {
+    this.prepareChartData();
+  }
   private initializeChartOptions(): ChartOptions {
     return {
       series: [],

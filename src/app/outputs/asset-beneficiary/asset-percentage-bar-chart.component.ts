@@ -41,7 +41,9 @@ export class AssetPercentageBarChartComponent implements OnInit {
       labels: [],
     };
   }
-
+  public refreshChart(): void {
+    this.prepareChartData();
+  }
   private prepareChartData(): void {
     const beneficiaryNames: string[] = [];
     const seriesData: { name: string; data: number[] }[] = [];
