@@ -176,7 +176,11 @@ export class NetWorthComponent implements OnInit, OnDestroy {
     endYear: number,
   ): YearValue[] {
     const series: YearValue[] = [];
-    for (let year: number = startYear; year <= endYear; year++) {
+    for (
+      let year: number = Math.max(startYear, asset.yearAcquired);
+      year <= endYear;
+      year++
+    ) {
       series.push({ year: year, value: this.valueAtYear(asset, year) });
     }
     return series;
