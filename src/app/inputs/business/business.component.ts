@@ -35,7 +35,9 @@ export class BusinessComponent implements OnChanges, OnInit {
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit() {
-    this.addEmptyShareholder();
+    if (this.shareholders.length === 0) {
+      this.addEmptyShareholder();
+    }
   }
 
   ngOnChanges() {
