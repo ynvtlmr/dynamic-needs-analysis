@@ -21,6 +21,7 @@ export class AssetManagerComponent {
   editingState: EditingState = { asset: null, index: null };
   distributions: Record<string, number> | null = null;
   idealDistributions: Record<string, number> = {};
+  additionalMoneyRequired: Record<string, number> = {};
 
   constructor(private localStorageService: LocalStorageService) {
     this.loadAssetsFromStorage();
@@ -64,7 +65,7 @@ export class AssetManagerComponent {
     }
     this.editingState = { asset: null, index: null };
     this.updateStorage();
-    this.updateBeneficiaryDistributions(); // Call after saving an asset
+    this.updateBeneficiaryDistributions();
   }
 
   editAsset(index: number): void {
@@ -132,9 +133,10 @@ export class AssetManagerComponent {
     const distributions: Record<string, number> = {};
 
     this.assets.forEach((asset) => {
-      const futureValue = this.calculateFutureValue(asset);
-      asset.beneficiaries.forEach((beneficiary) => {
-        const distribution = (beneficiary.allocation / 100) * futureValue;
+      const futureValue: number = this.calculateFutureValue(asset);
+      asset.beneficiaries.forEach((beneficiary: Beneficiary): void => {
+        const distribution: number =
+          (beneficiary.allocation / 100) * futureValue;
         distributions[beneficiary.name] =
           (distributions[beneficiary.name] || 0) + distribution;
       });
@@ -145,18 +147,42 @@ export class AssetManagerComponent {
 
   private updateBeneficiaryDistributions(): void {
     this.distributions = this.calculateBeneficiaryDistributions();
+    this.calculateAdditionalMoneyRequired();
   }
 
   private loadBeneficiariesFromStorage(): void {
     const beneficiaries: Beneficiary[] =
       this.localStorageService.getItem<Beneficiary[]>('beneficiaries') || [];
     this.calculateIdealDistributions(beneficiaries);
+    this.calculateAdditionalMoneyRequired();
   }
 
   private calculateIdealDistributions(beneficiaries: Beneficiary[]): void {
-    beneficiaries.forEach((beneficiary) => {
+    beneficiaries.forEach((beneficiary: Beneficiary): void => {
       this.idealDistributions[beneficiary.name] = beneficiary.allocation;
     });
+  }
+
+  private calculateAdditionalMoneyRequired(): void {
+    const totalFutureValue: number = this.totalFutureValue;
+    Object.keys(this.idealDistributions).forEach(
+      (beneficiaryName: string): void => {
+        const idealAmount: number =
+          (this.idealDistributions[beneficiaryName] / 100) * totalFutureValue;
+        const actualAmount: number = this.distributions?.[beneficiaryName] || 0;
+        this.additionalMoneyRequired[beneficiaryName] = Math.max(
+          0,
+          idealAmount - actualAmount,
+        );
+      },
+    );
+  }
+
+  get totalAdditionalMoneyRequired(): number {
+    return Object.values(this.additionalMoneyRequired).reduce(
+      (total: number, amount: number) => total + amount,
+      0,
+    );
   }
 
   protected readonly Object: ObjectConstructor = Object;
