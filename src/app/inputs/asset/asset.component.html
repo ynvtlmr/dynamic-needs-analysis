@@ -1,21 +1,4 @@
 <table>
-  <!-- Capital Gains Tax Rate -->
-  <tr>
-    <td><label for="taxBracket">Tax Bracket:</label></td>
-    <td>
-      <select
-        id="taxBracket"
-        [(ngModel)]="selectedTaxBracket"
-        (ngModelChange)="updateSelectedTaxBracket()"
-      >
-        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
-          {{ bracket.minIncome | currency }} and up -
-          {{ bracket.taxRate * 0.5 }}%
-        </option>
-      </select>
-    </td>
-  </tr>
-
   <!-- Type -->
   <tr>
     <td><label for="type">Type:</label></td>
@@ -110,6 +93,23 @@
     <td><label for="isToBeSold">To Be Sold:</label></td>
     <td>
       <input id="isToBeSold" [(ngModel)]="isToBeSold" type="checkbox" />
+    </td>
+  </tr>
+
+  <!-- Capital Gains Tax Rate -->
+  <tr>
+    <td><label for="taxBracket">Tax Bracket:</label></td>
+    <td>
+      <select
+        id="taxBracket"
+        [(ngModel)]="selectedTaxBracket"
+        (ngModelChange)="updateSelectedTaxBracket()"
+      >
+        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
+          {{ bracket.minIncome | currency }} and up -
+          {{ bracket.taxRate * 0.5 }}%
+        </option>
+      </select>
     </td>
   </tr>
 

@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
@@ -31,7 +32,7 @@ import { Beneficiary } from '../../models/beneficiary.model';
   ],
   providers: [provideNgxMask()],
 })
-export class AssetComponent implements OnChanges {
+export class AssetComponent implements OnChanges, OnInit {
   name: string = '';
   initialValue: number = 0;
   currentValue: number = 0;
@@ -55,9 +56,15 @@ export class AssetComponent implements OnChanges {
 
   constructor(private localStorageService: LocalStorageService) {}
 
+  ngOnInit() {
+    this.loadBeneficiaries();
+  }
+
   ngOnChanges(): void {
     if (this.asset) {
       this.populateAssetData(this.asset);
+    } else {
+      this.loadBeneficiaries();
     }
   }
 
@@ -72,15 +79,17 @@ export class AssetComponent implements OnChanges {
       this.localStorageService.getItem<Client>('client');
 
     this.taxBrackets =
-      TAX_BRACKETS[currentYear]?.[clientData?.province.toUpperCase() || ''] ||
+      TAX_BRACKETS[currentYear]?.[clientData?.province.toUpperCase() ?? ''] ||
       [];
 
     this.selectedTaxBracket = this.taxBrackets.find(
       (bracket: TaxBracket): boolean =>
         bracket.minIncome ===
-        (asset.selectedTaxBracket?.minIncome ||
+        (asset.selectedTaxBracket?.minIncome ??
           clientData?.selectedBracket?.minIncome),
     );
+
+    this.updateSelectedTaxBracket();
   }
 
   onSave(): void {

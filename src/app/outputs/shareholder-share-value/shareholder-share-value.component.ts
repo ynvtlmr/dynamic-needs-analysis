@@ -51,7 +51,7 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
 
   private loadBusinessData(): void {
     this.businesses =
-      this.localStorageService.getItem<Business[]>('businesses') || [];
+      this.localStorageService.getItem<Business[]>('businesses') ?? [];
     // Filter businesses where the client is a shareholder (implement as needed)
   }
 
