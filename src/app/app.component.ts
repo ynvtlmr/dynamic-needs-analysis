@@ -115,11 +115,11 @@ export class AppComponent {
       label: 'Goals Viz',
       component: GoalsVisualizationComponent,
     },
-    // {
-    //   path: 'outputs/total-insurable-needs',
-    //   label: 'Insurable Needs',
-    //   component: TotalInsurableNeedsComponent,
-    // },
+    {
+      path: 'outputs/total-insurable-needs',
+      label: 'Insurable Needs',
+      component: TotalInsurableNeedsComponent,
+    },
   ];
 
   onSelectInputComponent(component: ComponentType | null) {

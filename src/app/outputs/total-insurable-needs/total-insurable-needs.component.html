@@ -9,19 +9,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>Estate Tax Liability</td>
-        <td>{{ estateTaxLiability | currency }}</td>
+      <tr *ngFor="let liability of liabilities">
+        <td>{{ liability.name }}</td>
+        <td>{{ liability.value | currency }}</td>
         <td>
           <input
             type="range"
             min="0"
             max="100"
-            [(ngModel)]="percentageAllocation"
-            (change)="onPercentageChange()"
+            [(ngModel)]="liability.percentageAllocation"
+            (change)="onPercentageChange(liability)"
           />
         </td>
-        <td>{{ desiredInsuranceCoverage | currency }}</td>
+        <td>{{ liability.calculatedCoverage | currency }}</td>
       </tr>
     </tbody>
   </table>
