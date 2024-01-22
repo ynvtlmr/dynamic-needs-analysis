@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  OnInit,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -19,7 +20,7 @@ import { Business, Shareholder } from '../../models/business.model';
   providers: [provideNgxMask()],
   templateUrl: './business.component.html',
 })
-export class BusinessComponent implements OnChanges {
+export class BusinessComponent implements OnChanges, OnInit {
   businessName: string = '';
   valuation: number = 0;
   ebita: number = 0;
@@ -32,6 +33,10 @@ export class BusinessComponent implements OnChanges {
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private localStorageService: LocalStorageService) {}
+
+  ngOnInit() {
+    this.addEmptyShareholder();
+  }
 
   ngOnChanges() {
     if (this.business) {
