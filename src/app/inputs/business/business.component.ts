@@ -167,8 +167,8 @@ export class BusinessComponent implements OnChanges, OnInit {
       this.localStorageService.getItem<{ [key: string]: any }>('totals') || {};
 
     // Initialize KeyMan and ShareholderAgreement objects if not already present
-    totals['KeyMan'] = totals['KeyMan'] || {};
-    totals['ShareholderAgreement'] = totals['ShareholderAgreement'] || {};
+    totals['Key Man'] = totals['Key Man'] || {};
+    totals['Shareholder Agreement'] = totals['Shareholder Agreement'] || {};
 
     business.shareholders.forEach((shareholder) => {
       const finalEbitaContribution = this.calculateFinalEbitaContribution(
@@ -181,15 +181,15 @@ export class BusinessComponent implements OnChanges, OnInit {
       );
 
       // Ensure the business object exists within KeyMan and ShareholderAgreement
-      totals['KeyMan'][business.businessName] =
-        totals['KeyMan'][business.businessName] || {};
-      totals['ShareholderAgreement'][business.businessName] =
-        totals['ShareholderAgreement'][business.businessName] || {};
+      totals['Key Man'][business.businessName] =
+        totals['Key Man'][business.businessName] || {};
+      totals['Shareholder Agreement'][business.businessName] =
+        totals['Shareholder Agreement'][business.businessName] || {};
 
       // Assign values to respective shareholders
-      totals['KeyMan'][business.businessName][shareholder.shareholderName] =
+      totals['Key Man'][business.businessName][shareholder.shareholderName] =
         finalEbitaContribution;
-      totals['ShareholderAgreement'][business.businessName][
+      totals['Shareholder Agreement'][business.businessName][
         shareholder.shareholderName
       ] = finalShareValue;
     });

@@ -69,7 +69,7 @@ export class DebtManagerComponent {
     let totals: { [key: string]: number } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['debtFutureLiability'] = this.totalInsurableFutureValue;
+    totals['Debt Future Liability'] = this.totalInsurableFutureValue;
     this.localStorageService.setItem('totals', totals);
   }
 

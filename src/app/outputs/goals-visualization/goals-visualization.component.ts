@@ -138,9 +138,9 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
     if (this.shortfall < 0) {
-      totals['goalShortfall'] = this.shortfall * -1.0;
+      totals['Goal Shortfall'] = this.shortfall * -1.0;
     } else {
-      totals['goalShortfall'] = 0;
+      totals['Goal Shortfall'] = 0;
     }
     this.localStorageService.setItem('totals', totals);
   }

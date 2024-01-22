@@ -91,8 +91,8 @@ export class AssetManagerComponent {
     let totals: { [key: string]: number } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['estateTaxLiability'] = this.totalFutureTaxLiability;
-    totals['equalization'] = this.totalAdditionalMoneyRequired;
+    totals['Estate Tax Liability'] = this.totalFutureTaxLiability;
+    totals['Equalization'] = this.totalAdditionalMoneyRequired;
     this.localStorageService.setItem('totals', totals);
   }
 
