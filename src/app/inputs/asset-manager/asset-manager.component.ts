@@ -20,6 +20,7 @@ export class AssetManagerComponent {
   assets: Asset[] = [];
   editingState: EditingState = { asset: null, index: null };
   distributions: Record<string, number> | null = null;
+  idealDistributions: Record<string, number> = {};
 
   constructor(private localStorageService: LocalStorageService) {
     this.loadAssetsFromStorage();
@@ -48,6 +49,7 @@ export class AssetManagerComponent {
       this.localStorageService.getItem<Asset[]>('assets');
     this.assets = storedAssets || [];
     this.updateBeneficiaryDistributions();
+    this.loadBeneficiariesFromStorage();
   }
 
   addNewAsset(): void {
@@ -143,6 +145,18 @@ export class AssetManagerComponent {
 
   private updateBeneficiaryDistributions(): void {
     this.distributions = this.calculateBeneficiaryDistributions();
+  }
+
+  private loadBeneficiariesFromStorage(): void {
+    const beneficiaries: Beneficiary[] =
+      this.localStorageService.getItem<Beneficiary[]>('beneficiaries') || [];
+    this.calculateIdealDistributions(beneficiaries);
+  }
+
+  private calculateIdealDistributions(beneficiaries: Beneficiary[]): void {
+    beneficiaries.forEach((beneficiary) => {
+      this.idealDistributions[beneficiary.name] = beneficiary.allocation;
+    });
   }
 
   protected readonly Object: ObjectConstructor = Object;

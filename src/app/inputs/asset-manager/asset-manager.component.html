@@ -47,6 +47,7 @@
         <th>Beneficiary</th>
         <th>Amount ($)</th>
         <th>Percentage (%)</th>
+        <th>Ideal Distribution (%)</th>
       </tr>
       <tr *ngFor="let name of Object.keys(distributions)">
         <td>{{ name }}</td>
@@ -56,10 +57,14 @@
             (distributions[name] / totalFutureValue) * 100 | number: "1.0-2"
           }}%
         </td>
+        <td class="number">
+          {{ idealDistributions[name] | number: "1.0-2" }}%
+        </td>
       </tr>
       <tr>
         <td>Total</td>
         <td class="number">{{ totalFutureValue | currency }}</td>
+        <td class="number">100.00%</td>
         <td class="number">100.00%</td>
       </tr>
     </table>
