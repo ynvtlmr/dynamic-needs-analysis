@@ -3,6 +3,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { AssetComponent } from '../asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Asset } from '../../models/asset.model';
+import { Beneficiary } from '../../models/beneficiary.model';
 
 interface EditingState {
   asset: Asset | null;
@@ -18,6 +19,7 @@ interface EditingState {
 export class AssetManagerComponent {
   assets: Asset[] = [];
   editingState: EditingState = { asset: null, index: null };
+  distributions: Record<string, number> | null = null;
 
   constructor(private localStorageService: LocalStorageService) {
     this.loadAssetsFromStorage();
@@ -45,6 +47,7 @@ export class AssetManagerComponent {
     const storedAssets: Asset[] | null =
       this.localStorageService.getItem<Asset[]>('assets');
     this.assets = storedAssets || [];
+    this.updateBeneficiaryDistributions();
   }
 
   addNewAsset(): void {
@@ -59,6 +62,7 @@ export class AssetManagerComponent {
     }
     this.editingState = { asset: null, index: null };
     this.updateStorage();
+    this.updateBeneficiaryDistributions(); // Call after saving an asset
   }
 
   editAsset(index: number): void {
@@ -75,6 +79,7 @@ export class AssetManagerComponent {
   deleteAsset(index: number): void {
     this.assets.splice(index, 1);
     this.updateStorage();
+    this.updateBeneficiaryDistributions();
   }
 
   updateStorage(): void {
@@ -109,4 +114,29 @@ export class AssetManagerComponent {
       0,
     );
   }
+
+  private calculateFutureValue(asset: Asset): number {
+    return asset.currentValue * Math.pow(1 + asset.rate / 100, asset.term);
+  }
+
+  private calculateBeneficiaryDistributions(): Record<string, number> {
+    const distributions: Record<string, number> = {};
+
+    this.assets.forEach((asset) => {
+      const futureValue = this.calculateFutureValue(asset);
+      asset.beneficiaries.forEach((beneficiary) => {
+        const distribution = (beneficiary.allocation / 100) * futureValue;
+        distributions[beneficiary.name] =
+          (distributions[beneficiary.name] || 0) + distribution;
+      });
+    });
+
+    return distributions;
+  }
+
+  private updateBeneficiaryDistributions(): void {
+    this.distributions = this.calculateBeneficiaryDistributions();
+  }
+
+  protected readonly Object: ObjectConstructor = Object;
 }

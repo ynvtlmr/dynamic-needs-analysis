@@ -39,4 +39,13 @@
       (cancel)="onCancelEditing()"
     ></app-asset>
   </div>
+
+  <div *ngIf="distributions">
+    <h3>Total Future Value Distributions</h3>
+    <ul>
+      <li *ngFor="let name of Object.keys(distributions)">
+        {{ name }}: {{ distributions[name] | currency }}
+      </li>
+    </ul>
+  </div>
 </div>
