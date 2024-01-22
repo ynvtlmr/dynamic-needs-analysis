@@ -57,6 +57,7 @@ export class BusinessComponent implements OnChanges {
       term: this.term,
       shareholders: this.shareholders,
     };
+    this.updateTotalsForShareholders(business);
     this.save.emit(business);
   }
 
@@ -131,5 +132,63 @@ export class BusinessComponent implements OnChanges {
     return (
       this.totalMajorShareholderValue - this.totalMajorShareholderInsurance
     );
+  }
+
+  private calculateFinalEbitaContribution(
+    business: Business,
+    shareholder: Shareholder,
+  ): number {
+    return (
+      shareholder.ebitaContributionPercentage *
+      business.ebita *
+      Math.pow(1 + business.rate / 100, business.term)
+    );
+  }
+
+  private calculateFinalShareValue(
+    business: Business,
+    shareholder: Shareholder,
+  ): number {
+    return (
+      (shareholder.sharePercentage / 100) *
+      business.valuation *
+      Math.pow(1 + business.rate / 100, business.term)
+    );
+  }
+
+  private updateTotalsForShareholders(business: Business): void {
+    // Retrieve the existing totals or initialize if not present
+    const totals =
+      this.localStorageService.getItem<{ [key: string]: any }>('totals') || {};
+
+    // Initialize KeyMan and ShareholderAgreement objects if not already present
+    totals['KeyMan'] = totals['KeyMan'] || {};
+    totals['ShareholderAgreement'] = totals['ShareholderAgreement'] || {};
+
+    business.shareholders.forEach((shareholder) => {
+      const finalEbitaContribution = this.calculateFinalEbitaContribution(
+        business,
+        shareholder,
+      );
+      const finalShareValue = this.calculateFinalShareValue(
+        business,
+        shareholder,
+      );
+
+      // Ensure the business object exists within KeyMan and ShareholderAgreement
+      totals['KeyMan'][business.businessName] =
+        totals['KeyMan'][business.businessName] || {};
+      totals['ShareholderAgreement'][business.businessName] =
+        totals['ShareholderAgreement'][business.businessName] || {};
+
+      // Assign values to respective shareholders
+      totals['KeyMan'][business.businessName][shareholder.shareholderName] =
+        finalEbitaContribution;
+      totals['ShareholderAgreement'][business.businessName][
+        shareholder.shareholderName
+      ] = finalShareValue;
+    });
+
+    this.localStorageService.setItem('totals', totals);
   }
 }
