@@ -38,7 +38,11 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
     this.storageSub = this.localStorageService
       .watchStorage()
       .subscribe((key: string) => {
-        if (key === 'assets' || key === 'percentLiquidityToGoals') {
+        if (
+          key === 'assets' ||
+          key === 'goals' ||
+          key === 'percentLiquidityToGoals'
+        ) {
           this.calculateTotals();
           this.calculateGoals();
           this.updateChart();
@@ -57,11 +61,18 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private calculateTotals(): void {
-    const assets: Asset[] =
-      this.localStorageService.getItem<Asset[]>('assets') || [];
+    this.totalCurrentValueLiquid = 0;
+    this.totalFutureValueLiquid = 0;
+    this.totalCurrentValueFixed = 0;
+    this.totalFutureValueFixed = 0;
+    this.totalCurrentValueToBeSold = 0;
+    this.totalFutureValueToBeSold = 0;
 
-    assets.forEach((asset) => {
-      const futureValue =
+    const assets: Asset[] =
+      this.localStorageService.getItem<Asset[]>('assets') ?? [];
+
+    assets.forEach((asset: Asset): void => {
+      const futureValue: number =
         asset.currentValue * Math.pow(1 + asset.rate / 100, asset.term);
 
       if (asset.isLiquid) {

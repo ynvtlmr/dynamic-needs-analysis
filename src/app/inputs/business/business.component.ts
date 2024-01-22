@@ -70,9 +70,9 @@ export class BusinessComponent implements OnChanges {
         this.shareholders.length === 0
           ? this.localStorageService.getItem<Client>('client')!.name
           : '',
-      sharePercentage: 0,
+      sharePercentage: this.shareholders.length === 0 ? 100 : 0,
       insuranceCoverage: 0,
-      ebitaContributionPercentage: 0,
+      ebitaContributionPercentage: this.shareholders.length === 0 ? 100 : 0,
     };
     this.shareholders.push(newShareholder);
   }
