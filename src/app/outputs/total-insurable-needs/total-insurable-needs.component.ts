@@ -3,6 +3,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { Asset } from '../../models/asset.model';
 import { CurrencyPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-total-insurable-needs',
@@ -14,10 +15,13 @@ export class TotalInsurableNeedsComponent implements OnInit {
   estateTaxLiability: number = 0;
   percentageAllocation: number = 0;
   desiredInsuranceCoverage: number = 0;
+  private storageSub!: Subscription;
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
+    this.subscribeToLocalStorageChanges();
+
     const assets: Asset[] =
       this.localStorageService.getItem<Asset[]>('assets') ?? [];
     this.estateTaxLiability = this.calculateEstateTaxLiability(assets);
@@ -28,6 +32,20 @@ export class TotalInsurableNeedsComponent implements OnInit {
       ) ?? {};
     this.percentageAllocation = liabilityAllocations['estateTaxLiability'] ?? 0;
     this.calculateDesiredInsuranceCoverage();
+  }
+
+  onPercentageChange(): void {
+    this.calculateDesiredInsuranceCoverage();
+    this.storePercentageAllocation();
+  }
+
+  private subscribeToLocalStorageChanges(): void {
+    this.storageSub = this.localStorageService.watchStorage().subscribe(() => {
+      const assets: Asset[] =
+        this.localStorageService.getItem<Asset[]>('assets') ?? [];
+      this.estateTaxLiability = this.calculateEstateTaxLiability(assets);
+      this.calculateDesiredInsuranceCoverage();
+    });
   }
 
   private calculateEstateTaxLiability(assets: Asset[]): number {
@@ -44,11 +62,6 @@ export class TotalInsurableNeedsComponent implements OnInit {
     return (
       (futureValue - asset.initialValue) * (asset.capitalGainsTaxRate / 100.0)
     );
-  }
-
-  onPercentageChange(): void {
-    this.calculateDesiredInsuranceCoverage();
-    this.storePercentageAllocation();
   }
 
   private calculateDesiredInsuranceCoverage(): void {
