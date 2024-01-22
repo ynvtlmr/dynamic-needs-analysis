@@ -98,6 +98,7 @@ export class AssetComponent implements OnChanges {
       selectedTaxBracket: this.selectedTaxBracket,
       capitalGainsTaxRate: this.capitalGainsTaxRate,
       beneficiaries: this.beneficiaries,
+      futureTaxLiabilityDollars: this.futureTaxLiabilityDollars,
     };
     this.save.emit(asset);
   }
@@ -134,6 +135,11 @@ export class AssetComponent implements OnChanges {
       (this.futureValueDollars - this.initialValue) *
       (this.capitalGainsTaxRate / 100.0)
     );
+  }
+
+  set futureTaxLiabilityDollars(value: number) {
+    // do nothing
+    return;
   }
 
   onTypeChange(selectedType: string): void {

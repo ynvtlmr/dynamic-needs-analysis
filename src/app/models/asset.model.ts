@@ -15,4 +15,5 @@ export interface Asset {
   beneficiaries: Beneficiary[];
   selectedTaxBracket: TaxBracket | undefined;
   capitalGainsTaxRate: number;
+  futureTaxLiabilityDollars?: number;
 }

@@ -4,6 +4,7 @@
     <tr>
       <th>Name</th>
       <th>Current Value ($)</th>
+      <th>Future Tax Liability ($)</th>
       <th></th>
       <th></th>
     </tr>
@@ -11,12 +12,20 @@
     <tr *ngFor="let asset of assets; let i = index">
       <td>{{ asset.name }}</td>
       <td class="number">{{ asset.currentValue | currency }}</td>
+      <td class="number">{{ asset.futureTaxLiabilityDollars | currency }}</td>
       <td>
         <button [class.active]="isEditing(i)" (click)="editAsset(i)">
           Edit
         </button>
       </td>
       <td><button (click)="deleteAsset(i)">Delete</button></td>
+    </tr>
+
+    <tr>
+      <td>Total Future Tax Liability</td>
+      <td class="number">{{ totalCurrentValue | currency }}</td>
+      <td class="number">{{ totalFutureTaxLiability | currency }}</td>
+      <td colspan="2"></td>
     </tr>
   </table>
 

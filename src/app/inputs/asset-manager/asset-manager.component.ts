@@ -79,6 +79,12 @@ export class AssetManagerComponent {
 
   updateStorage(): void {
     this.localStorageService.setItem('assets', this.assets);
+
+    let totals: { [key: string]: number } =
+      this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
+      {};
+    totals['FutureTaxLiability'] = this.totalFutureTaxLiability;
+    this.localStorageService.setItem('totals', totals);
   }
 
   onCancelEditing(): void {
@@ -87,5 +93,20 @@ export class AssetManagerComponent {
 
   isEditing(index: number): boolean {
     return this.editingState.index === index;
+  }
+
+  get totalCurrentValue(): number {
+    return this.assets.reduce(
+      (acc: number, asset: Asset) => acc + (asset.currentValue || 0),
+      0,
+    );
+  }
+
+  get totalFutureTaxLiability(): number {
+    return this.assets.reduce(
+      (acc: number, asset: Asset) =>
+        acc + (asset.futureTaxLiabilityDollars || 0),
+      0,
+    );
   }
 }
