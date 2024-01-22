@@ -115,6 +115,13 @@ export class AssetManagerComponent {
     );
   }
 
+  get totalFutureValue(): number {
+    return this.assets.reduce(
+      (acc, asset) => acc + this.calculateFutureValue(asset),
+      0,
+    );
+  }
+
   private calculateFutureValue(asset: Asset): number {
     return asset.currentValue * Math.pow(1 + asset.rate / 100, asset.term);
   }

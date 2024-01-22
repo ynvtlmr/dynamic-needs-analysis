@@ -42,10 +42,26 @@
 
   <div *ngIf="distributions">
     <h3>Total Future Value Distributions</h3>
-    <ul>
-      <li *ngFor="let name of Object.keys(distributions)">
-        {{ name }}: {{ distributions[name] | currency }}
-      </li>
-    </ul>
+    <table>
+      <tr>
+        <th>Beneficiary</th>
+        <th>Amount ($)</th>
+        <th>Percentage (%)</th>
+      </tr>
+      <tr *ngFor="let name of Object.keys(distributions)">
+        <td>{{ name }}</td>
+        <td class="number">{{ distributions[name] | currency }}</td>
+        <td class="number">
+          {{
+            (distributions[name] / totalFutureValue) * 100 | number: "1.0-2"
+          }}%
+        </td>
+      </tr>
+      <tr>
+        <td>Total</td>
+        <td class="number">{{ totalFutureValue | currency }}</td>
+        <td class="number">100.00%</td>
+      </tr>
+    </table>
   </div>
 </div>
