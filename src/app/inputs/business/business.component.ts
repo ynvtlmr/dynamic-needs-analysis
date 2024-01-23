@@ -146,7 +146,7 @@ export class BusinessComponent implements OnChanges, OnInit {
     shareholder: Shareholder,
   ): number {
     return (
-      shareholder.ebitaContributionPercentage *
+      (shareholder.ebitaContributionPercentage / 100) *
       business.ebita *
       Math.pow(1 + business.rate / 100, business.term)
     );
