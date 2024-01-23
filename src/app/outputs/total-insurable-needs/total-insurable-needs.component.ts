@@ -20,6 +20,7 @@ interface Liability {
 export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   liabilities: Liability[] = [];
   totalInsurableNeed: number = 0;
+  subtotals: { [key: string]: number } = {};
   private storageSub!: Subscription;
 
   constructor(private localStorageService: LocalStorageService) {}
@@ -38,6 +39,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   private loadDataFromStorage(): void {
     const totals =
       this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
+    this.calculateSubtotals(totals);
     const percentAllocations =
       this.localStorageService.getItem<{ [key: string]: number }>(
         'totalsPercentAllocations',
@@ -54,6 +56,30 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
         : 0,
     }));
     this.calculateTotalInsurableNeed();
+  }
+
+  private calculateSubtotals(totals: { [key: string]: any }): void {
+    Object.keys(totals).forEach((key) => {
+      if (typeof totals[key] === 'object' && !Array.isArray(totals[key])) {
+        this.subtotals[key] = this.computeTotalForSection(totals[key]);
+      }
+    });
+  }
+
+  private computeTotalForSection(section: any): number {
+    let total = 0;
+    Object.values(section).forEach((value) => {
+      if (
+        typeof value === 'object' &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
+        total += this.computeTotalForSection(value);
+      } else if (typeof value === 'number') {
+        total += value;
+      }
+    });
+    return total;
   }
 
   private calculateTotalInsurableNeed(): void {
@@ -91,6 +117,6 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   }
 
   isNumeric(value: any): boolean {
-    return !isNaN(value) && isFinite(value);
+    return !isNaN(parseFloat(value)) && isFinite(value);
   }
 }

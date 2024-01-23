@@ -22,7 +22,13 @@
           />
         </td>
         <td *ngIf="!isNumeric(liability.value)"></td>
-        <td>{{ liability.calculatedCoverage | currency }}</td>
+        <td>
+          {{
+            isNumeric(liability.calculatedCoverage)
+              ? (liability.calculatedCoverage | currency)
+              : ""
+          }}
+        </td>
       </tr>
       <!-- Row to display total insurable need -->
       <tr>
