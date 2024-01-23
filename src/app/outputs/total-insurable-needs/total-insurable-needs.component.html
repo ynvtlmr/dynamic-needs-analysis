@@ -1,41 +1,20 @@
-<div class="total-insurable-needs">
-  <table>
-    <thead>
-      <tr>
-        <th>Liability Name</th>
-        <th>Insurable Need</th>
-        <th>Priority</th>
-        <th>Coverage</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let liability of liabilities">
-        <td>{{ liability.name }}</td>
-        <td>{{ liability.value | currency }}</td>
-        <td *ngIf="isNumeric(liability.value)">
-          <input
-            type="range"
-            min="0"
-            max="100"
-            [(ngModel)]="liability.percentageAllocation"
-            (change)="onPercentageChange(liability)"
-          />
-        </td>
-        <td *ngIf="!isNumeric(liability.value)"></td>
-        <td>
-          {{
-            isNumeric(liability.calculatedCoverage)
-              ? (liability.calculatedCoverage | currency)
-              : ""
-          }}
-        </td>
-      </tr>
-      <!-- Row to display total insurable need -->
-      <tr>
-        <td>Total</td>
-        <td>{{ totalInsurableNeed | currency }}</td>
-        <td colspan="2"></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<table>
+  <tr>
+    <th>Label</th>
+    <th>Value</th>
+    <th>Priority</th>
+  </tr>
+  <tr *ngFor="let row of totalsData">
+    <td>{{ row.label }}</td>
+    <td class="number">{{ row.value | currency }}</td>
+    <td *ngIf="row.priority !== undefined">
+      <input
+        type="range"
+        [(ngModel)]="row.priority"
+        (change)="updatePriority(row.key, row.priority)"
+        min="0"
+        max="100"
+      />{{ row.priority }}%
+    </td>
+  </tr>
+</table>

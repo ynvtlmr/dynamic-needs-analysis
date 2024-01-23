@@ -1,122 +1,88 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { Subscription } from 'rxjs';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
-interface Liability {
-  name: string;
-  value: number | string;
-  percentageAllocation: number;
-  calculatedCoverage: number;
+interface TotalsRow {
+  key: string;
+  label: string;
+  value?: number;
+  priority?: number;
 }
 
 @Component({
   selector: 'app-total-insurable-needs',
-  templateUrl: './total-insurable-needs.component.html',
   standalone: true,
-  imports: [CommonModule, CurrencyPipe, FormsModule],
+  imports: [
+    FormsModule,
+    DecimalPipe,
+    CommonModule,
+    NgxMaskPipe,
+    NgxMaskDirective,
+    CurrencyPipe,
+  ],
+  templateUrl: './total-insurable-needs.component.html',
 })
-export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
-  liabilities: Liability[] = [];
-  totalInsurableNeed: number = 0;
-  subtotals: { [key: string]: number } = {};
-  private storageSub!: Subscription;
+export class TotalInsurableNeedsComponent implements OnInit {
+  totalsData: TotalsRow[] = [];
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.loadDataFromStorage();
-    this.subscribeToLocalStorageChanges();
+    this.loadTotalsData();
   }
 
-  ngOnDestroy(): void {
-    if (this.storageSub) {
-      this.storageSub.unsubscribe();
-    }
-  }
-
-  private loadDataFromStorage(): void {
+  private loadTotalsData(): void {
     const totals =
-      this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
-    this.calculateSubtotals(totals);
-    const percentAllocations =
-      this.localStorageService.getItem<{ [key: string]: number }>(
-        'totalsPercentAllocations',
-      ) ?? {};
+      this.localStorageService.getItem<Record<string, any>>('totals');
+    const totalsPercentAllocations = this.localStorageService.getItem<
+      Record<string, any>
+    >('totalsPercentAllocations');
 
-    this.liabilities = Object.entries(totals).map(([name, value]) => ({
-      name,
-      value,
-      percentageAllocation: this.isNumeric(value)
-        ? percentAllocations[name] ?? 0
-        : 0,
-      calculatedCoverage: this.isNumeric(value)
-        ? ((percentAllocations[name] ?? 0) * Number(value)) / 100
-        : 0,
-    }));
-    this.calculateTotalInsurableNeed();
-  }
+    if (totals) {
+      Object.entries(totals).forEach(([key, value]) => {
+        let sum: number = 0;
+        let priority: number | undefined;
 
-  private calculateSubtotals(totals: { [key: string]: any }): void {
-    Object.keys(totals).forEach((key) => {
-      if (typeof totals[key] === 'object' && !Array.isArray(totals[key])) {
-        this.subtotals[key] = this.computeTotalForSection(totals[key]);
-      }
-    });
-  }
-
-  private computeTotalForSection(section: any): number {
-    let total = 0;
-    Object.values(section).forEach((value) => {
-      if (
-        typeof value === 'object' &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        total += this.computeTotalForSection(value);
-      } else if (typeof value === 'number') {
-        total += value;
-      }
-    });
-    return total;
-  }
-
-  private calculateTotalInsurableNeed(): void {
-    this.totalInsurableNeed = this.liabilities.reduce((acc, liability) => {
-      return (
-        acc + (this.isNumeric(liability.value) ? Number(liability.value) : 0)
-      );
-    }, 0);
-  }
-
-  private subscribeToLocalStorageChanges(): void {
-    this.storageSub = this.localStorageService.watchStorage().subscribe(() => {
-      this.loadDataFromStorage();
-    });
-  }
-
-  onPercentageChange(liability: Liability): void {
-    if (this.isNumeric(liability.value)) {
-      liability.calculatedCoverage =
-        (Number(liability.value) * liability.percentageAllocation) / 100;
-      this.storePercentageAllocations();
+        if (typeof value === 'object' && !Array.isArray(value)) {
+          sum = Object.values(value).reduce((acc: number, val: any) => {
+            return (
+              acc + (this.isNumeric(val) ? val : this.sumNestedValues(val))
+            );
+          }, 0);
+        } else if (this.isNumeric(value)) {
+          sum = value;
+          priority = totalsPercentAllocations?.[key];
+        }
+        this.totalsData.push({ key, label: key, value: sum, priority });
+      });
     }
+    console.log(this.totalsData);
   }
 
-  private storePercentageAllocations(): void {
-    const allocations = this.liabilities.reduce(
-      (acc, liability) =>
-        this.isNumeric(liability.value)
-          ? { ...acc, [liability.name]: liability.percentageAllocation }
-          : acc,
-      {},
-    );
-
-    this.localStorageService.setItem('totalsPercentAllocations', allocations);
-  }
-
-  isNumeric(value: any): boolean {
+  private isNumeric(value: any): boolean {
     return !isNaN(parseFloat(value)) && isFinite(value);
+  }
+
+  private sumNestedValues(obj: any): number {
+    if (typeof obj === 'object' && !Array.isArray(obj)) {
+      return Object.values(obj).reduce((acc: number, val: any) => {
+        return acc + (this.isNumeric(val) ? val : 0);
+      }, 0);
+    }
+    return 0;
+  }
+
+  updatePriority(key: string, newPriority: number | undefined): void {
+    let totalsPercentAllocations =
+      this.localStorageService.getItem<Record<string, any>>(
+        'totalsPercentAllocations',
+      ) || {};
+    totalsPercentAllocations[key] = newPriority;
+    this.localStorageService.setItem(
+      'totalsPercentAllocations',
+      totalsPercentAllocations,
+    );
   }
 }
