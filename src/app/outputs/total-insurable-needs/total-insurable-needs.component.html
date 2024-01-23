@@ -12,7 +12,7 @@
       <tr *ngFor="let liability of liabilities">
         <td>{{ liability.name }}</td>
         <td>{{ liability.value | currency }}</td>
-        <td>
+        <td *ngIf="isNumeric(liability.value)">
           <input
             type="range"
             min="0"
@@ -21,7 +21,14 @@
             (change)="onPercentageChange(liability)"
           />
         </td>
+        <td *ngIf="!isNumeric(liability.value)"></td>
         <td>{{ liability.calculatedCoverage | currency }}</td>
+      </tr>
+      <!-- Row to display total insurable need -->
+      <tr>
+        <td>Total</td>
+        <td>{{ totalInsurableNeed | currency }}</td>
+        <td colspan="2"></td>
       </tr>
     </tbody>
   </table>

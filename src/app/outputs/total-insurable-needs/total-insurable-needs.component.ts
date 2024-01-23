@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 interface Liability {
   name: string;
-  value: number;
+  value: number | string;
   percentageAllocation: number;
   calculatedCoverage: number;
 }
@@ -19,6 +19,7 @@ interface Liability {
 })
 export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   liabilities: Liability[] = [];
+  totalInsurableNeed: number = 0;
   private storageSub!: Subscription;
 
   constructor(private localStorageService: LocalStorageService) {}
@@ -36,8 +37,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
 
   private loadDataFromStorage(): void {
     const totals =
-      this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
-      {};
+      this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
     const percentAllocations =
       this.localStorageService.getItem<{ [key: string]: number }>(
         'totalsPercentAllocations',
@@ -46,9 +46,22 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     this.liabilities = Object.entries(totals).map(([name, value]) => ({
       name,
       value,
-      percentageAllocation: percentAllocations[name] ?? 0,
-      calculatedCoverage: ((percentAllocations[name] ?? 0) * value) / 100,
+      percentageAllocation: this.isNumeric(value)
+        ? percentAllocations[name] ?? 0
+        : 0,
+      calculatedCoverage: this.isNumeric(value)
+        ? ((percentAllocations[name] ?? 0) * Number(value)) / 100
+        : 0,
     }));
+    this.calculateTotalInsurableNeed();
+  }
+
+  private calculateTotalInsurableNeed(): void {
+    this.totalInsurableNeed = this.liabilities.reduce((acc, liability) => {
+      return (
+        acc + (this.isNumeric(liability.value) ? Number(liability.value) : 0)
+      );
+    }, 0);
   }
 
   private subscribeToLocalStorageChanges(): void {
@@ -58,20 +71,26 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   }
 
   onPercentageChange(liability: Liability): void {
-    liability.calculatedCoverage =
-      (liability.value * liability.percentageAllocation) / 100;
-    this.storePercentageAllocations();
+    if (this.isNumeric(liability.value)) {
+      liability.calculatedCoverage =
+        (Number(liability.value) * liability.percentageAllocation) / 100;
+      this.storePercentageAllocations();
+    }
   }
 
   private storePercentageAllocations(): void {
     const allocations = this.liabilities.reduce(
-      (acc, liability) => ({
-        ...acc,
-        [liability.name]: liability.percentageAllocation,
-      }),
+      (acc, liability) =>
+        this.isNumeric(liability.value)
+          ? { ...acc, [liability.name]: liability.percentageAllocation }
+          : acc,
       {},
     );
 
     this.localStorageService.setItem('totalsPercentAllocations', allocations);
+  }
+
+  isNumeric(value: any): boolean {
+    return !isNaN(value) && isFinite(value);
   }
 }
