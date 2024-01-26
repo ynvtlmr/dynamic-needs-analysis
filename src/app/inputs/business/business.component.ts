@@ -169,8 +169,18 @@ export class BusinessComponent implements OnChanges, OnInit {
       this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
 
     // Initialize KeyMan and ShareholderAgreement objects if not already present
-    totals['Key Man'] = totals['Key Man'] || {};
-    totals['Shareholder Agreement'] = totals['Shareholder Agreement'] || {};
+    totals['Key Man'] = totals['Key Man'] || { subcategories: {} };
+    totals['Shareholder Agreement'] = totals['Shareholder Agreement'] || {
+      subcategories: {},
+    };
+
+    // Initialize the specific business subcategory if not already present
+    totals['Key Man'].subcategories[business.businessName] = totals['Key Man']
+      .subcategories[business.businessName] || { subcategories: {} };
+    totals['Shareholder Agreement'].subcategories[business.businessName] =
+      totals['Shareholder Agreement'].subcategories[business.businessName] || {
+        subcategories: {},
+      };
 
     business.shareholders.forEach((shareholder) => {
       const finalEbitaContribution = this.calculateFinalEbitaContribution(
@@ -182,41 +192,19 @@ export class BusinessComponent implements OnChanges, OnInit {
         shareholder,
       );
 
-      // Ensure the business object exists within KeyMan and ShareholderAgreement
-      totals['Key Man'][business.businessName] =
-        totals['Key Man'][business.businessName] || {};
-      totals['Shareholder Agreement'][business.businessName] =
-        totals['Shareholder Agreement'][business.businessName] || {};
-
-      if (
-        !totals['Key Man'][business.businessName][shareholder.shareholderName]
-      ) {
-        totals['Key Man'][business.businessName][shareholder.shareholderName] =
-          {
-            value: finalEbitaContribution,
-            priority: 0,
-          };
-      }
-      if (
-        !totals['Shareholder Agreement'][business.businessName][
-          shareholder.shareholderName
-        ]
-      ) {
-        totals['Shareholder Agreement'][business.businessName][
-          shareholder.shareholderName
-        ] = {
-          value: finalShareValue,
-          priority: 100,
-        };
-      }
-
-      // Assign values to respective shareholders
-      totals['Key Man'][business.businessName][shareholder.shareholderName][
-        'value'
-      ] = finalEbitaContribution;
-      totals['Shareholder Agreement'][business.businessName][
+      // Update Key Man and Shareholder Agreement for each shareholder
+      totals['Key Man'].subcategories[business.businessName].subcategories[
         shareholder.shareholderName
-      ]['value'] = finalShareValue;
+      ] = {
+        value: finalEbitaContribution,
+        priority: 0,
+      };
+      totals['Shareholder Agreement'].subcategories[
+        business.businessName
+      ].subcategories[shareholder.shareholderName] = {
+        value: finalShareValue,
+        priority: 100,
+      };
     });
 
     this.localStorageService.setItem('totals', totals);
