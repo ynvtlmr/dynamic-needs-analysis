@@ -74,10 +74,13 @@ export class ClientComponent implements OnInit {
     this.localStorageService.setItem('client', client);
 
     // Save insuredIncomeAmount to totals
-    let totals: { [key: string]: number } =
+    let totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['Income Replacement'] = this.insuredIncomeAmount;
+    if (!totals['Income Replacement']) {
+      totals['Income Replacement'] = { value: 0, priority: 100 };
+    }
+    totals['Income Replacement']['value'] = this.insuredIncomeAmount;
     this.localStorageService.setItem('totals', totals);
   }
 

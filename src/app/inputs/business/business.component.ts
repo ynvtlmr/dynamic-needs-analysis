@@ -166,7 +166,7 @@ export class BusinessComponent implements OnChanges, OnInit {
   private updateTotalsForShareholders(business: Business): void {
     // Retrieve the existing totals or initialize if not present
     const totals =
-      this.localStorageService.getItem<{ [key: string]: any }>('totals') || {};
+      this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
 
     // Initialize KeyMan and ShareholderAgreement objects if not already present
     totals['Key Man'] = totals['Key Man'] || {};
@@ -188,12 +188,35 @@ export class BusinessComponent implements OnChanges, OnInit {
       totals['Shareholder Agreement'][business.businessName] =
         totals['Shareholder Agreement'][business.businessName] || {};
 
+      if (
+        !totals['Key Man'][business.businessName][shareholder.shareholderName]
+      ) {
+        totals['Key Man'][business.businessName][shareholder.shareholderName] =
+          {
+            value: finalEbitaContribution,
+            priority: 0,
+          };
+      }
+      if (
+        !totals['Shareholder Agreement'][business.businessName][
+          shareholder.shareholderName
+        ]
+      ) {
+        totals['Shareholder Agreement'][business.businessName][
+          shareholder.shareholderName
+        ] = {
+          value: finalShareValue,
+          priority: 100,
+        };
+      }
+
       // Assign values to respective shareholders
-      totals['Key Man'][business.businessName][shareholder.shareholderName] =
-        finalEbitaContribution;
+      totals['Key Man'][business.businessName][shareholder.shareholderName][
+        'value'
+      ] = finalEbitaContribution;
       totals['Shareholder Agreement'][business.businessName][
         shareholder.shareholderName
-      ] = finalShareValue;
+      ]['value'] = finalShareValue;
     });
 
     this.localStorageService.setItem('totals', totals);

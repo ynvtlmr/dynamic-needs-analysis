@@ -88,11 +88,17 @@ export class AssetManagerComponent {
   updateStorage(): void {
     this.localStorageService.setItem('assets', this.assets);
 
-    let totals: { [key: string]: number } =
+    let totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['Estate Tax Liability'] = this.totalFutureTaxLiability;
-    totals['Equalization'] = this.totalAdditionalMoneyRequired;
+    if (!totals['Estate Tax Liability']) {
+      totals['Estate Tax Liability'] = { value: 0, priority: 100 };
+    }
+    if (!totals['Equalization']) {
+      totals['Equalization'] = { value: 0, priority: 100 };
+    }
+    totals['Estate Tax Liability']['value'] = this.totalFutureTaxLiability;
+    totals['Equalization']['value'] = this.totalAdditionalMoneyRequired;
     this.localStorageService.setItem('totals', totals);
   }
 

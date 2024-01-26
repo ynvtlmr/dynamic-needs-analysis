@@ -134,13 +134,16 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
     // Assuming this.totalFutureValueLiquid already reflects liquidity allocated towards goals
     this.shortfall = this.liquidityAllocatedToGoals - this.totalSumOfGoals;
 
-    let totals: { [key: string]: number } =
+    let totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
+    if (!totals['Goal Shortfall']) {
+      totals['Goal Shortfall'] = { value: 0, priority: 100 };
+    }
     if (this.shortfall < 0) {
-      totals['Goal Shortfall'] = this.shortfall * -1.0;
+      totals['Goal Shortfall']['value'] = this.shortfall * -1.0;
     } else {
-      totals['Goal Shortfall'] = 0;
+      totals['Goal Shortfall']['value'] = 0;
     }
     this.localStorageService.setItem('totals', totals);
   }

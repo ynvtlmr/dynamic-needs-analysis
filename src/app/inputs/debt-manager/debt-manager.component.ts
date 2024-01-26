@@ -66,10 +66,13 @@ export class DebtManagerComponent {
   updateStorage(): void {
     this.localStorageService.setItem('debts', this.debts);
 
-    let totals: { [key: string]: number } =
+    let totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
-    totals['Debt Future Liability'] = this.totalInsurableFutureValue;
+    if (!totals['Debt Future Liability']) {
+      totals['Debt Future Liability'] = { value: 0, priority: 100 };
+    }
+    totals['Debt Future Liability']['value'] = this.totalInsurableFutureValue;
     this.localStorageService.setItem('totals', totals);
   }
 
