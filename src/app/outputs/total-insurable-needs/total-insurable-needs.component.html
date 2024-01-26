@@ -1,25 +1,23 @@
+<!-- total-insurable-needs.component.html -->
 <table>
   <tr>
     <th>Label</th>
     <th>Value</th>
     <th>Priority</th>
   </tr>
-  <tr *ngFor="let item of formattedData">
-    <td>
-      {{ item.category }}
-      {{ item.subCategory ? " > " + item.subCategory : "" }}
-      {{ item.name ? " > " + item.name : "" }}
-    </td>
-    <td *ngIf="item.value !== undefined">{{ item.value | currency }}</td>
-    <td *ngIf="item.priority !== undefined">
+  <tr *ngFor="let row of displayData">
+    <td [style.paddingLeft.px]="row.level * 20">{{ row.label }}</td>
+    <td *ngIf="row.value !== undefined">{{ row.value | currency }}</td>
+    <td *ngIf="row.value === undefined">&mdash;</td>
+    <td *ngIf="row.priority !== undefined">
       <input
         type="range"
-        [(ngModel)]="item.priority"
-        (change)="updateItemPriority(item)"
+        [(ngModel)]="row.priority"
+        (change)="updateItemPriority(row)"
         min="0"
         max="100"
       />
-      {{ item.priority }}%
+      {{ row.priority }}%
     </td>
   </tr>
 </table>

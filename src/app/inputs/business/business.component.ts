@@ -197,7 +197,7 @@ export class BusinessComponent implements OnChanges, OnInit {
         shareholder.shareholderName
       ] = {
         value: finalEbitaContribution,
-        priority: 0,
+        priority: 100,
       };
       totals['Shareholder Agreement'].subcategories[
         business.businessName

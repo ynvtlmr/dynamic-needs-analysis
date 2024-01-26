@@ -5,9 +5,17 @@ import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 
 interface TotalItem {
-  value: number;
-  priority: number;
+  value?: number;
+  priority?: number;
   subcategories?: Record<string, TotalItem>;
+}
+
+interface DisplayRow {
+  label: string;
+  value?: number;
+  priority?: number;
+  level: number; // Indentation level for visual hierarchy
+  path: string[]; // Path to this item in the totals object
 }
 
 @Component({
@@ -19,126 +27,75 @@ interface TotalItem {
 export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   private storageSub!: Subscription;
   totals: Record<string, TotalItem> = {};
-  formattedData: any[] = [];
-
-  static readonly ITEMS_ORDER: string[] = [
-    'Income Replacement',
-    'Estate Tax Liability',
-    'Equalization',
-    'Debt Future Liability',
-    'Goal Shortfall',
-    'Key Man',
-    'Shareholder Agreement',
-  ];
+  displayData: DisplayRow[] = [];
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.storageSub = this.localStorageService
-      .watchStorage()
-      .subscribe((key: string): void => {
+    this.storageSub = this.localStorageService.watchStorage().subscribe({
+      next: (key) => {
         if (key === 'totals') {
-          this.loadTotals();
+          this.loadAndParseTotals();
         }
-      });
-    this.loadTotals();
-    this.formatTotalsForDisplay();
-    console.log(this.totals);
-    console.log(this.formattedData);
+      },
+    });
+    this.loadAndParseTotals(); // Initial load
   }
 
   ngOnDestroy(): void {
-    if (this.storageSub) {
-      this.storageSub.unsubscribe();
-    }
+    this.storageSub.unsubscribe();
   }
 
-  private loadTotals(): void {
-    const totalsFromStorage: Record<string, TotalItem> | null =
+  private loadAndParseTotals(): void {
+    const totals =
       this.localStorageService.getItem<Record<string, TotalItem>>('totals');
-    if (totalsFromStorage) {
-      this.totals = totalsFromStorage;
+    if (totals) {
+      this.totals = totals;
+      this.displayData = [];
+      this.processTotalsObject(totals, 0, [], '');
     }
   }
 
-  private formatTotalsForDisplay(): void {
-    this.formattedData = []; // Reset formatted data
-
-    TotalInsurableNeedsComponent.ITEMS_ORDER.forEach((category) => {
-      const categoryData = this.totals[category];
-      if (!categoryData) {
-        return;
-      }
-
-      if (categoryData.subcategories) {
-        this.formattedData.push({
-          category,
-          subCategory: '',
-          name: '',
-          isCategory: true,
-        });
-        this.processSubcategories(categoryData.subcategories, category, 1);
-      } else {
-        this.formattedData.push({
-          category,
-          subCategory: '',
-          name: '',
-          ...categoryData,
-        });
-      }
-    });
-  }
-
-  private processSubcategories(
-    subcategories: Record<string, TotalItem>,
-    parentCategory: string,
+  private processTotalsObject(
+    totals: Record<string, TotalItem>,
     level: number,
+    path: string[],
+    prefix: string,
   ): void {
-    Object.entries(subcategories).forEach(([subCategory, subCatData]) => {
-      if (subCatData.subcategories) {
-        this.formattedData.push({
-          category: parentCategory,
-          subCategory,
-          name: '',
-          isSubcategory: true,
-          level,
-        });
-        this.processSubcategories(
-          subCatData.subcategories,
-          subCategory,
+    Object.entries(totals).forEach(([key, item]) => {
+      const currentPath = [...path, key];
+      const label = prefix + key;
+      if (item.subcategories) {
+        // Parent node
+        this.displayData.push({ label, level, path: currentPath });
+        this.processTotalsObject(
+          item.subcategories,
           level + 1,
+          currentPath,
+          label + ' > ',
         );
       } else {
-        this.formattedData.push({
-          category: parentCategory,
-          subCategory,
-          name: subCategory,
-          ...subCatData,
+        // Leaf node
+        this.displayData.push({
+          label,
+          value: item.value,
+          priority: item.priority,
           level,
+          path: currentPath,
         });
       }
     });
   }
 
-  updateItemPriority(item: any): void {
-    // Construct the path to the item in the totals object
-    const path = [item.category];
-    if (item.subCategory) path.push(item.subCategory);
-    if (item.name) path.push(item.name);
-
-    // Update the priority in the totals object
+  updateItemPriority(row: DisplayRow): void {
     let ref = this.totals;
-    path.forEach((key, index) => {
-      if (index === path.length - 1) {
-        // Update priority at the leaf node
-        ref[key].priority = item.priority;
+    row.path.forEach((key, index) => {
+      if (index === row.path.length - 1) {
+        ref[key].priority = row.priority;
       } else {
-        // Navigate to the next level
         ref = ref[key].subcategories!;
       }
     });
-
-    // Save the updated totals object to localStorage
     this.localStorageService.setItem('totals', this.totals);
   }
 }
