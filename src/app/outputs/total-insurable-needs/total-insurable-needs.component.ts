@@ -52,7 +52,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     if (totals) {
       this.totals = totals;
       this.displayData = [];
-      this.processTotalsObject(totals, 0, [], '');
+      this.processTotalsObject(totals, 0, []);
     }
   }
 
@@ -60,20 +60,15 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     totals: Record<string, TotalItem>,
     level: number,
     path: string[],
-    prefix: string,
   ): void {
     Object.entries(totals).forEach(([key, item]) => {
       const currentPath = [...path, key];
-      const label = prefix + key;
+      const label = key; // Use only the current key as the label for all nodes
+
       if (item.subcategories) {
         // Parent node
         this.displayData.push({ label, level, path: currentPath });
-        this.processTotalsObject(
-          item.subcategories,
-          level + 1,
-          currentPath,
-          label + ' > ',
-        );
+        this.processTotalsObject(item.subcategories, level + 1, currentPath);
       } else {
         // Leaf node
         this.displayData.push({
