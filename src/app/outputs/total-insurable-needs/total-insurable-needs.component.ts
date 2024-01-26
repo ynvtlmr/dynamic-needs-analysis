@@ -1,88 +1,144 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
+import { KeyValuePipe, NgForOf, NgIf, CurrencyPipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
-interface TotalsRow {
-  key: string;
-  label: string;
-  value?: number;
-  priority?: number;
+interface TotalItem {
+  value: number;
+  priority: number;
+  subcategories?: Record<string, TotalItem>;
 }
 
 @Component({
   selector: 'app-total-insurable-needs',
   standalone: true,
-  imports: [
-    FormsModule,
-    DecimalPipe,
-    CommonModule,
-    NgxMaskPipe,
-    NgxMaskDirective,
-    CurrencyPipe,
-  ],
+  imports: [KeyValuePipe, FormsModule, NgIf, NgForOf, CurrencyPipe],
   templateUrl: './total-insurable-needs.component.html',
 })
-export class TotalInsurableNeedsComponent implements OnInit {
-  totalsData: TotalsRow[] = [];
+export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
+  private storageSub!: Subscription;
+  totals: Record<string, TotalItem> = {};
+  formattedData: any[] = [];
+
+  static readonly ITEMS_ORDER: string[] = [
+    'Income Replacement',
+    'Estate Tax Liability',
+    'Equalization',
+    'Debt Future Liability',
+    'Goal Shortfall',
+    'Key Man',
+    'Shareholder Agreement',
+  ];
 
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
-    this.loadTotalsData();
-  }
-
-  private loadTotalsData(): void {
-    const totals =
-      this.localStorageService.getItem<Record<string, any>>('totals');
-    const totalsPercentAllocations = this.localStorageService.getItem<
-      Record<string, any>
-    >('totalsPercentAllocations');
-
-    if (totals) {
-      Object.entries(totals).forEach(([key, value]) => {
-        let sum: number = 0;
-        let priority: number | undefined;
-
-        if (typeof value === 'object' && !Array.isArray(value)) {
-          sum = Object.values(value).reduce((acc: number, val: any) => {
-            return (
-              acc + (this.isNumeric(val) ? val : this.sumNestedValues(val))
-            );
-          }, 0);
-        } else if (this.isNumeric(value)) {
-          sum = value;
-          priority = totalsPercentAllocations?.[key];
+    this.storageSub = this.localStorageService
+      .watchStorage()
+      .subscribe((key: string): void => {
+        if (key === 'totals') {
+          this.loadTotals();
         }
-        this.totalsData.push({ key, label: key, value: sum, priority });
       });
+    this.loadTotals();
+    this.formatTotalsForDisplay();
+    console.log(this.totals);
+    console.log(this.formattedData);
+  }
+
+  ngOnDestroy(): void {
+    if (this.storageSub) {
+      this.storageSub.unsubscribe();
     }
-    console.log(this.totalsData);
   }
 
-  private isNumeric(value: any): boolean {
-    return !isNaN(parseFloat(value)) && isFinite(value);
-  }
-
-  private sumNestedValues(obj: any): number {
-    if (typeof obj === 'object' && !Array.isArray(obj)) {
-      return Object.values(obj).reduce((acc: number, val: any) => {
-        return acc + (this.isNumeric(val) ? val : 0);
-      }, 0);
+  private loadTotals(): void {
+    const totalsFromStorage: Record<string, TotalItem> | null =
+      this.localStorageService.getItem<Record<string, TotalItem>>('totals');
+    if (totalsFromStorage) {
+      this.totals = totalsFromStorage;
     }
-    return 0;
   }
 
-  updatePriority(key: string, newPriority: number | undefined): void {
-    let totalsPercentAllocations =
-      this.localStorageService.getItem<Record<string, any>>(
-        'totalsPercentAllocations',
-      ) || {};
-    totalsPercentAllocations[key] = newPriority;
-    this.localStorageService.setItem(
-      'totalsPercentAllocations',
-      totalsPercentAllocations,
-    );
+  private formatTotalsForDisplay(): void {
+    this.formattedData = []; // Reset formatted data
+
+    TotalInsurableNeedsComponent.ITEMS_ORDER.forEach((category) => {
+      const categoryData = this.totals[category];
+      if (!categoryData) {
+        return;
+      }
+
+      if (categoryData.subcategories) {
+        this.formattedData.push({
+          category,
+          subCategory: '',
+          name: '',
+          isCategory: true,
+        });
+        this.processSubcategories(categoryData.subcategories, category, 1);
+      } else {
+        this.formattedData.push({
+          category,
+          subCategory: '',
+          name: '',
+          ...categoryData,
+        });
+      }
+    });
+  }
+
+  private processSubcategories(
+    subcategories: Record<string, TotalItem>,
+    parentCategory: string,
+    level: number,
+  ): void {
+    Object.entries(subcategories).forEach(([subCategory, subCatData]) => {
+      if (subCatData.subcategories) {
+        this.formattedData.push({
+          category: parentCategory,
+          subCategory,
+          name: '',
+          isSubcategory: true,
+          level,
+        });
+        this.processSubcategories(
+          subCatData.subcategories,
+          subCategory,
+          level + 1,
+        );
+      } else {
+        this.formattedData.push({
+          category: parentCategory,
+          subCategory,
+          name: subCategory,
+          ...subCatData,
+          level,
+        });
+      }
+    });
+  }
+
+  updateItemPriority(item: any): void {
+    // Construct the path to the item in the totals object
+    const path = [item.category];
+    if (item.subCategory) path.push(item.subCategory);
+    if (item.name) path.push(item.name);
+
+    // Update the priority in the totals object
+    let ref = this.totals;
+    path.forEach((key, index) => {
+      if (index === path.length - 1) {
+        // Update priority at the leaf node
+        ref[key].priority = item.priority;
+      } else {
+        // Navigate to the next level
+        ref = ref[key].subcategories!;
+      }
+    });
+
+    // Save the updated totals object to localStorage
+    this.localStorageService.setItem('totals', this.totals);
   }
 }

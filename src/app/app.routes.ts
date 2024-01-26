@@ -39,10 +39,10 @@ export const routes: Routes = [
     path: 'outputs/goals-visualization',
     component: GoalsVisualizationComponent,
   },
-  // {
-  //   path: 'outputs/total-insurable-needs',
-  //   component: TotalInsurableNeedsComponent,
-  // },
+  {
+    path: 'outputs/total-insurable-needs',
+    component: TotalInsurableNeedsComponent,
+  },
   { path: '', redirectTo: '/inputs/client', pathMatch: 'full' },
 ];
 

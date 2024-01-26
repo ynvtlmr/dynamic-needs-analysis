@@ -4,17 +4,22 @@
     <th>Value</th>
     <th>Priority</th>
   </tr>
-  <tr *ngFor="let row of totalsData">
-    <td>{{ row.label }}</td>
-    <td class="number">{{ row.value | currency }}</td>
-    <td *ngIf="row.priority !== undefined">
+  <tr *ngFor="let item of formattedData">
+    <td>
+      {{ item.category }}
+      {{ item.subCategory ? " > " + item.subCategory : "" }}
+      {{ item.name ? " > " + item.name : "" }}
+    </td>
+    <td *ngIf="item.value !== undefined">{{ item.value | currency }}</td>
+    <td *ngIf="item.priority !== undefined">
       <input
         type="range"
-        [(ngModel)]="row.priority"
-        (change)="updatePriority(row.key, row.priority)"
+        [(ngModel)]="item.priority"
+        (change)="updateItemPriority(item)"
         min="0"
         max="100"
-      />{{ row.priority }}%
+      />
+      {{ item.priority }}%
     </td>
   </tr>
 </table>
