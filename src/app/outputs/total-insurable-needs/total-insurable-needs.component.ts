@@ -14,8 +14,8 @@ interface DisplayRow {
   label: string;
   value?: number;
   priority?: number;
-  level: number; // Indentation level for visual hierarchy
-  path: string[]; // Path to this item in the totals object
+  level: number;
+  path: string[];
 }
 
 @Component({
@@ -29,6 +29,16 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   totals: Record<string, TotalItem> = {};
   displayData: DisplayRow[] = [];
 
+  static readonly ITEMS_ORDER: string[] = [
+    'Income Replacement',
+    'Estate Tax Liability',
+    'Equalization',
+    'Debt Future Liability',
+    'Goal Shortfall',
+    'Key Man',
+    'Shareholder Agreement',
+  ];
+
   constructor(private localStorageService: LocalStorageService) {}
 
   ngOnInit(): void {
@@ -39,7 +49,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
         }
       },
     });
-    this.loadAndParseTotals(); // Initial load
+    this.loadAndParseTotals();
   }
 
   ngOnDestroy(): void {
@@ -47,39 +57,41 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
   }
 
   private loadAndParseTotals(): void {
-    const totals =
+    const totalsFromStorage =
       this.localStorageService.getItem<Record<string, TotalItem>>('totals');
-    if (totals) {
-      this.totals = totals;
+    if (totalsFromStorage) {
+      this.totals = totalsFromStorage;
       this.displayData = [];
-      this.processTotalsObject(totals, 0, []);
+      TotalInsurableNeedsComponent.ITEMS_ORDER.forEach((item) => {
+        if (totalsFromStorage[item]) {
+          this.processTotalsObject(totalsFromStorage[item], 0, [item]);
+        }
+      });
     }
   }
 
   private processTotalsObject(
-    totals: Record<string, TotalItem>,
+    totalItem: TotalItem,
     level: number,
     path: string[],
   ): void {
-    Object.entries(totals).forEach(([key, item]) => {
-      const currentPath = [...path, key];
-      const label = key; // Use only the current key as the label for all nodes
-
-      if (item.subcategories) {
-        // Parent node
-        this.displayData.push({ label, level, path: currentPath });
-        this.processTotalsObject(item.subcategories, level + 1, currentPath);
-      } else {
-        // Leaf node
-        this.displayData.push({
-          label,
-          value: item.value,
-          priority: item.priority,
-          level,
-          path: currentPath,
-        });
-      }
-    });
+    const label = path[path.length - 1];
+    if (totalItem.subcategories) {
+      // Parent node
+      this.displayData.push({ label, level, path });
+      Object.entries(totalItem.subcategories).forEach(([key, item]) => {
+        this.processTotalsObject(item, level + 1, [...path, key]);
+      });
+    } else {
+      // Leaf node
+      this.displayData.push({
+        label,
+        value: totalItem.value,
+        priority: totalItem.priority,
+        level,
+        path,
+      });
+    }
   }
 
   updateItemPriority(row: DisplayRow): void {
