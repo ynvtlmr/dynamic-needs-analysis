@@ -66,7 +66,7 @@ export class DebtManagerComponent {
   updateStorage(): void {
     this.localStorageService.setItem('debts', this.debts);
 
-    let totals: { [key: string]: any } =
+    const totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
     if (!totals['Debt Future Liability']) {

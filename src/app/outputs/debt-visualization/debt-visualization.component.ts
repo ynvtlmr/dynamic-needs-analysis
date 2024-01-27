@@ -107,6 +107,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       let year = debt.yearAcquired;
       let value: number;
 
+      let debtRemaining: boolean = true;
       do {
         value = this.debtValueOverTime(debt, year);
         if (value > 0) {
@@ -114,10 +115,10 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         } else {
           // When the debt value becomes zero or less, we record the year
           latestYear = Math.max(latestYear, year);
-          break; // No need to calculate further for this debt
+          debtRemaining = false;
         }
         year++;
-      } while (true); // Loop until debt is paid off
+      } while (debtRemaining); // Loop until debt is paid off
 
       series.push({
         name: debt.name,

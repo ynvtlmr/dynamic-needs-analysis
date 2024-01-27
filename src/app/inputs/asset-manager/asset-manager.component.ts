@@ -88,7 +88,7 @@ export class AssetManagerComponent {
   updateStorage(): void {
     this.localStorageService.setItem('assets', this.assets);
 
-    let totals: { [key: string]: any } =
+    const totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};
     if (!totals['Estate Tax Liability']) {
