@@ -89,6 +89,10 @@ export class DebtComponent implements OnChanges {
   }
 
   get yearsToBePaidOff(): number {
+    if (this.annualPayment <= 0 || this.debtRemainingDollars <= 0) {
+      return 0;
+    }
+
     return DebtComponent.nper(
       this.rate,
       this.annualPayment,
