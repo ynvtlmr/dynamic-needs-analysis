@@ -13,7 +13,7 @@ import { DiversificationComponent } from './outputs/diversification/diversificat
 import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
-import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
+import { ShareholderEbitdaContributionComponent } from './outputs/shareholder-ebitda-contribution/shareholder-ebitda-contribution.component';
 import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
 import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
@@ -30,7 +30,7 @@ type ComponentType = Type<
   | AssetBeneficiaryComponent
   | NetWorthComponent
   | DebtVisualizationComponent
-  | ShareholderEbitaContributionComponent
+  | ShareholderEbitdaContributionComponent
   | ShareholderShareValueComponent
   | GoalsVisualizationComponent
   | TotalInsurableNeedsComponent
@@ -62,6 +62,11 @@ export class AppComponent {
       component: BeneficiaryComponent,
     },
     {
+      path: 'inputs/business-manager',
+      label: 'Businesses',
+      component: BusinessManagerComponent,
+    },
+    {
       path: 'inputs/asset-manager',
       label: 'Assets',
       component: AssetManagerComponent,
@@ -70,11 +75,6 @@ export class AppComponent {
       path: 'inputs/debt-manager',
       label: 'Debts',
       component: DebtManagerComponent,
-    },
-    {
-      path: 'inputs/business-manager',
-      label: 'Businesses',
-      component: BusinessManagerComponent,
     },
     { path: 'inputs/goal', label: 'Goals', component: GoalComponent },
   ];
@@ -97,13 +97,13 @@ export class AppComponent {
     },
     {
       path: 'outputs/debt-visualization',
-      label: 'Debt Viz',
+      label: 'Debts',
       component: DebtVisualizationComponent,
     },
     {
-      path: 'outputs/shareholder-ebita-contribution',
-      label: 'Biz Ebita',
-      component: ShareholderEbitaContributionComponent,
+      path: 'outputs/shareholder-ebitda-contribution',
+      label: 'Biz Ebitda',
+      component: ShareholderEbitdaContributionComponent,
     },
     {
       path: 'outputs/shareholder-share-value',
@@ -112,7 +112,7 @@ export class AppComponent {
     },
     {
       path: 'outputs/goals-visualization',
-      label: 'Goals Viz',
+      label: 'Goals',
       component: GoalsVisualizationComponent,
     },
     {

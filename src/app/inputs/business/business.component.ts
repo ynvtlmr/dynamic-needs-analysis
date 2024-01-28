@@ -23,7 +23,7 @@ import { Business, Shareholder } from '../../models/business.model';
 export class BusinessComponent implements OnChanges, OnInit {
   businessName: string = '';
   valuation: number = 0;
-  ebita: number = 0;
+  ebitda: number = 0;
   rate: number = 0;
   term: number = 0;
   shareholders: Shareholder[] = [];
@@ -49,7 +49,7 @@ export class BusinessComponent implements OnChanges, OnInit {
   populateBusinessData(business: Business): void {
     this.businessName = business.businessName;
     this.valuation = business.valuation;
-    this.ebita = business.ebita; // Add this line to set the EBITA value
+    this.ebitda = business.ebitda; // Add this line to set the EBITA value
     this.rate = business.rate;
     this.term = business.term;
     this.shareholders = business.shareholders;
@@ -59,7 +59,7 @@ export class BusinessComponent implements OnChanges, OnInit {
     const business: Business = {
       businessName: this.businessName,
       valuation: this.valuation,
-      ebita: this.ebita,
+      ebitda: this.ebitda,
       rate: this.rate,
       term: this.term,
       shareholders: this.shareholders,
@@ -80,7 +80,7 @@ export class BusinessComponent implements OnChanges, OnInit {
           : '',
       sharePercentage: this.shareholders.length === 0 ? 100 : 0,
       insuranceCoverage: 0,
-      ebitaContributionPercentage: this.shareholders.length === 0 ? 100 : 0,
+      ebitdaContributionPercentage: this.shareholders.length === 0 ? 100 : 0,
     };
     this.shareholders.push(newShareholder);
   }
@@ -99,8 +99,8 @@ export class BusinessComponent implements OnChanges, OnInit {
     );
   }
 
-  calculateEbitaContribDollars(shareholder: Shareholder): number {
-    return this.ebita * (shareholder.ebitaContributionPercentage / 100);
+  calculateEbitdaContribDollars(shareholder: Shareholder): number {
+    return this.ebitda * (shareholder.ebitdaContributionPercentage / 100);
   }
 
   get totalMajorShareholderPercentage(): number {
@@ -111,10 +111,10 @@ export class BusinessComponent implements OnChanges, OnInit {
     );
   }
 
-  get totalEbitaContribPercentage(): number {
+  get totalEbitdaContribPercentage(): number {
     return this.shareholders.reduce(
       (acc: number, shareholder: Shareholder) =>
-        acc + shareholder.ebitaContributionPercentage,
+        acc + shareholder.ebitdaContributionPercentage,
       0,
     );
   }
@@ -141,13 +141,13 @@ export class BusinessComponent implements OnChanges, OnInit {
     );
   }
 
-  private calculateFinalEbitaContribution(
+  private calculateFinalEbitdaContribution(
     business: Business,
     shareholder: Shareholder,
   ): number {
     return (
-      (shareholder.ebitaContributionPercentage / 100) *
-      business.ebita *
+      (shareholder.ebitdaContributionPercentage / 100) *
+      business.ebitda *
       Math.pow(1 + business.rate / 100, business.term)
     );
   }
@@ -183,7 +183,7 @@ export class BusinessComponent implements OnChanges, OnInit {
       };
 
     business.shareholders.forEach((shareholder) => {
-      const finalEbitaContribution = this.calculateFinalEbitaContribution(
+      const finalEbitdaContribution = this.calculateFinalEbitdaContribution(
         business,
         shareholder,
       );
@@ -196,7 +196,7 @@ export class BusinessComponent implements OnChanges, OnInit {
       totals['Key Man'].subcategories[business.businessName].subcategories[
         shareholder.shareholderName
       ] = {
-        value: finalEbitaContribution,
+        value: finalEbitdaContribution,
         priority: 100,
       };
       totals['Shareholder Agreement'].subcategories[

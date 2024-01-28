@@ -18,12 +18,12 @@ export type ChartOptions = {
 };
 
 @Component({
-  selector: 'app-shareholder-ebita-contribution',
-  templateUrl: './shareholder-ebita-contribution.component.html',
+  selector: 'app-shareholder-ebitda-contribution',
+  templateUrl: './shareholder-ebitda-contribution.component.html',
   imports: [NgApexchartsModule],
   standalone: true,
 })
-export class ShareholderEbitaContributionComponent
+export class ShareholderEbitdaContributionComponent
   implements OnInit, OnDestroy
 {
   public chartOptions!: ChartOptions;
@@ -63,7 +63,7 @@ export class ShareholderEbitaContributionComponent
       business.shareholders.forEach((shareholder) => {
         series.push({
           name: `${business.businessName} - ${shareholder.shareholderName}`,
-          data: this.calculateCompoundedEbitaContribution(
+          data: this.calculateCompoundedEbitdaContribution(
             business,
             shareholder,
           ),
@@ -85,15 +85,15 @@ export class ShareholderEbitaContributionComponent
     };
   }
 
-  private calculateCompoundedEbitaContribution(
+  private calculateCompoundedEbitdaContribution(
     business: Business,
     shareholder: Shareholder,
   ): number[] {
     const contributions: number[] = [];
     for (let year = 0; year <= business.term; year++) {
       const compounded =
-        shareholder.ebitaContributionPercentage *
-        business.ebita *
+        shareholder.ebitdaContributionPercentage *
+        business.ebitda *
         Math.pow(1 + business.rate / 100, year);
       contributions.push(compounded);
     }

@@ -31,7 +31,7 @@ export class BusinessManagerComponent {
     this.editingBusiness = {
       businessName: '',
       valuation: 0,
-      ebita: 0,
+      ebitda: 0,
       rate: 0,
       term: 0,
       shareholders: [],

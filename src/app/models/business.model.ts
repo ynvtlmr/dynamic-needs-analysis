@@ -2,13 +2,13 @@ export interface Shareholder {
   shareholderName: string;
   sharePercentage: number;
   insuranceCoverage: number;
-  ebitaContributionPercentage: number;
+  ebitdaContributionPercentage: number;
 }
 
 export interface Business {
   businessName: string;
   valuation: number;
-  ebita: number;
+  ebitda: number;
   rate: number;
   term: number;
   shareholders: Shareholder[];

@@ -10,7 +10,7 @@ import { DiversificationComponent } from './outputs/diversification/diversificat
 import { AssetBeneficiaryComponent } from './outputs/asset-beneficiary/asset-beneficiary.component';
 import { NetWorthComponent } from './outputs/net-worth/net-worth.component';
 import { DebtVisualizationComponent } from './outputs/debt-visualization/debt-visualization.component';
-import { ShareholderEbitaContributionComponent } from './outputs/shareholder-ebita-contribution/shareholder-ebita-contribution.component';
+import { ShareholderEbitdaContributionComponent } from './outputs/shareholder-ebitda-contribution/shareholder-ebitda-contribution.component';
 import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
 import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
@@ -28,8 +28,8 @@ export const routes: Routes = [
   { path: 'outputs/net-worth', component: NetWorthComponent },
   { path: 'outputs/debt-visualization', component: DebtVisualizationComponent },
   {
-    path: 'outputs/shareholder-ebita-contribution',
-    component: ShareholderEbitaContributionComponent,
+    path: 'outputs/shareholder-ebitda-contribution',
+    component: ShareholderEbitdaContributionComponent,
   },
   {
     path: 'outputs/shareholder-share-value',
