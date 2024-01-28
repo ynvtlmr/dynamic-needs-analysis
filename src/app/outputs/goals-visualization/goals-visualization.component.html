@@ -26,16 +26,8 @@
       <td class="number">{{ totalFutureValueToBeSold | currency }}</td>
     </tr>
     <tr>
-      <td>Percent Liquidity to Goals:</td>
-      <td>
-        <input
-          type="number"
-          [(ngModel)]="percentLiquidityToGoals"
-          (change)="onPercentLiquidityChange()"
-          min="0"
-          max="100"
-        />
-      </td>
+      <td>% Liquidity Allocated to Goals:</td>
+      <td class="number">{{ percentLiquidityToGoals | number }}%</td>
     </tr>
     <tr>
       <td>Liquidity Preserved:</td>

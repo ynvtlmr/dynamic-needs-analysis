@@ -55,4 +55,16 @@
       </td>
     </tr>
   </table>
+
+  <div>
+    <label for="percent-liquidity">% Liquidity Allocated to Goals:</label>
+    <input
+      type="number"
+      [(ngModel)]="percentLiquidityToGoals"
+      (ngModelChange)="onPercentLiquidityChange()"
+      id="percent-liquidity"
+      min="0"
+      max="100"
+    />
+  </div>
 </div>

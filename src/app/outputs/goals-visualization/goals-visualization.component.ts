@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Asset } from '../../models/asset.model';
 import { Goal } from '../../models/goal.model';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { getChartOptions, ChartOptions } from './goals-visualization-chart';
 import { NgApexchartsModule } from 'ng-apexcharts';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-goals-visualization',
   templateUrl: './goals-visualization.component.html',
   standalone: true,
-  imports: [CurrencyPipe, FormsModule, NgApexchartsModule],
+  imports: [CurrencyPipe, FormsModule, NgApexchartsModule, DecimalPipe],
 })
 export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   totalCurrentValueFixed: number = 0;
@@ -46,6 +46,7 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
           this.calculateTotals();
           this.calculateGoals();
           this.updateChart();
+          this.loadPercentLiquidityFromStorage();
         }
       });
     this.loadPercentLiquidityFromStorage();

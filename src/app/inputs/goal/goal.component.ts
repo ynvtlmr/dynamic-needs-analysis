@@ -14,9 +14,11 @@ import { Goal } from '../../models/goal.model';
 })
 export class GoalComponent {
   goals: Goal[] = [];
+  percentLiquidityToGoals: number = 0;
 
   constructor(private localStorageService: LocalStorageService) {
     this.loadGoalsFromStorage();
+    this.loadPercentLiquidityFromStorage();
   }
 
   addEmptyGoal(): void {
@@ -34,11 +36,31 @@ export class GoalComponent {
 
   private updateStorage(): void {
     this.localStorageService.setItem('goals', this.goals);
+    this.localStorageService.setItem(
+      'percentLiquidityToGoals',
+      this.percentLiquidityToGoals,
+    );
   }
 
   private loadGoalsFromStorage(): void {
     const data: Goal[] | null =
       this.localStorageService.getItem<Goal[]>('goals');
     this.goals = data ? data : [];
+  }
+
+  private loadPercentLiquidityFromStorage(): void {
+    const percent = this.localStorageService.getItem<number>(
+      'percentLiquidityToGoals',
+    );
+    this.percentLiquidityToGoals = percent ?? 0;
+  }
+
+  onPercentLiquidityChange(): void {
+    this.localStorageService.setItem(
+      'percentLiquidityToGoals',
+      this.percentLiquidityToGoals,
+    );
+    // Update storage whenever this value changes
+    this.updateStorage();
   }
 }

@@ -7,7 +7,9 @@
   </tr>
   <tr *ngFor="let row of displayData">
     <td [style.paddingLeft.px]="row.level * 20">{{ row.label }}</td>
-    <td *ngIf="row.value !== undefined">{{ row.value | currency }}</td>
+    <td class="number" *ngIf="row.value !== undefined">
+      {{ row.value | currency }}
+    </td>
     <td *ngIf="row.value === undefined">&mdash;</td>
     <td *ngIf="row.priority !== undefined">
       <input
