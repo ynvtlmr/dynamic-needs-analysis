@@ -81,7 +81,7 @@ export class ShareholderEbitdaContributionComponent
         },
       },
       xaxis: { type: 'category', categories: this.generateYearsArray() },
-      yaxis: { title: { text: 'EBITA Contribution ($)' } },
+      yaxis: { title: { text: 'EBITDA Contribution ($)' } },
     };
   }
 

@@ -49,7 +49,7 @@ export class BusinessComponent implements OnChanges, OnInit {
   populateBusinessData(business: Business): void {
     this.businessName = business.businessName;
     this.valuation = business.valuation;
-    this.ebitda = business.ebitda; // Add this line to set the EBITA value
+    this.ebitda = business.ebitda; // Add this line to set the EBITDA value
     this.rate = business.rate;
     this.term = business.term;
     this.shareholders = business.shareholders;

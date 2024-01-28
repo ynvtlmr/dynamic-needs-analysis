@@ -4,6 +4,7 @@ import { AssetComponent } from '../asset/asset.component';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { Asset } from '../../models/asset.model';
 import { Beneficiary } from '../../models/beneficiary.model';
+import { Business } from '../../models/business.model';
 
 interface EditingState {
   asset: Asset | null;
@@ -17,6 +18,7 @@ interface EditingState {
   templateUrl: './asset-manager.component.html',
 })
 export class AssetManagerComponent {
+  businesses: Business[] = [];
   assets: Asset[] = [];
   editingState: EditingState = { asset: null, index: null };
   distributions: Record<string, number> | null = null;
@@ -24,6 +26,7 @@ export class AssetManagerComponent {
   additionalMoneyRequired: Record<string, number> = {};
 
   constructor(private localStorageService: LocalStorageService) {
+    this.loadBusinessesFromStorage();
     this.loadAssetsFromStorage();
   }
 
@@ -43,6 +46,12 @@ export class AssetManagerComponent {
       selectedTaxBracket: undefined,
       capitalGainsTaxRate: 0,
     };
+  }
+
+  loadBusinessesFromStorage(): void {
+    const storedBusinesses: Business[] =
+      this.localStorageService.getItem<Business[]>('businesses') || [];
+    this.businesses = storedBusinesses;
   }
 
   loadAssetsFromStorage(): void {

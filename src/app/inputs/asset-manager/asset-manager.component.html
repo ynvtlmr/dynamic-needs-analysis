@@ -8,6 +8,23 @@
       <th></th>
       <th></th>
     </tr>
+    <!-- Loop through businesses -->
+    <tr *ngFor="let business of businesses">
+      <td>{{ business.businessName }}</td>
+      <td class="number">{{ business.valuation | currency }}</td>
+      <td></td>
+      <!-- No value for Future Tax Liability -->
+      <td></td>
+      <!-- No edit button -->
+      <td></td>
+      <!-- No delete button -->
+    </tr>
+
+    <!-- spacer row -->
+    <tr>
+      <td colspan="5">---</td>
+    </tr>
+
     <!-- Loop through assets -->
     <tr *ngFor="let asset of assets; let i = index">
       <td>{{ asset.name }}</td>
