@@ -126,8 +126,10 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       });
     });
 
-    const minYear = Math.min(...this.debts.map((d) => d.yearAcquired));
-    const maxYear = latestYear; // Use latestYear as the maxYear
+    const minYear: number = Math.min(
+      ...this.debts.map((d: Debt) => d.yearAcquired),
+    );
+    const maxYear: number = latestYear;
 
     this.chartOptions = {
       ...this.chartOptions,
@@ -146,7 +148,8 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       return this.debtValuesCache.get(cacheKey)!;
     }
 
-    if (year < debt.yearAcquired) {
+    // Stop calculation if it exceeds 10 years from the current year
+    if (year > new Date().getFullYear() + Math.max(debt.term, 10)) {
       return 0;
     }
 
@@ -160,6 +163,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       return 0;
     }
 
+    // Apply interest and subtract the annual payment
     remainingDebt *= Math.pow(1 + debt.rate / 100, 1);
     remainingDebt = Math.max(0, remainingDebt - debt.annualPayment);
 
