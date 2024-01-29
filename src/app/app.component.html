@@ -1,8 +1,22 @@
 <div class="app-container">
   <!-- Save app state -->
-  <button (click)="clearAllLocalStorage()">Clear All Data</button>
-  <button (click)="downloadLocalStorageAsFile()">Save Client</button>
-  <input type="file" (change)="loadLocalStorageFromFile($event)" />
+  <button mat-raised-button color="warn" (click)="clearAllLocalStorage()">
+    Clear All Data
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="downloadLocalStorageAsFile()"
+  >
+    Save Client
+  </button>
+  <button mat-stroked-button (click)="fileInput.click()">Load Client</button>
+  <input
+    type="file"
+    #fileInput
+    (change)="loadLocalStorageFromFile($event)"
+    style="display: none"
+  />
   <br />
 
   <!-- Input Navigation -->

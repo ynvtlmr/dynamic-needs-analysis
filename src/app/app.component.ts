@@ -20,6 +20,8 @@ import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/to
 import { Type } from '@angular/core';
 
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
 type ComponentType = Type<
@@ -55,6 +57,8 @@ interface NavLink {
     RouterLinkActive,
     MatButtonToggleModule,
     FormsModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
