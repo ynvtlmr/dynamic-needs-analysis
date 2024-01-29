@@ -6,26 +6,29 @@
   <br />
 
   <!-- Input Navigation -->
-  <div>
-    <button
-      *ngFor="let link of inputLinks"
-      (click)="onSelectInputComponent(link.component)"
-      [class.active]="selectedInputComponent === link.component"
-    >
+  <mat-button-toggle-group
+    name="inputNav"
+    aria-label="Input Navigation"
+    [(ngModel)]="selectedInputComponent"
+  >
+    <mat-button-toggle *ngFor="let link of inputLinks" [value]="link.component">
       {{ link.label }}
-    </button>
-  </div>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <!-- Output Navigation -->
-  <div>
-    <button
+  <mat-button-toggle-group
+    name="outputNav"
+    aria-label="Output Navigation"
+    [(ngModel)]="selectedOutputComponent"
+  >
+    <mat-button-toggle
       *ngFor="let link of outputLinks"
-      (click)="onSelectOutputComponent(link.component)"
-      [class.active]="selectedOutputComponent === link.component"
+      [value]="link.component"
     >
       {{ link.label }}
-    </button>
-  </div>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
 
   <!-- Conditionally Render Selected Components -->
   <div *ngIf="selectedInputComponent">

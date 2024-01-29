@@ -19,6 +19,9 @@ import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals
 import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
 import { Type } from '@angular/core';
 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { FormsModule } from '@angular/forms';
+
 type ComponentType = Type<
   | ClientComponent
   | BeneficiaryComponent
@@ -45,7 +48,14 @@ interface NavLink {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonToggleModule,
+    FormsModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
