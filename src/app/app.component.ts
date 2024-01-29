@@ -136,22 +136,6 @@ export class AppComponent {
     },
   ];
 
-  onSelectInputComponent(component: ComponentType | null) {
-    if (this.selectedInputComponent === component) {
-      this.selectedInputComponent = null;
-    } else {
-      this.selectedInputComponent = component;
-    }
-  }
-
-  onSelectOutputComponent(component: ComponentType | null) {
-    if (this.selectedOutputComponent === component) {
-      this.selectedOutputComponent = null;
-    } else {
-      this.selectedOutputComponent = component;
-    }
-  }
-
   clearAllLocalStorage() {
     this.localStorageService.clearAll();
   }
