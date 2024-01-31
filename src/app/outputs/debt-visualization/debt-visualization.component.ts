@@ -13,6 +13,7 @@ import {
 } from 'ng-apexcharts';
 import { Debt } from '../../models/debt.model';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { formatCurrency } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -76,9 +77,19 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       xaxis: {
         type: 'numeric',
         title: { text: 'Years' },
+        labels: {
+          formatter: (value: string): string => {
+            const yearValue = Math.round(parseFloat(value));
+            return yearValue.toString();
+          },
+        },
       },
       yaxis: {
         title: { text: 'Debt Value ($)' },
+        labels: {
+          formatter: (value: number): string =>
+            formatCurrency(value, 'en-US', '$'),
+        },
       },
       tooltip: {
         y: {
@@ -131,6 +142,11 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
     );
     const maxYear: number = latestYear;
 
+    let tickAmount: number = maxYear - minYear + 1;
+    while (tickAmount > 20) {
+      tickAmount = tickAmount / 2;
+    }
+
     this.chartOptions = {
       ...this.chartOptions,
       series: series,
@@ -138,6 +154,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         ...this.chartOptions.xaxis,
         min: minYear,
         max: maxYear,
+        tickAmount: tickAmount,
       },
     };
   }

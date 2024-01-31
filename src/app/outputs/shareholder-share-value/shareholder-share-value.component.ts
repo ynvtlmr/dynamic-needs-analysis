@@ -9,6 +9,7 @@ import {
 } from 'ng-apexcharts';
 import { Business, Shareholder } from '../../models/business.model';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { formatCurrency } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -80,7 +81,13 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
         },
       },
       xaxis: { type: 'category', categories: this.generateYearsArray() },
-      yaxis: { title: { text: 'Share Value ($)' } },
+      yaxis: {
+        title: { text: 'Share Value ($)' },
+        labels: {
+          formatter: (value: number): string =>
+            formatCurrency(value, 'en-US', '$'),
+        },
+      },
     };
   }
 

@@ -13,6 +13,7 @@ import {
 } from 'ng-apexcharts';
 import { Asset } from '../../models/asset.model';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { formatCurrency } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -79,22 +80,19 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       } as ApexChart,
       xaxis: {
         type: 'numeric',
-        tickAmount: 0,
-        min: 0,
-        max: 0,
         labels: {
           formatter: (value: string): string => {
             const valAsNumber: number = parseFloat(value);
             return isNaN(valAsNumber)
               ? value
-              : Math.round(valAsNumber).toString().slice(-2);
+              : Math.round(valAsNumber).toString().slice(-4);
           },
         },
       } as ApexXAxis,
       yaxis: {
         labels: {
           formatter: (value: number): string =>
-            `$${(value / 1000).toFixed(0)}k`,
+            formatCurrency(value, 'en-US', '$'),
         },
       } as ApexYAxis,
       dataLabels: {
@@ -132,10 +130,14 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       ...this.assets.map((a: Asset) => a.yearAcquired + a.term),
     );
 
+    let tickAmount: number = endYear - startYear + 1;
+    while (tickAmount > 20) {
+      tickAmount = tickAmount / 2;
+    }
     if (this.chartOptions && this.chartOptions.xaxis) {
       this.chartOptions.xaxis.min = startYear;
       this.chartOptions.xaxis.max = endYear;
-      this.chartOptions.xaxis.tickAmount = endYear - startYear + 1;
+      this.chartOptions.xaxis.tickAmount = tickAmount;
     }
 
     this.chartOptions.series = this.assets.map((asset: Asset) => ({
