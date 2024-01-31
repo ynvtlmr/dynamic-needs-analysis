@@ -39,7 +39,16 @@ export function getChartOptions(values: number[]): ChartOptions {
 
   return {
     series: [{ data: dataWithColors }],
-    chart: { type: 'bar', height: 350, animations: { enabled: false } },
+    chart: {
+      type: 'bar',
+      height: 350,
+      animations: {
+        enabled: false,
+      },
+      toolbar: {
+        show: false,
+      },
+    },
     xaxis: {
       categories: [
         'Future Liquidity',

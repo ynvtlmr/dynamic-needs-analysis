@@ -79,6 +79,9 @@ export class ShareholderEbitdaContributionComponent
         animations: {
           enabled: false,
         },
+        toolbar: {
+          show: false,
+        },
       },
       xaxis: { type: 'category', categories: this.generateYearsArray() },
       yaxis: { title: { text: 'EBITDA Contribution ($)' } },

@@ -69,10 +69,10 @@ export class BeneficiaryFutureValueBarChartComponent implements OnInit {
         height: 350,
         stacked: true,
         animations: {
-          enabled: true,
+          enabled: false,
         },
         toolbar: {
-          show: true,
+          show: false,
         },
       },
       plotOptions: {

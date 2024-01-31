@@ -51,10 +51,10 @@ export class BeneficiaryFutureValuePieChartComponent implements OnInit {
         type: 'pie',
         height: 350,
         animations: {
-          enabled: true,
+          enabled: false,
         },
         toolbar: {
-          show: true,
+          show: false,
         },
       },
       dataLabels: {

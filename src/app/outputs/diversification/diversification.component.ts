@@ -50,8 +50,26 @@ export class DiversificationComponent implements OnInit, OnDestroy {
         animations: {
           enabled: false,
         },
+        toolbar: {
+          show: false,
+        },
       },
-      responsive: [{ breakpoint: 400, options: { chart: { width: 200 } } }],
+      responsive: [
+        {
+          breakpoint: 400,
+          options: {
+            chart: {
+              width: 200,
+              animations: {
+                enabled: false,
+              },
+              toolbar: {
+                show: false,
+              },
+            },
+          },
+        },
+      ],
       labels: [],
       legend: { position: 'bottom' },
       colors: CUSTOM_COLORS,
