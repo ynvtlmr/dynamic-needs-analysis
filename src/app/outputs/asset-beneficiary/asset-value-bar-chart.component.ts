@@ -37,7 +37,19 @@ export class AssetValueBarChartComponent implements OnInit {
       plotOptions: { bar: { horizontal: true } },
       dataLabels: { enabled: false },
       xaxis: { type: 'category', categories: [] },
-      yaxis: { title: { text: 'Asset Value' } },
+      yaxis: {
+        title: { text: 'Asset Value' },
+      },
+      tooltip: {
+        y: {
+          formatter: (val: number): string => {
+            return `$${val.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`;
+          },
+        },
+      },
       title: { text: 'Asset Value Distribution' },
       legend: { position: 'bottom' },
       labels: [],

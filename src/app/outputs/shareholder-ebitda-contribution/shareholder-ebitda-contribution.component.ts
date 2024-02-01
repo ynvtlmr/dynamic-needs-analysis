@@ -89,7 +89,7 @@ export class ShareholderEbitdaContributionComponent
         title: { text: 'EBITDA Contribution ($)' },
         labels: {
           formatter: (value: number): string =>
-            formatCurrency(value, 'en-US', '$'),
+            formatCurrency(value, 'en-US', '$', 'USD', '1.0-2'),
         },
       },
     };

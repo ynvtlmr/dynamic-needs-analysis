@@ -85,7 +85,7 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
         title: { text: 'Share Value ($)' },
         labels: {
           formatter: (value: number): string =>
-            formatCurrency(value, 'en-US', '$'),
+            formatCurrency(value, 'en-US', '$', 'USD', '1.0-2'),
         },
       },
     };

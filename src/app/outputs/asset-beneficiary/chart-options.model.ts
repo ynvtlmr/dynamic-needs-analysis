@@ -8,6 +8,7 @@ import {
   ApexTitleSubtitle,
   ApexXAxis,
   ApexYAxis,
+  ApexTooltip,
 } from 'ng-apexcharts';
 
 export type ChartOptions = {
@@ -15,6 +16,7 @@ export type ChartOptions = {
   chart: ApexChart;
   xaxis: ApexXAxis;
   yaxis: ApexYAxis;
+  tooltip?: ApexTooltip;
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
   title: ApexTitleSubtitle;

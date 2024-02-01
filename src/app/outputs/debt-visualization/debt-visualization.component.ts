@@ -88,12 +88,17 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         title: { text: 'Debt Value ($)' },
         labels: {
           formatter: (value: number): string =>
-            formatCurrency(value, 'en-US', '$'),
+            formatCurrency(value, 'en-US', '$', 'USD', '1.0-2'),
         },
       },
       tooltip: {
         y: {
-          formatter: (val: number): string => `$${val.toFixed(2)}`,
+          formatter: (val: number): string => {
+            return `$${val.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}`;
+          },
         },
       },
       dataLabels: { enabled: false },

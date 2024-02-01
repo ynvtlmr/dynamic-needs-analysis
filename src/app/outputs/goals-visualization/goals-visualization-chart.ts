@@ -5,7 +5,9 @@ import {
   ApexYAxis,
   ApexDataLabels,
   ApexPlotOptions,
+  ApexTooltip,
 } from 'ng-apexcharts';
+import { formatCurrency } from '@angular/common';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -14,6 +16,7 @@ export type ChartOptions = {
   yaxis: ApexYAxis;
   dataLabels: ApexDataLabels;
   plotOptions: ApexPlotOptions;
+  tooltip: ApexTooltip;
 };
 
 export function getChartOptions(values: number[]): ChartOptions {
@@ -58,7 +61,22 @@ export function getChartOptions(values: number[]): ChartOptions {
         'Surplus / Shortfall',
       ],
     },
-    yaxis: { title: { text: 'Value ($)' } },
+    yaxis: {
+      title: { text: 'Value ($)' },
+      labels: {
+        formatter: (value: number) =>
+          formatCurrency(value, 'en-US', '$', 'USD', '1.0-2'),
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: (val: number) =>
+          formatCurrency(val, 'en-US', '$', 'USD', '1.2-2'),
+        title: {
+          formatter: () => '',
+        },
+      },
+    },
     dataLabels: { enabled: false },
     plotOptions: { bar: { horizontal: false } },
   };

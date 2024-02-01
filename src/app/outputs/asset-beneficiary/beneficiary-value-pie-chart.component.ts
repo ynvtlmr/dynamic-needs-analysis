@@ -33,7 +33,9 @@ export class BeneficiaryValuePieChartComponent implements OnInit {
           show: false,
         },
       },
-      dataLabels: { enabled: true },
+      dataLabels: {
+        enabled: true,
+      },
       title: { text: 'Real Beneficiary Distribution' },
       legend: { position: 'bottom' },
       labels: [],

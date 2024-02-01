@@ -13,8 +13,6 @@ import { BeneficiaryValuePieChartComponent } from './beneficiary-value-pie-chart
 import { BeneficiaryPercentagePieChartComponent } from './beneficiary-percentage-pie-chart.component';
 import { AssetValueBarChartComponent } from './asset-value-bar-chart.component';
 import { AssetPercentageBarChartComponent } from './asset-percentage-bar-chart.component';
-import { BeneficiaryFutureValuePieChartComponent } from './beneficiary-future-value-pie-chart.component';
-import { BeneficiaryFutureValueBarChartComponent } from './beneficiary-future-value-bar-chart.component';
 
 @Component({
   selector: 'app-asset-beneficiary',
@@ -24,8 +22,6 @@ import { BeneficiaryFutureValueBarChartComponent } from './beneficiary-future-va
     BeneficiaryPercentagePieChartComponent,
     AssetValueBarChartComponent,
     AssetPercentageBarChartComponent,
-    BeneficiaryFutureValuePieChartComponent,
-    BeneficiaryFutureValueBarChartComponent,
   ],
   standalone: true,
 })
@@ -42,10 +38,6 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
   private assetValueBarChartComponent!: AssetValueBarChartComponent;
   @ViewChild(AssetPercentageBarChartComponent)
   private assetPercentageBarChartComponent!: AssetPercentageBarChartComponent;
-  @ViewChild(BeneficiaryFutureValuePieChartComponent)
-  private beneficiaryFutureValuePieChartComponent!: BeneficiaryFutureValuePieChartComponent;
-  @ViewChild(BeneficiaryFutureValueBarChartComponent)
-  private beneficiaryFutureValueBarChartComponent!: BeneficiaryFutureValueBarChartComponent;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -91,12 +83,6 @@ export class AssetBeneficiaryComponent implements OnInit, OnDestroy {
     }
     if (this.assetPercentageBarChartComponent) {
       this.assetPercentageBarChartComponent.refreshChart();
-    }
-    if (this.beneficiaryFutureValuePieChartComponent) {
-      this.beneficiaryFutureValuePieChartComponent.refreshChart();
-    }
-    if (this.beneficiaryFutureValueBarChartComponent) {
-      this.beneficiaryFutureValueBarChartComponent.refreshChart();
     }
   }
 }
