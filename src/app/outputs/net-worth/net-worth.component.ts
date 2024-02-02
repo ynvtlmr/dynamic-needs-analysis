@@ -92,18 +92,14 @@ export class NetWorthComponent implements OnInit, OnDestroy {
       yaxis: {
         labels: {
           formatter: (value: number): string =>
-            formatCurrency(value, 'en-US', '$'),
+            formatCurrency(value, 'en-US', '$', 'USD', '1.0-2'),
         },
       } as ApexYAxis,
       dataLabels: {
         enabled: false,
       } as ApexDataLabels,
       fill: {
-        type: 'gradient',
-        gradient: {
-          opacityFrom: 0.6,
-          opacityTo: 0.8,
-        },
+        type: 'solid',
       } as ApexFill,
       legend: {
         position: 'top',
