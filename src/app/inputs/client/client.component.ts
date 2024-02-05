@@ -30,6 +30,7 @@ export class ClientComponent implements OnInit {
     this.loadClientFromStorage();
     this.updateTaxBrackets();
     this.loadSelectedBracket();
+    this.updateInsuredAmount();
   }
   name: string = '';
   birthdate: string = '';
@@ -56,11 +57,14 @@ export class ClientComponent implements OnInit {
     }
   }
 
+  updateInsuredAmount(): void {
+    this.insuredIncomeAmount =
+      this.annualIncome * this.incomeReplacementMultiplier;
+  }
   updateClientData(): void {
     this.updateTaxBrackets();
     this.saveSelectedBracket();
-    this.insuredIncomeAmount =
-      this.annualIncome * this.incomeReplacementMultiplier;
+    this.updateInsuredAmount();
 
     const client: Client = {
       name: this.name,
