@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LocalStorageService } from './services/local-storage.service';
@@ -18,6 +18,7 @@ import { ShareholderShareValueComponent } from './outputs/shareholder-share-valu
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
 import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
 import { Type } from '@angular/core';
+import { SwUpdate, VersionEvent } from '@angular/service-worker';
 
 type ComponentType = Type<
   | ClientComponent
@@ -47,12 +48,32 @@ interface NavLink {
   standalone: true,
   imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   selectedInputComponent: ComponentType | null = null;
   selectedOutputComponent: ComponentType | null = null;
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private swUpdate: SwUpdate
+  ) {}
+
+
+  ngOnInit() {
+    this.checkForUpdates();
+  }
+
+  checkForUpdates() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
+        if (event.type === 'VERSION_READY') {
+          if (confirm("New version of the app is available. Load new version?")) {
+            window.location.reload();
+          }
+        }
+      });
+    }
+  }
 
   inputLinks: NavLink[] = [
     { path: 'inputs/client', label: 'Client', component: ClientComponent },
