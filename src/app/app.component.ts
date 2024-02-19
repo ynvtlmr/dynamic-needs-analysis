@@ -55,9 +55,8 @@ export class AppComponent implements OnInit {
   selectedOutputComponent: ComponentType | null = null;
   constructor(
     private localStorageService: LocalStorageService,
-    private swUpdate: SwUpdate
+    private swUpdate: SwUpdate,
   ) {}
-
 
   ngOnInit() {
     this.checkForUpdates();
@@ -67,7 +66,9 @@ export class AppComponent implements OnInit {
     if (this.swUpdate.isEnabled) {
       this.swUpdate.versionUpdates.subscribe((event: VersionEvent) => {
         if (event.type === 'VERSION_READY') {
-          if (confirm("New version of the app is available. Load new version?")) {
+          if (
+            confirm('New version of the app is available. Load new version?')
+          ) {
             window.location.reload();
           }
         }

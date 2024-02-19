@@ -102,7 +102,7 @@ export class ShareholderEbitdaContributionComponent
     const contributions: number[] = [];
     for (let year = 0; year <= business.term; year++) {
       const compounded =
-        shareholder.ebitdaContributionPercentage *
+        (shareholder.ebitdaContributionPercentage / 100) *
         business.ebitda *
         Math.pow(1 + business.rate / 100, year);
       contributions.push(compounded);
