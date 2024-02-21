@@ -180,15 +180,28 @@ export class AssetManagerComponent {
   }
 
   private calculateAdditionalMoneyRequired(): void {
-    const totalFutureValue: number = this.totalFutureValue;
+    // Calculate the total future value required to adjust each beneficiary's allocation to their desired percentage
+    const totalDesiredValue: number = Object.keys(
+      this.idealDistributions,
+    ).reduce((total: number, beneficiaryName: string) => {
+      const currentAmount: number = this.distributions?.[beneficiaryName] ?? 0;
+      const idealPercentage: number =
+        this.idealDistributions[beneficiaryName] / 100;
+      const idealAmount: number = currentAmount / idealPercentage;
+      return Math.max(total, idealAmount);
+    }, 0);
+
+    // Calculate the additional amount needed to ensure the total future value meets the total desired value
     Object.keys(this.idealDistributions).forEach(
       (beneficiaryName: string): void => {
-        const idealAmount: number =
-          (this.idealDistributions[beneficiaryName] / 100) * totalFutureValue;
-        const actualAmount: number = this.distributions?.[beneficiaryName] || 0;
+        const currentAmount: number =
+          this.distributions?.[beneficiaryName] ?? 0;
+        const desiredPercentage: number =
+          this.idealDistributions[beneficiaryName] / 100;
+        const idealAmount: number = totalDesiredValue * desiredPercentage;
         this.additionalMoneyRequired[beneficiaryName] = Math.max(
           0,
-          idealAmount - actualAmount,
+          idealAmount - currentAmount,
         );
       },
     );
