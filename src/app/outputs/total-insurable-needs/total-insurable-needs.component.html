@@ -4,6 +4,7 @@
     <th>Label</th>
     <th>Value</th>
     <th>Priority</th>
+    <th>Allocated Budget</th>
   </tr>
   <tr *ngFor="let row of displayData">
     <td [style.paddingLeft.px]="row.level * 20">{{ row.label }}</td>
@@ -20,6 +21,10 @@
         max="100"
       />
       {{ row.priority }}%
+    </td>
+    <!-- Allocated Budget -->
+    <td *ngIf="row.value !== undefined && row.priority !== undefined">
+      {{ (row.value * row.priority) / 100 | currency }}
     </td>
   </tr>
 </table>

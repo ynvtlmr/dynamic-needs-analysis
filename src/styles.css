@@ -1,8 +1,8 @@
 /* Base styles */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .content {
@@ -56,12 +56,12 @@ input[type="number"] {
 
 /* Container to hold pie charts */
 .pie-chart-container {
-  display: flex;                  /* Enable flexbox */
-  justify-content: space-around;  /* Distribute space between charts */
-  align-items: center;            /* Align charts vertically */
+  display: flex; /* Enable flexbox */
+  justify-content: space-around; /* Distribute space between charts */
+  align-items: center; /* Align charts vertically */
 }
 
 /* Style for each chart */
 .chart {
-  flex: 1;  /* Each chart takes equal width */
+  flex: 1; /* Each chart takes equal width */
 }
