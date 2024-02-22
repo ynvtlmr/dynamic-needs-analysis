@@ -105,4 +105,18 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     });
     this.localStorageService.setItem('totals', this.totals);
   }
+
+  // total-insurable-needs.component.ts
+
+  // Add methods to calculate total value and allocated budget
+  get totalValue(): number {
+    return this.displayData.reduce((acc, row) => acc + (row.value || 0), 0);
+  }
+
+  get totalAllocatedBudget(): number {
+    return this.displayData.reduce(
+      (acc, row) => acc + ((row.value || 0) * (row.priority || 0)) / 100,
+      0,
+    );
+  }
 }

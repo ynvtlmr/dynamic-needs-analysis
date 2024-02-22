@@ -22,9 +22,19 @@
       />
       {{ row.priority }}%
     </td>
-    <!-- Allocated Budget -->
     <td *ngIf="row.value !== undefined && row.priority !== undefined">
       {{ (row.value * row.priority) / 100 | currency }}
+    </td>
+  </tr>
+  <!-- Totals Row -->
+  <tr>
+    <td><strong>Total</strong></td>
+    <td class="number">
+      {{ totalValue | currency }}
+    </td>
+    <td></td>
+    <td class="number">
+      {{ totalAllocatedBudget | currency }}
     </td>
   </tr>
 </table>
