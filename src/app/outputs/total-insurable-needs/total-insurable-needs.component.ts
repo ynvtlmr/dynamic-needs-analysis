@@ -43,7 +43,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.storageSub = this.localStorageService.watchStorage().subscribe({
-      next: (key) => {
+      next: (key: string): void => {
         if (key === 'totals') {
           this.loadAndParseTotals();
         }
@@ -62,7 +62,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     if (totalsFromStorage) {
       this.totals = totalsFromStorage;
       this.displayData = [];
-      TotalInsurableNeedsComponent.ITEMS_ORDER.forEach((item) => {
+      TotalInsurableNeedsComponent.ITEMS_ORDER.forEach((item: string): void => {
         if (totalsFromStorage[item]) {
           this.processTotalsObject(totalsFromStorage[item], 0, [item]);
         }
@@ -75,7 +75,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     level: number,
     path: string[],
   ): void {
-    const label = path[path.length - 1];
+    const label: string = path[path.length - 1];
     if (totalItem.subcategories) {
       // Parent node
       this.displayData.push({ label, level, path });
@@ -96,7 +96,7 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
 
   updateItemPriority(row: DisplayRow): void {
     let ref = this.totals;
-    row.path.forEach((key, index) => {
+    row.path.forEach((key: string, index: number): void => {
       if (index === row.path.length - 1) {
         ref[key].priority = row.priority;
       } else {
@@ -106,16 +106,17 @@ export class TotalInsurableNeedsComponent implements OnInit, OnDestroy {
     this.localStorageService.setItem('totals', this.totals);
   }
 
-  // total-insurable-needs.component.ts
-
-  // Add methods to calculate total value and allocated budget
   get totalValue(): number {
-    return this.displayData.reduce((acc, row) => acc + (row.value || 0), 0);
+    return this.displayData.reduce(
+      (acc: number, row: DisplayRow) => acc + (row.value || 0),
+      0,
+    );
   }
 
   get totalAllocatedBudget(): number {
     return this.displayData.reduce(
-      (acc, row) => acc + ((row.value || 0) * (row.priority || 0)) / 100,
+      (acc: number, row: DisplayRow) =>
+        acc + ((row.value || 0) * (row.priority || 0)) / 100,
       0,
     );
   }

@@ -86,12 +86,16 @@ export class DebtManagerComponent {
   }
 
   get totalInitialValue(): number {
-    return this.debts.reduce((sum, debt) => sum + debt.initialValue, 0);
+    return this.debts.reduce(
+      (sum: number, debt: Debt) => sum + debt.initialValue,
+      0,
+    );
   }
 
   get totalInsurableFutureValue(): number {
     return this.debts.reduce(
-      (sum, debt) => sum + (debt.insurableFutureValueDollars ?? 0),
+      (sum: number, debt: Debt) =>
+        sum + (debt.insurableFutureValueDollars ?? 0),
       0,
     );
   }

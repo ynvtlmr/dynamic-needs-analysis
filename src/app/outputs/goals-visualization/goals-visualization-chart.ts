@@ -28,13 +28,12 @@ export function getChartOptions(values: number[]): ChartOptions {
     'Surplus / Shortfall',
   ];
 
-  const positiveColor = '#00E396'; // Color for positive values
-  const negativeColor = '#FF4560'; // Color for negative values
+  const positiveColor = '#00E396';
+  const negativeColor = '#FF4560';
 
-  // Map each value to an object with x as category name and color based on its value
-  const dataWithColors = values.map((value, index) => {
+  const dataWithColors = values.map((value: number, index: number) => {
     return {
-      x: categories[index], // Using category name
+      x: categories[index],
       y: value,
       fillColor: value >= 0 ? positiveColor : negativeColor,
     };

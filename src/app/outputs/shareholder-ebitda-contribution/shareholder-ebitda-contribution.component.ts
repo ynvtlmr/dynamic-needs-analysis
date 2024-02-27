@@ -36,7 +36,7 @@ export class ShareholderEbitdaContributionComponent
   ngOnInit(): void {
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key: string) => {
+      .subscribe((key: string): void => {
         if (key === 'businesses' || key === 'shareholders' || key === 'all') {
           this.loadBusinessData();
           this.prepareChartData();
@@ -60,8 +60,8 @@ export class ShareholderEbitdaContributionComponent
   private prepareChartData(): void {
     const series: ApexAxisChartSeries = [];
 
-    this.businesses.forEach((business) => {
-      business.shareholders.forEach((shareholder) => {
+    this.businesses.forEach((business: Business): void => {
+      business.shareholders.forEach((shareholder: Shareholder): void => {
         series.push({
           name: `${business.businessName} - ${shareholder.shareholderName}`,
           data: this.calculateCompoundedEbitdaContribution(
@@ -100,8 +100,8 @@ export class ShareholderEbitdaContributionComponent
     shareholder: Shareholder,
   ): number[] {
     const contributions: number[] = [];
-    for (let year = 0; year <= business.term; year++) {
-      const compounded =
+    for (let year: number = 0; year <= business.term; year++) {
+      const compounded: number =
         (shareholder.ebitdaContributionPercentage / 100) *
         business.ebitda *
         Math.pow(1 + business.rate / 100, year);
@@ -111,7 +111,9 @@ export class ShareholderEbitdaContributionComponent
   }
 
   private generateYearsArray(): string[] {
-    const currentYear = new Date().getFullYear();
-    return Array.from({ length: 50 }, (_, i) => (currentYear + i).toString()); // Adjust range as necessary
+    const currentYear: number = new Date().getFullYear();
+    return Array.from({ length: 50 }, (_, i: number) =>
+      (currentYear + i).toString(),
+    );
   }
 }

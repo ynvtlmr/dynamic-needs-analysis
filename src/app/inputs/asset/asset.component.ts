@@ -146,11 +146,6 @@ export class AssetComponent implements OnChanges, OnInit {
     );
   }
 
-  set futureTaxLiabilityDollars(value: number) {
-    // do nothing
-    return;
-  }
-
   onTypeChange(selectedType: string): void {
     const typeInfo: FinTypeAttributes | undefined =
       FIN_INSTR_TYPES.get(selectedType);

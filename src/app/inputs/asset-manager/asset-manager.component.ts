@@ -50,13 +50,13 @@ export class AssetManagerComponent {
 
   loadBusinessesFromStorage(): void {
     this.businesses =
-      this.localStorageService.getItem<Business[]>('businesses') || [];
+      this.localStorageService.getItem<Business[]>('businesses') ?? [];
   }
 
   loadAssetsFromStorage(): void {
     const storedAssets: Asset[] | null =
       this.localStorageService.getItem<Asset[]>('assets');
-    this.assets = storedAssets || [];
+    this.assets = storedAssets ?? [];
     this.updateBeneficiaryDistributions();
     this.loadBeneficiariesFromStorage();
   }

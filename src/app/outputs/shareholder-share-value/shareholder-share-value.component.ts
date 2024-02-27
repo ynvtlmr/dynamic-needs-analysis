@@ -34,7 +34,7 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key: string) => {
+      .subscribe((key: string): void => {
         if (key === 'businesses' || key === 'shareholders' || key === 'all') {
           this.loadBusinessData();
           this.prepareChartData();
@@ -44,7 +44,7 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
     this.prepareChartData();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     if (this.storageSub) {
       this.storageSub.unsubscribe();
     }
@@ -53,14 +53,13 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
   private loadBusinessData(): void {
     this.businesses =
       this.localStorageService.getItem<Business[]>('businesses') ?? [];
-    // Filter businesses where the client is a shareholder (implement as needed)
   }
 
   private prepareChartData(): void {
     const series: ApexAxisChartSeries = [];
 
-    this.businesses.forEach((business) => {
-      business.shareholders.forEach((shareholder) => {
+    this.businesses.forEach((business: Business): void => {
+      business.shareholders.forEach((shareholder: Shareholder): void => {
         series.push({
           name: `${business.businessName} - ${shareholder.shareholderName}`,
           data: this.calculateShareValueOverTime(business, shareholder),
@@ -96,8 +95,8 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
     shareholder: Shareholder,
   ): number[] {
     const values: number[] = [];
-    for (let year = 0; year <= business.term; year++) {
-      const value =
+    for (let year: number = 0; year <= business.term; year++) {
+      const value: number =
         (shareholder.sharePercentage / 100) *
         business.valuation *
         Math.pow(1 + business.rate / 100, year);
@@ -107,7 +106,9 @@ export class ShareholderShareValueComponent implements OnInit, OnDestroy {
   }
 
   private generateYearsArray(): string[] {
-    const currentYear = new Date().getFullYear();
-    return Array.from({ length: 50 }, (_, i) => (currentYear + i).toString()); // Adjust range as necessary
+    const currentYear: number = new Date().getFullYear();
+    return Array.from({ length: 50 }, (_, i: number) =>
+      (currentYear + i).toString(),
+    );
   }
 }

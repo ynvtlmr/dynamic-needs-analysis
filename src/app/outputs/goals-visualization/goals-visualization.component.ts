@@ -37,7 +37,7 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.storageSub = this.localStorageService
       .watchStorage()
-      .subscribe((key: string) => {
+      .subscribe((key: string): void => {
         if (
           key === 'assets' ||
           key === 'goals' ||
@@ -98,16 +98,15 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
     const goals: Goal[] =
       this.localStorageService.getItem<Goal[]>('goals') || [];
     this.totalSumOfGoals = goals.reduce(
-      (sum, goal) => sum + goal.dollarAmount,
+      (sum: number, goal: Goal) => sum + goal.dollarAmount,
       0,
     );
 
-    // Recalculate shortfall in case goals change
     this.calculateShortfall();
   }
 
   private calculateLiquidityValues(): void {
-    const allocationFactor = this.percentLiquidityToGoals / 100;
+    const allocationFactor: number = this.percentLiquidityToGoals / 100;
     this.liquidityPreserved =
       this.totalFutureValueLiquid * (1 - allocationFactor);
     this.liquidityAllocatedToGoals =
@@ -115,24 +114,14 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private loadPercentLiquidityFromStorage(): void {
-    const storedPercent = this.localStorageService.getItem<number>(
-      'percentLiquidityToGoals',
-    );
+    const storedPercent: number | null =
+      this.localStorageService.getItem<number>('percentLiquidityToGoals');
     if (storedPercent != null) {
       this.percentLiquidityToGoals = storedPercent;
     }
   }
 
-  onPercentLiquidityChange(): void {
-    this.localStorageService.setItem(
-      'percentLiquidityToGoals',
-      this.percentLiquidityToGoals,
-    );
-    this.calculateLiquidityValues();
-  }
-
   private calculateShortfall(): void {
-    // Assuming this.totalFutureValueLiquid already reflects liquidity allocated towards goals
     this.shortfall = this.liquidityAllocatedToGoals - this.totalSumOfGoals;
 
     const totals: { [key: string]: any } =
@@ -150,7 +139,7 @@ export class GoalsVisualizationComponent implements OnInit, OnDestroy {
   }
 
   private updateChart(): void {
-    const chartValues = [
+    const chartValues: number[] = [
       this.totalFutureValueLiquid,
       this.liquidityPreserved,
       this.liquidityAllocatedToGoals,

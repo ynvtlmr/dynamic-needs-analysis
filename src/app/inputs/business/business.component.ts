@@ -34,13 +34,13 @@ export class BusinessComponent implements OnChanges, OnInit {
 
   constructor(private localStorageService: LocalStorageService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (this.shareholders.length === 0) {
       this.addEmptyShareholder();
     }
   }
 
-  ngOnChanges() {
+  ngOnChanges(): void {
     if (this.business) {
       this.populateBusinessData(this.business);
     }
@@ -49,7 +49,7 @@ export class BusinessComponent implements OnChanges, OnInit {
   populateBusinessData(business: Business): void {
     this.businessName = business.businessName;
     this.valuation = business.valuation;
-    this.ebitda = business.ebitda; // Add this line to set the EBITDA value
+    this.ebitda = business.ebitda;
     this.rate = business.rate;
     this.term = business.term;
     this.shareholders = business.shareholders;
@@ -164,17 +164,14 @@ export class BusinessComponent implements OnChanges, OnInit {
   }
 
   private updateTotalsForShareholders(business: Business): void {
-    // Retrieve the existing totals or initialize if not present
-    const totals =
+    const totals: { [p: string]: any } =
       this.localStorageService.getItem<{ [key: string]: any }>('totals') ?? {};
 
-    // Initialize KeyMan and ShareholderAgreement objects if not already present
     totals['Key Man'] = totals['Key Man'] || { subcategories: {} };
     totals['Shareholder Agreement'] = totals['Shareholder Agreement'] || {
       subcategories: {},
     };
 
-    // Initialize the specific business subcategory if not already present
     totals['Key Man'].subcategories[business.businessName] = totals['Key Man']
       .subcategories[business.businessName] || { subcategories: {} };
     totals['Shareholder Agreement'].subcategories[business.businessName] =
@@ -182,17 +179,14 @@ export class BusinessComponent implements OnChanges, OnInit {
         subcategories: {},
       };
 
-    business.shareholders.forEach((shareholder) => {
-      const finalEbitdaContribution = this.calculateFinalEbitdaContribution(
-        business,
-        shareholder,
-      );
-      const finalShareValue = this.calculateFinalShareValue(
+    business.shareholders.forEach((shareholder: Shareholder): void => {
+      const finalEbitdaContribution: number =
+        this.calculateFinalEbitdaContribution(business, shareholder);
+      const finalShareValue: number = this.calculateFinalShareValue(
         business,
         shareholder,
       );
 
-      // Update Key Man and Shareholder Agreement for each shareholder
       totals['Key Man'].subcategories[business.businessName].subcategories[
         shareholder.shareholderName
       ] = {

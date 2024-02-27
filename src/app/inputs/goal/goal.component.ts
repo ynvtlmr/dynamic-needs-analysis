@@ -49,7 +49,7 @@ export class GoalComponent {
   }
 
   private loadPercentLiquidityFromStorage(): void {
-    const percent = this.localStorageService.getItem<number>(
+    const percent: number | null = this.localStorageService.getItem<number>(
       'percentLiquidityToGoals',
     );
     this.percentLiquidityToGoals = percent ?? 0;
@@ -60,7 +60,6 @@ export class GoalComponent {
       'percentLiquidityToGoals',
       this.percentLiquidityToGoals,
     );
-    // Update storage whenever this value changes
     this.updateStorage();
   }
 }

@@ -77,7 +77,6 @@ export class ClientComponent implements OnInit {
     };
     this.localStorageService.setItem('client', client);
 
-    // Save insuredIncomeAmount to totals
     const totals: { [key: string]: any } =
       this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
       {};

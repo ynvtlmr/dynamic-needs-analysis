@@ -1,176 +1,180 @@
-<table>
-  <!-- Type -->
-  <tr>
-    <td><label for="type">Type:</label></td>
-    <td>
-      <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
-        <option *ngFor="let type of financialInstrumentTypes" [value]="type">
-          {{ type }}
-        </option>
-      </select>
-    </td>
-  </tr>
-
-  <!-- Name -->
-  <tr>
-    <td>
-      <label for="financialInstrumentName">Asset Name:</label>
-    </td>
-    <td>
-      <input
-        id="financialInstrumentName"
-        [(ngModel)]="name"
-        type="text"
-        placeholder="AAPL Stocks"
-      />
-    </td>
-  </tr>
-
-  <!-- Year Acquired -->
-  <tr>
-    <td><label for="yearAcquired">Year Acquired:</label></td>
-    <td>
-      <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number" />
-    </td>
-  </tr>
-
-  <!-- Initial Value -->
-  <tr>
-    <td><label for="initialValue">Initial Value ($):</label></td>
-    <td>
-      <input
-        id="initialValue"
-        [(ngModel)]="initialValue"
-        type="text"
-        mask="separator.2"
-        thousandSeparator=","
-        prefix="$"
-        placeholder="$123,456.78"
-        style="text-align: right"
-      />
-    </td>
-  </tr>
-
-  <!-- Current Value -->
-  <tr>
-    <td><label for="currentValue">Current Value ($):</label></td>
-    <td>
-      <input
-        id="currentValue"
-        [(ngModel)]="currentValue"
-        type="text"
-        mask="separator.2"
-        thousandSeparator=","
-        prefix="$"
-        placeholder="$123,456.78"
-        style="text-align: right"
-      />
-    </td>
-  </tr>
-
-  <!-- Rate -->
-  <tr>
-    <td><label for="rate">Appreciation Rate (%):</label></td>
-    <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
-  </tr>
-
-  <!-- Term -->
-  <tr>
-    <td><label for="term">Term (years):</label></td>
-    <td><input id="term" [(ngModel)]="term" type="number" /></td>
-  </tr>
-
-  <!-- Additional Attributes -->
-  <tr>
-    <td><label for="isTaxable">Taxable:</label></td>
-    <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox" /></td>
-  </tr>
-  <tr>
-    <td><label for="isLiquid">Liquid:</label></td>
-    <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox" /></td>
-  </tr>
-  <tr>
-    <td><label for="isToBeSold">To Be Sold:</label></td>
-    <td>
-      <input id="isToBeSold" [(ngModel)]="isToBeSold" type="checkbox" />
-    </td>
-  </tr>
-
-  <!-- Capital Gains Tax Rate -->
-  <tr>
-    <td><label for="taxBracket">Tax Bracket:</label></td>
-    <td>
-      <select
-        id="taxBracket"
-        [(ngModel)]="selectedTaxBracket"
-        (ngModelChange)="updateSelectedTaxBracket()"
-      >
-        <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
-          {{ bracket.minIncome | currency }} and up -
-          {{ bracket.taxRate * 0.5 }}%
-        </option>
-      </select>
-    </td>
-  </tr>
-
-  <!-- Load Beneficiaries -->
-  <tr>
-    <td colspan="2">
-      <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
-      <button (click)="clearBeneficiaries()">Clear All Beneficiaries</button>
-    </td>
-  </tr>
-
-  <!-- Beneficiaries Table -->
-  <ng-container *ngIf="beneficiaries.length > 0">
-    <tr *ngFor="let beneficiary of beneficiaries; let i = index">
-      <td>{{ beneficiary.name }}</td>
+<div>
+  <table>
+    <!-- Type -->
+    <tr>
+      <td><label for="type">Type:</label></td>
       <td>
-        <input
-          type="number"
-          [(ngModel)]="beneficiary.allocation"
-          (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
-        />
+        <select id="type" [(ngModel)]="type" (change)="onTypeChange(type)">
+          <option *ngFor="let type of financialInstrumentTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- Name -->
+    <tr>
+      <td>
+        <label for="financialInstrumentName">Asset Name:</label>
       </td>
       <td>
-        <button (click)="deleteBeneficiary(i)">Delete</button>
+        <input
+          id="financialInstrumentName"
+          [(ngModel)]="name"
+          type="text"
+          placeholder="AAPL Stocks"
+        />
+      </td>
+    </tr>
+
+    <!-- Year Acquired -->
+    <tr>
+      <td><label for="yearAcquired">Year Acquired:</label></td>
+      <td>
+        <input id="yearAcquired" [(ngModel)]="yearAcquired" type="number" />
+      </td>
+    </tr>
+
+    <!-- Initial Value -->
+    <tr>
+      <td><label for="initialValue">Initial Value ($):</label></td>
+      <td>
+        <input
+          id="initialValue"
+          [(ngModel)]="initialValue"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="$123,456.78"
+          style="text-align: right"
+        />
+      </td>
+    </tr>
+
+    <!-- Current Value -->
+    <tr>
+      <td><label for="currentValue">Current Value ($):</label></td>
+      <td>
+        <input
+          id="currentValue"
+          [(ngModel)]="currentValue"
+          type="text"
+          mask="separator.2"
+          thousandSeparator=","
+          prefix="$"
+          placeholder="$123,456.78"
+          style="text-align: right"
+        />
+      </td>
+    </tr>
+
+    <!-- Rate -->
+    <tr>
+      <td><label for="rate">Appreciation Rate (%):</label></td>
+      <td><input id="rate" [(ngModel)]="rate" type="number" /></td>
+    </tr>
+
+    <!-- Term -->
+    <tr>
+      <td><label for="term">Term (years):</label></td>
+      <td><input id="term" [(ngModel)]="term" type="number" /></td>
+    </tr>
+
+    <!-- Additional Attributes -->
+    <tr>
+      <td><label for="isTaxable">Taxable:</label></td>
+      <td><input id="isTaxable" [(ngModel)]="isTaxable" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="isLiquid">Liquid:</label></td>
+      <td><input id="isLiquid" [(ngModel)]="isLiquid" type="checkbox" /></td>
+    </tr>
+    <tr>
+      <td><label for="isToBeSold">To Be Sold:</label></td>
+      <td>
+        <input id="isToBeSold" [(ngModel)]="isToBeSold" type="checkbox" />
+      </td>
+    </tr>
+
+    <!-- Capital Gains Tax Rate -->
+    <tr>
+      <td><label for="taxBracket">Tax Bracket:</label></td>
+      <td>
+        <select
+          id="taxBracket"
+          [(ngModel)]="selectedTaxBracket"
+          (ngModelChange)="updateSelectedTaxBracket()"
+        >
+          <option *ngFor="let bracket of taxBrackets" [ngValue]="bracket">
+            {{ bracket.minIncome | currency }} and up -
+            {{ bracket.taxRate * 0.5 }}%
+          </option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- Load Beneficiaries -->
+    <tr>
+      <td colspan="2">
+        <button (click)="loadBeneficiaries()">Add Beneficiaries</button>
+        <button (click)="clearBeneficiaries()">Clear All Beneficiaries</button>
+      </td>
+    </tr>
+
+    <!-- Beneficiaries Table -->
+    <ng-container *ngIf="beneficiaries.length > 0">
+      <tr *ngFor="let beneficiary of beneficiaries; let i = index">
+        <td>{{ beneficiary.name }}</td>
+        <td>
+          <input
+            type="number"
+            [(ngModel)]="beneficiary.allocation"
+            (ngModelChange)="updateAllocation(i, beneficiary.allocation)"
+          />
+        </td>
+        <td>
+          <button (click)="deleteBeneficiary(i)">Delete</button>
+        </td>
+      </tr>
+      <tr>
+        <td>Total Allocation (%)</td>
+        <td>{{ totalAllocations }}</td>
+      </tr>
+    </ng-container>
+
+    <!-- Display Calculated Values -->
+    <tr>
+      <td>Current Years Held:</td>
+      <td class="number">{{ currentYearsHeld }}</td>
+    </tr>
+    <tr>
+      <td>Current Growth Dollars ($):</td>
+      <td class="number">{{ currentGrowthDollars | currency }}</td>
+    </tr>
+    <tr>
+      <td>Current Growth Percentage (%):</td>
+      <td class="number">{{ currentGrowthPercentage | number: "1.0-2" }}%</td>
+    </tr>
+    <tr>
+      <td>Future Value Dollars ($):</td>
+      <td class="number">{{ futureValueDollars | currency }}</td>
+    </tr>
+    <tr>
+      <td>Future Value Growth Percentage (%):</td>
+      <td class="number">
+        {{ futureValueGrowthPercentage | number: "1.0-2" }}%
       </td>
     </tr>
     <tr>
-      <td>Total Allocation (%)</td>
-      <td>{{ totalAllocations }}</td>
+      <td>Current Tax Liability ($):</td>
+      <td class="number">{{ currentTaxLiabilityDollars | currency }}</td>
     </tr>
-  </ng-container>
-
-  <!-- Display Calculated Values -->
-  <tr>
-    <td>Current Years Held:</td>
-    <td class="number">{{ currentYearsHeld }}</td>
-  </tr>
-  <tr>
-    <td>Current Growth Dollars ($):</td>
-    <td class="number">{{ currentGrowthDollars | currency }}</td>
-  </tr>
-  <tr>
-    <td>Current Growth Percentage (%):</td>
-    <td class="number">{{ currentGrowthPercentage | number: "1.0-2" }}%</td>
-  </tr>
-  <tr>
-    <td>Future Value Dollars ($):</td>
-    <td class="number">{{ futureValueDollars | currency }}</td>
-  </tr>
-  <tr>
-    <td>Future Value Growth Percentage (%):</td>
-    <td class="number">{{ futureValueGrowthPercentage | number: "1.0-2" }}%</td>
-  </tr>
-  <tr>
-    <td>Current Tax Liability ($):</td>
-    <td class="number">{{ currentTaxLiabilityDollars | currency }}</td>
-  </tr>
-  <tr>
-    <td>Future Tax Liability ($):</td>
-    <td class="number">{{ futureTaxLiabilityDollars | currency }}</td>
-  </tr>
-</table>
-<button class="active" (click)="onSave()">Save</button>
-<button (click)="onCancel()">Cancel</button>
+    <tr>
+      <td>Future Tax Liability ($):</td>
+      <td class="number">{{ futureTaxLiabilityDollars | currency }}</td>
+    </tr>
+  </table>
+  <button class="active" (click)="onSave()">Save</button>
+  <button (click)="onCancel()">Cancel</button>
+</div>

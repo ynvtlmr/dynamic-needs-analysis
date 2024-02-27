@@ -69,7 +69,7 @@ export class LocalStorageService {
           ? allData['client']['name'].split(' ').join('')
           : 'DNA';
 
-      const currentDate = new Date()
+      const currentDate: string = new Date()
         .toISOString()
         .split('T')[0]
         .replace(/-/g, '.');

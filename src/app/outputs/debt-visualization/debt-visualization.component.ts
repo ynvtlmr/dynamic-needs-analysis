@@ -79,7 +79,7 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         title: { text: 'Years' },
         labels: {
           formatter: (value: string): string => {
-            const yearValue = Math.round(parseFloat(value));
+            const yearValue: number = Math.round(parseFloat(value));
             return yearValue.toString();
           },
         },
@@ -116,11 +116,11 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
 
   private prepareChartData(): void {
     const series: ApexAxisChartSeries = [];
-    let latestYear = 0; // Variable to track the latest year across all debts
+    let latestYear: number = 0;
 
-    this.debts.forEach((debt: Debt) => {
-      const dataPoints = [];
-      let year = debt.yearAcquired;
+    this.debts.forEach((debt: Debt): void => {
+      const dataPoints: any[] = [];
+      let year: number = debt.yearAcquired;
       let value: number;
 
       let debtRemaining: boolean = true;
@@ -129,12 +129,11 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
         if (value > 0) {
           dataPoints.push([year, value]);
         } else {
-          // When the debt value becomes zero or less, we record the year
           latestYear = Math.max(latestYear, year);
           debtRemaining = false;
         }
         year++;
-      } while (debtRemaining); // Loop until debt is paid off
+      } while (debtRemaining);
 
       series.push({
         name: debt.name,
@@ -170,7 +169,6 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       return this.debtValuesCache.get(cacheKey)!;
     }
 
-    // Stop calculation if it exceeds 10 years from the current year
     if (year > new Date().getFullYear() + Math.max(debt.term, 10)) {
       return 0;
     }
@@ -185,7 +183,6 @@ export class DebtVisualizationComponent implements OnInit, OnDestroy {
       return 0;
     }
 
-    // Apply interest and subtract the annual payment
     remainingDebt *= Math.pow(1 + debt.rate / 100, 1);
     remainingDebt = Math.max(0, remainingDebt - debt.annualPayment);
 
