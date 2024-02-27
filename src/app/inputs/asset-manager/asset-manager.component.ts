@@ -120,10 +120,15 @@ export class AssetManagerComponent {
   }
 
   get totalCurrentValue(): number {
-    return this.assets.reduce(
-      (acc: number, asset: Asset) => acc + (asset.currentValue || 0),
+    const totalAssetValue = this.assets.reduce(
+      (acc, asset) => acc + (asset.currentValue || 0),
       0,
     );
+    const totalBusinessValue = this.businesses.reduce(
+      (acc, business) => acc + (business.valuation || 0),
+      0,
+    );
+    return totalAssetValue + totalBusinessValue;
   }
 
   get totalFutureTaxLiability(): number {
@@ -215,4 +220,22 @@ export class AssetManagerComponent {
   }
 
   protected readonly Object: ObjectConstructor = Object;
+
+  get calculateTotalPercentage(): number {
+    const totalDistributions = Object.values(this.distributions ?? {}).reduce(
+      (total, amount) => total + amount,
+      0,
+    );
+    return totalDistributions > 0
+      ? (totalDistributions / this.totalFutureValue) * 100
+      : 0;
+  }
+
+  get calculateTotalIdealPercentage(): number {
+    // Sum of all ideal percentages based on beneficiary allocations
+    return Object.values(this.idealDistributions).reduce(
+      (total, percentage) => total + percentage,
+      0,
+    );
+  }
 }

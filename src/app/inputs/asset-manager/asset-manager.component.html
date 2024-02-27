@@ -83,8 +83,12 @@
       <tr>
         <td>Total</td>
         <td class="number">{{ totalFutureValue | currency }}</td>
-        <td class="number">100.00%</td>
-        <td class="number">100.00%</td>
+        <td class="number">
+          {{ calculateTotalPercentage | number: "1.0-2" }}%
+        </td>
+        <td class="number">
+          {{ calculateTotalIdealPercentage | number: "1.0-2" }}%
+        </td>
         <td class="number">{{ totalAdditionalMoneyRequired | currency }}</td>
       </tr>
     </table>
