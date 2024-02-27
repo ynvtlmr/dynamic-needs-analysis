@@ -49,9 +49,8 @@ export class AssetManagerComponent {
   }
 
   loadBusinessesFromStorage(): void {
-    const storedBusinesses: Business[] =
+    this.businesses =
       this.localStorageService.getItem<Business[]>('businesses') || [];
-    this.businesses = storedBusinesses;
   }
 
   loadAssetsFromStorage(): void {
@@ -120,12 +119,12 @@ export class AssetManagerComponent {
   }
 
   get totalCurrentValue(): number {
-    const totalAssetValue = this.assets.reduce(
-      (acc, asset) => acc + (asset.currentValue || 0),
+    const totalAssetValue: number = this.assets.reduce(
+      (acc: number, asset: Asset) => acc + (asset.currentValue || 0),
       0,
     );
-    const totalBusinessValue = this.businesses.reduce(
-      (acc, business) => acc + (business.valuation || 0),
+    const totalBusinessValue: number = this.businesses.reduce(
+      (acc: number, business: Business) => acc + (business.valuation || 0),
       0,
     );
     return totalAssetValue + totalBusinessValue;
@@ -141,7 +140,7 @@ export class AssetManagerComponent {
 
   get totalFutureValue(): number {
     return this.assets.reduce(
-      (acc, asset) => acc + this.calculateFutureValue(asset),
+      (acc: number, asset: Asset) => acc + this.calculateFutureValue(asset),
       0,
     );
   }
@@ -153,7 +152,7 @@ export class AssetManagerComponent {
   private calculateBeneficiaryDistributions(): Record<string, number> {
     const distributions: Record<string, number> = {};
 
-    this.assets.forEach((asset) => {
+    this.assets.forEach((asset: Asset): void => {
       const futureValue: number = this.calculateFutureValue(asset);
       asset.beneficiaries.forEach((beneficiary: Beneficiary): void => {
         const distribution: number =
@@ -185,7 +184,6 @@ export class AssetManagerComponent {
   }
 
   private calculateAdditionalMoneyRequired(): void {
-    // Calculate the total future value required to adjust each beneficiary's allocation to their desired percentage
     const totalDesiredValue: number = Object.keys(
       this.idealDistributions,
     ).reduce((total: number, beneficiaryName: string) => {
@@ -196,7 +194,6 @@ export class AssetManagerComponent {
       return Math.max(total, idealAmount);
     }, 0);
 
-    // Calculate the additional amount needed to ensure the total future value meets the total desired value
     Object.keys(this.idealDistributions).forEach(
       (beneficiaryName: string): void => {
         const currentAmount: number =
@@ -222,19 +219,17 @@ export class AssetManagerComponent {
   protected readonly Object: ObjectConstructor = Object;
 
   get calculateTotalPercentage(): number {
-    const totalDistributions = Object.values(this.distributions ?? {}).reduce(
-      (total, amount) => total + amount,
-      0,
-    );
+    const totalDistributions: number = Object.values(
+      this.distributions ?? {},
+    ).reduce((total: number, amount: number) => total + amount, 0);
     return totalDistributions > 0
       ? (totalDistributions / this.totalFutureValue) * 100
       : 0;
   }
 
   get calculateTotalIdealPercentage(): number {
-    // Sum of all ideal percentages based on beneficiary allocations
     return Object.values(this.idealDistributions).reduce(
-      (total, percentage) => total + percentage,
+      (total: number, percentage: number) => total + percentage,
       0,
     );
   }
