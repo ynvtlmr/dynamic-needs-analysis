@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { LocalStorageService } from './services/local-storage.service';
+import { Type } from '@angular/core';
+import { SwUpdate, VersionEvent } from '@angular/service-worker';
 
 import { ClientComponent } from './inputs/client/client.component';
 import { BeneficiaryComponent } from './inputs/beneficiary/beneficiary.component';
@@ -17,8 +19,6 @@ import { ShareholderEbitdaContributionComponent } from './outputs/shareholder-eb
 import { ShareholderShareValueComponent } from './outputs/shareholder-share-value/shareholder-share-value.component';
 import { GoalsVisualizationComponent } from './outputs/goals-visualization/goals-visualization.component';
 import { TotalInsurableNeedsComponent } from './outputs/total-insurable-needs/total-insurable-needs.component';
-import { Type } from '@angular/core';
-import { SwUpdate, VersionEvent } from '@angular/service-worker';
 
 type ComponentType = Type<
   | ClientComponent
@@ -144,7 +144,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  onSelectInputComponent(component: ComponentType | null) {
+  onSelectInputComponent(component: ComponentType | null): void {
     if (this.selectedInputComponent === component) {
       this.selectedInputComponent = null;
     } else {
@@ -152,7 +152,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onSelectOutputComponent(component: ComponentType | null) {
+  onSelectOutputComponent(component: ComponentType | null): void {
     if (this.selectedOutputComponent === component) {
       this.selectedOutputComponent = null;
     } else {
