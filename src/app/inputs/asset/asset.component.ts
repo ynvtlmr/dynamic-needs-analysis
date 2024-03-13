@@ -69,7 +69,20 @@ export class AssetComponent implements OnChanges, OnInit {
   }
 
   populateAssetData(asset: Asset): void {
-    Object.assign(this, asset);
+    this.name = asset.name;
+    this.initialValue = asset.initialValue;
+    this.currentValue = asset.currentValue;
+    this.yearAcquired = asset.yearAcquired;
+    this.rate = asset.rate;
+    this.term = asset.term;
+    this.type = asset.type;
+    this.isTaxable = asset.isTaxable;
+    this.isLiquid = asset.isLiquid;
+    this.isToBeSold = asset.isToBeSold;
+    this.beneficiaries = [...asset.beneficiaries]; // Create a new array to ensure change detection
+    this.selectedTaxBracket = asset.selectedTaxBracket;
+    this.capitalGainsTaxRate = asset.capitalGainsTaxRate;
+
     this.setTaxBracketsAndSelected(asset);
   }
 
