@@ -22,19 +22,19 @@ import { LocalStorageService } from '../../services/local-storage.service';
 export class MenuComponent {
   constructor(private localStorageService: LocalStorageService) {}
 
-  toggleSidenav(sidenav: any) {
+  toggleSidenav(sidenav: any): void {
     sidenav.toggle();
   }
 
-  clearLocalStorage() {
+  clearLocalStorage(): void {
     this.localStorageService.clearAll();
   }
 
-  saveLocalStorage() {
+  saveLocalStorage(): void {
     this.localStorageService.downloadAsFile();
   }
 
-  loadLocalStorage(event: Event) {
+  loadLocalStorage(event: Event): void {
     this.localStorageService.loadFromFile(event);
   }
 }

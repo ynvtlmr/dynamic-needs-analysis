@@ -1,9 +1,12 @@
-// Inside home.module.ts
+// Angular Core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+
+// Components
 import { HomeComponent } from './home.component';
 
+// Pages
 import { ClientPageComponent } from '../client-page/client-page.component';
 import { BeneficiaryPageComponent } from '../beneficiary-page/beneficiary-page.component';
 import { BusinessPageComponent } from '../business-page/business-page.component';
