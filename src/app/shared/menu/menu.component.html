@@ -1,0 +1,44 @@
+<!-- src/app/shared/menu/menu.component.html -->
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" opened="true" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/client">
+        <mat-icon>account_circle</mat-icon>
+        <span>Client</span>
+      </a>
+      <a mat-list-item routerLink="/beneficiaries">
+        <mat-icon>group</mat-icon>
+        <span>Beneficiaries</span>
+      </a>
+      <a mat-list-item routerLink="/businesses">
+        <mat-icon>business_center</mat-icon>
+        <span>Businesses</span>
+      </a>
+      <a mat-list-item routerLink="/assets">
+        <mat-icon>account_balance</mat-icon>
+        <span>Assets</span>
+      </a>
+      <a mat-list-item routerLink="/debts">
+        <mat-icon>money_off</mat-icon>
+        <span>Debts</span>
+      </a>
+      <a mat-list-item routerLink="/goals">
+        <mat-icon>flag</mat-icon>
+        <span>Goals</span>
+      </a>
+      <a mat-list-item routerLink="/total-needs">
+        <mat-icon>assessment</mat-icon>
+        <span>Total Needs</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="toggleSidenav(sidenav)">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

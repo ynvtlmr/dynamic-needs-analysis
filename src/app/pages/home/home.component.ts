@@ -6,6 +6,7 @@ import { SwUpdate, VersionEvent } from '@angular/service-worker';
 
 // services
 import { LocalStorageService } from '../../services/local-storage.service';
+import { MenuComponent } from '../../shared/menu/menu.component';
 
 // inputs
 import { AssetManagerComponent } from '../../inputs/asset-manager/asset-manager.component';
@@ -51,7 +52,13 @@ interface NavLink {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MenuComponent,
+  ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
