@@ -32,6 +32,30 @@
         <span>Total Needs</span>
       </a>
     </mat-nav-list>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a mat-list-item (click)="clearLocalStorage()">
+        <mat-icon>delete_outline</mat-icon>
+        <span>Clear</span>
+      </a>
+      <a mat-list-item (click)="saveLocalStorage()">
+        <mat-icon>save_alt</mat-icon>
+        <span>Save</span>
+      </a>
+      <a mat-list-item>
+        <input
+          type="file"
+          id="file-input"
+          hidden
+          (change)="loadLocalStorage($event)"
+          accept=".json"
+        />
+        <label for="file-input" mat-list-item style="width: 100%">
+          <mat-icon>upload_file</mat-icon>
+          <span>Load</span>
+        </label>
+      </a>
+    </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">

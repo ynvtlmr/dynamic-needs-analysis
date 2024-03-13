@@ -4,6 +4,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { LocalStorageService } from '../../services/local-storage.service';
 
 @Component({
   selector: 'app-menu',
@@ -19,9 +20,21 @@ import { RouterModule } from '@angular/router';
   ],
 })
 export class MenuComponent {
-  constructor() {}
+  constructor(private localStorageService: LocalStorageService) {}
 
   toggleSidenav(sidenav: any) {
     sidenav.toggle();
+  }
+
+  clearLocalStorage() {
+    this.localStorageService.clearAll();
+  }
+
+  saveLocalStorage() {
+    this.localStorageService.downloadAsFile();
+  }
+
+  loadLocalStorage(event: Event) {
+    this.localStorageService.loadFromFile(event);
   }
 }
