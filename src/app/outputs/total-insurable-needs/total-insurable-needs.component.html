@@ -2,9 +2,9 @@
 <table>
   <tr>
     <th>Label</th>
-    <th>Value</th>
+    <th>Need</th>
     <th>Priority</th>
-    <th>Allocated Budget</th>
+    <th>Want</th>
   </tr>
   <tr *ngFor="let row of displayData">
     <td [style.paddingLeft.px]="row.level * 20">{{ row.label }}</td>
@@ -22,7 +22,10 @@
       />
       {{ row.priority }}%
     </td>
-    <td *ngIf="row.value !== undefined && row.priority !== undefined">
+    <td
+      class="number"
+      *ngIf="row.value !== undefined && row.priority !== undefined"
+    >
       {{ (row.value * row.priority) / 100 | currency }}
     </td>
   </tr>
