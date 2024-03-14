@@ -1,38 +1,6 @@
 /* Base styles */
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
-body {
-  font-family: "Roboto", sans-serif;
-}
-
-.content {
-  width: 100%;
-}
-
-/* Styles for screens wider than 600px */
-@media (min-width: 600px) {
-  .content {
-    max-width: 600px;
-    margin: auto;
-  }
-}
-
-@media only screen {
-  .app-container {
-    max-width: 780px;
-    margin: 0 auto;
-  }
-}
-
-.active {
-  color: white;
-  background-color: #007bff;
-}
-
-input {
-  width: 120px;
-}
-
 /* Right aligns number inputs */
 input[type="number"] {
   text-align: right;
@@ -52,18 +20,6 @@ input[type="number"]::-webkit-outer-spin-button {
 /* Hide spinners for Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-/* Container to hold pie charts */
-.pie-chart-container {
-  display: flex; /* Enable flexbox */
-  justify-content: space-around; /* Distribute space between charts */
-  align-items: center; /* Align charts vertically */
-}
-
-/* Style for each chart */
-.chart {
-  flex: 1; /* Each chart takes equal width */
 }
 
 html, body { height: 100%; }
