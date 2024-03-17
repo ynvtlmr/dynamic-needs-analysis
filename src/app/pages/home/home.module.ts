@@ -17,8 +17,7 @@ import { TotalInsurableNeedsComponent } from '../../outputs/total-insurable-need
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent,
+    path: '', component: HomeComponent,
     children: [
       { 
         path: 'client', component: ClientPageComponent, 
@@ -45,7 +44,7 @@ const routes: Routes = [
         title: 'Goals' 
       },
       {
-        path: 'total-needs',component: TotalInsurableNeedsComponent,
+        path: 'total-needs', component: TotalInsurableNeedsComponent,
         title: 'Total Needs'
       },
     ],
