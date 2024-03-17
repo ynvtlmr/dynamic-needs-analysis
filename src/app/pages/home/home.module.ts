@@ -20,24 +20,33 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: 'client', component: ClientPageComponent, title: 'Client' },
-      {
-        path: 'beneficiaries',
-        component: BeneficiaryPageComponent,
-        title: 'Beneficiaries',
+      { 
+        path: 'client', component: ClientPageComponent, 
+        title: 'Client' 
+      },
+      { 
+        path: 'beneficiaries', component: BeneficiaryPageComponent,
+        title: 'Beneficiaries'
+      },
+      { 
+        path: 'businesses', component: BusinessPageComponent,
+        title: 'Businesses'
+      },
+      { 
+        path: 'assets', component: AssetsPageComponent, 
+        title: 'Assets' 
+      },
+      { 
+        path: 'debts', component: DebtsPageComponent, 
+        title: 'Debts' 
+      },
+      { 
+        path: 'goals', component: GoalsPageComponent, 
+        title: 'Goals' 
       },
       {
-        path: 'businesses',
-        component: BusinessPageComponent,
-        title: 'Businesses',
-      },
-      { path: 'assets', component: AssetsPageComponent, title: 'Assets' },
-      { path: 'debts', component: DebtsPageComponent, title: 'Debts' },
-      { path: 'goals', component: GoalsPageComponent, title: 'Goals' },
-      {
-        path: 'total-needs',
-        component: TotalInsurableNeedsComponent,
-        title: 'Total Needs',
+        path: 'total-needs',component: TotalInsurableNeedsComponent,
+        title: 'Total Needs'
       },
     ],
   },
