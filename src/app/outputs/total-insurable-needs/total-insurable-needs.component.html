@@ -1,7 +1,7 @@
 <!-- total-insurable-needs.component.html -->
 <table>
   <tr>
-    <th>Label</th>
+    <th>Purpose</th>
     <th>Need</th>
     <th>Priority</th>
     <th>Want</th>
@@ -13,14 +13,18 @@
     </td>
     <td *ngIf="row.value === undefined">&mdash;</td>
     <td *ngIf="row.priority !== undefined">
-      <input type="range" min="0" max="100"
-             [(ngModel)]="row.priority"
-             (change)="updateItemPriority(row)"
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [(ngModel)]="row.priority"
+        (change)="updateItemPriority(row)"
       />
-        {{ row.priority }}%
+      {{ row.priority }}%
     </td>
-    <td class="number"
-        *ngIf="row.value !== undefined && row.priority !== undefined"
+    <td
+      class="number"
+      *ngIf="row.value !== undefined && row.priority !== undefined"
     >
       {{ (row.value * row.priority) / 100 | currency }}
     </td>
