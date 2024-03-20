@@ -1,0 +1,28 @@
+.container {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+
+.action-button {
+  margin-top: 10px;
+}
+
+input {
+  width: 100%;
+}

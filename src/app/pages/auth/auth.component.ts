@@ -22,6 +22,7 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-auth',
   standalone: true,
   templateUrl: './auth.component.html',
+  styleUrls: ['./auth.component.css'],
   imports: [
     ReactiveFormsModule,
     NgIf,
@@ -98,5 +99,9 @@ export class AuthComponent {
     } else if (action === 'logIn') {
       this.logIn().then();
     }
+  }
+
+  toggleVisibility() {
+    this.hide = !this.hide;
   }
 }

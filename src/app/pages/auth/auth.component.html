@@ -1,12 +1,13 @@
 <div class="container">
   <mat-card class="login-card">
     <mat-card-header>
-      <mat-card-title>Welcome</mat-card-title>
+      <mat-card-title>Dynamic Needs Analysis</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="authForm" (ngSubmit)="submitForm('logIn')">
         <!-- Email Field -->
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
+          <label>Email: </label>
           <mat-label>Email</mat-label>
           <input
             matInput
@@ -23,7 +24,8 @@
         </mat-form-field>
 
         <!-- Password Field -->
-        <mat-form-field appearance="fill" class="full-width">
+        <mat-form-field appearance="outline" class="full-width">
+          <label>Password: </label>
           <mat-label>Password</mat-label>
           <input
             matInput
@@ -42,14 +44,16 @@
         <!-- Action Buttons -->
         <div class="actions">
           <button mat-raised-button color="primary" type="submit">
-            Log In
+            <mat-icon>login</mat-icon>
+            <span>Log In</span>
           </button>
           <button
-            mat-stroked-button
+            mat-raised-button
             color="accent"
             (click)="submitForm('signUp')"
           >
-            Sign Up
+            <mat-icon>person_add</mat-icon>
+            <span>Sign Up</span>
           </button>
         </div>
       </form>
