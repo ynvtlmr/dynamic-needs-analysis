@@ -31,6 +31,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 Build
 
 `docker build --progress=plain -t dynamic-needs-analysis -f Dockerfile.dev .`
+
 Run
 
 `docker run -it --rm --name dynamic-needs-analysis-container -p 4200:4200 -v ${PWD}/src:/app/src dynamic-needs-analysis`
