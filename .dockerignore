@@ -1,0 +1,24 @@
+**/README.md
+**/LICENSE
+
+**/node_modules
+**/.DS_Store
+**/.vscode
+**/.vscode-workspace
+**/.editorconfig
+**/.aws
+
+# Ignore logs
+**/npm-debug.log
+**/yarn-error.log
+
+# Ignore the .git directory
+**/.git
+**/.gitignore
+
+# Ignore any .env files
+**/.env
+
+**/coverage
+**/build
+**/dist
