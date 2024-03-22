@@ -25,3 +25,26 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Develop in Docker
+
+Build `docker build --progress=plain -t dynamic-needs-analysis -f Dockerfile.dev .`
+Run `docker run -it --rm --name dynamic-needs-analysis-container -p 4200:4200 -v ${PWD}/src:/app/src dynamic-needs-analysis`
+
+Note: Changes to package.json or package-lock.json require a rebuild of the image.
+
+### Docker Compose - Development
+
+To get up an running faster, you can use docker-compose to build and run the container.
+
+Build and Run `docker-compose up --build`
+Run `docker-compose up`
+Stop and Remove container `docker-compose down`
+
+### Docker Compose - Production
+
+The production version cannot be live edited because it does not map to an external volume.
+The app is built wih `ng build` and Nginx is used to serve the app on port 80.
+
+Build and Run `docker-compose -f docker-compose.prod.yml up --build`
+Stop and Remove `docker-compose -f docker-compose.prod.yml down`

@@ -1,0 +1,11 @@
+FROM node:20-alpine as build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+
+# Only documents that the app inside is listening on port 4200
+EXPOSE 4200
+
+# Start the Angular app in Development mode
+CMD ["npm", "run", "docker-dev"] 

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: dynamic-needs-analysis-prod
+    container_name: dynamic-needs-analysis-prod-container
+    ports:
+      - 80:80
