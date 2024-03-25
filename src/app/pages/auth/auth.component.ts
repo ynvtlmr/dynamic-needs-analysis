@@ -22,7 +22,7 @@ import { MatIcon } from '@angular/material/icon';
   selector: 'app-auth',
   standalone: true,
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css'],
+  styleUrls: ['./auth.component.scss'],
   imports: [
     ReactiveFormsModule,
     NgIf,
