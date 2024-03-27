@@ -37,9 +37,13 @@
     "@angular/platform-browser-dynamic": "^17.1.2",
     "@angular/router": "^17.1.2",
     "@angular/service-worker": "^17.1.2",
+    "@stripe/stripe-js": "^3.1.0",
+    "@vercel/node": "^3.0.24",
+    "firebase-admin": "^12.0.0",
     "ng-apexcharts": "^1.8.0",
     "ngx-mask": "^17.0.4",
     "rxjs": "~7.8.1",
+    "stripe": "^14.22.0",
     "tslib": "^2.6.2",
     "zone.js": "~0.14.3"
   },
