@@ -3,9 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 type LocalStorageItem = Record<string, unknown>;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
+
 export class LocalStorageService {
   private localStorageSubject: BehaviorSubject<string> =
     new BehaviorSubject<string>('');

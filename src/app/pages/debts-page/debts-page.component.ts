@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DebtManagerComponent } from '../../inputs/debt-manager/debt-manager.component';
-import { DebtVisualizationComponent } from '../../outputs/debt-visualization/debt-visualization.component';
+import { DebtManagerComponent } from '../../components/inputs/debt-manager/debt-manager.component';
+import {
+  DebtVisualizationComponent
+} from '../../components/outputs/debt-visualization/debt-visualization.component';
 
 @Component({
   selector: 'app-debts-page',

@@ -13,7 +13,9 @@ import { BusinessPageComponent } from '../business-page/business-page.component'
 import { AssetsPageComponent } from '../assets-page/assets-page.component';
 import { DebtsPageComponent } from '../debts-page/debts-page.component';
 import { GoalsPageComponent } from '../goals-page/goals-page.component';
-import { TotalInsurableNeedsComponent } from '../../outputs/total-insurable-needs/total-insurable-needs.component';
+import { 
+    TotalInsurableNeedsComponent 
+} from '../../components/outputs/total-insurable-needs/total-insurable-needs.component';
 
 const routes: Routes = [
   {

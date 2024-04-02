@@ -1,22 +1,15 @@
-// Angular core
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 
-// services
-import { MenuComponent } from '../menu/menu.component';
+// Services
+import { MenuComponent } from '../../components/common/menu/menu.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    MenuComponent,
-  ],
+  imports: [ CommonModule, RouterOutlet, RouterLink, RouterLinkActive, MenuComponent ],
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {

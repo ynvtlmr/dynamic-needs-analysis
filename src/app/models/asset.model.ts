@@ -1,5 +1,5 @@
 import { Beneficiary } from './beneficiary.model';
-import { TaxBracket } from '../inputs/constants/tax.constant';
+import { TaxBracket } from '../constants/tax.constant';
 
 export interface Asset {
   name: string;

@@ -1,21 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Auth,
-  UserCredential,
-  authState,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
+import { 
+  Auth, UserCredential, authState, createUserWithEmailAndPassword, signInWithEmailAndPassword 
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { Credential } from '../models/credential.model';
 
-export interface Credential {
-  email: string;
-  password: string;
-}
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
+
 export class AuthService {
   private auth: Auth = inject(Auth);
   readonly authState$ = authState(this.auth);

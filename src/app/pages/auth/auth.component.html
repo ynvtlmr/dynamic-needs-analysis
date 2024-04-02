@@ -5,6 +5,7 @@
     </mat-card-header>
     <mat-card-content>
       <form [formGroup]="authForm" (ngSubmit)="submitForm('logIn')">
+        
         <!-- Email Field -->
         <mat-form-field appearance="outline" class="full-width">
           <label>Email: </label>
@@ -29,13 +30,13 @@
           <mat-label>Password</mat-label>
           <input
             matInput
-            [type]="hide ? 'password' : 'text'"
             formControlName="password"
+            [type]="hide ? 'password' : 'text'"
             placeholder="Enter your password"
           />
-          <mat-icon matSuffix (click)="hide = !hide">{{
-            hide ? "visibility_off" : "visibility"
-          }}</mat-icon>
+          <mat-icon matSuffix (click)="hide = !hide">
+            {{ hide ? "visibility_off" : "visibility" }}
+          </mat-icon>
           <mat-error *ngIf="authForm.get('password')?.errors?.['required']">
             Password is required.
           </mat-error>
@@ -47,15 +48,13 @@
             <mat-icon>login</mat-icon>
             <span>Log In</span>
           </button>
-          <button
-            mat-raised-button
-            color="accent"
-            (click)="submitForm('signUp')"
-          >
+          <button mat-raised-button color="accent" 
+                  (click)="submitForm('signUp')">
             <mat-icon>person_add</mat-icon>
             <span>Sign Up</span>
           </button>
         </div>
+
       </form>
     </mat-card-content>
   </mat-card>

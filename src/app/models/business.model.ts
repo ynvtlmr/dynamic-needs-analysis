@@ -1,9 +1,4 @@
-export interface Shareholder {
-  shareholderName: string;
-  sharePercentage: number;
-  insuranceCoverage: number;
-  ebitdaContributionPercentage: number;
-}
+import { Shareholder } from './shareholder.model';
 
 export interface Business {
   businessName: string;

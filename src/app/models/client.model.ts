@@ -1,4 +1,4 @@
-import { TaxBracket } from '../inputs/constants/tax.constant';
+import { TaxBracket } from '../constants/tax.constant';
 
 export interface Client {
   name: string;
