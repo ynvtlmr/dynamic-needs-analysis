@@ -1,5 +1,52 @@
+/* Base styles */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import '_variables.scss';
+@import '_mixins.scss';
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css'; // Already in angular.json
+
+.app-container {
+  // display: flex;
+  // flex-direction: column;
+  // height: 100%;
+  background-color: lightgray;
+}
+
 .page {
   margin-top: 20px;
-  // margin-left: 20px;
-  // background-color: green;
+  margin-left: 20px;
+  // margin-right: 200px;
+  background-color: $page-background-color;
+  width: 900px;
 }
+
+
+// Add mixins for media queries
+
+/* Right aligns number inputs */
+// input[type="number"] {
+//   text-align: right;
+// }
+
+// .number {
+//   text-align: right;
+// }
+
+/* Hide spinners for WebKit browsers */
+// input[type="number"]::-webkit-inner-spin-button,
+// input[type="number"]::-webkit-outer-spin-button {
+//   -webkit-appearance: none;
+//   margin: 0;
+// }
+
+/* Hide spinners for Firefox */
+// input[type="number"] {
+//   -moz-appearance: textfield;
+// }
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// button.active {
+//   background-color: blue;
+//   color: white;
+// }

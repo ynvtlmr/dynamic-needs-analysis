@@ -13,15 +13,14 @@ const DEFAULT_RETIREMENT_AGE: number = 65;
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
+  styleUrls: ['./client.component.scss'],
   standalone: true,
   imports: [FormsModule, NgForOf, CurrencyPipe, NgxMaskDirective, NgxMaskPipe],
-  providers: [provideNgxMask()]
+  providers: [provideNgxMask()],
 })
 export class ClientComponent implements OnInit {
   taxBrackets: TaxBracket[] = [];
-  birthdateModel: Birthdate = new Birthdate(
-    this.localStorageService.getItem('birthdate'),
-  );
+  birthdateModel: Birthdate = new Birthdate(this.localStorageService.getItem('birthdate'));
   expectedRetirementAge: number = DEFAULT_RETIREMENT_AGE;
 
   constructor(private localStorageService: LocalStorageService) {}
@@ -42,8 +41,7 @@ export class ClientComponent implements OnInit {
   insuredIncomeAmount: number = 0;
 
   private loadClientFromStorage(): void {
-    const clientData: Client | null =
-      this.localStorageService.getItem<Client>('client');
+    const clientData: Client | null = this.localStorageService.getItem<Client>('client');
     if (clientData) {
       const client: Client = clientData;
       this.name = client.name;
@@ -52,14 +50,12 @@ export class ClientComponent implements OnInit {
       this.annualIncome = client.annualIncome;
       this.incomeReplacementMultiplier = client.incomeReplacementMultiplier;
       this.selectedBracket = client.selectedBracket;
-      this.expectedRetirementAge =
-        client.expectedRetirementAge ?? DEFAULT_RETIREMENT_AGE;
+      this.expectedRetirementAge = client.expectedRetirementAge ?? DEFAULT_RETIREMENT_AGE;
     }
   }
 
   updateInsuredAmount(): void {
-    this.insuredIncomeAmount =
-      this.annualIncome * this.incomeReplacementMultiplier;
+    this.insuredIncomeAmount = this.annualIncome * this.incomeReplacementMultiplier;
   }
   updateClientData(): void {
     this.updateTaxBrackets();
@@ -77,9 +73,7 @@ export class ClientComponent implements OnInit {
     };
     this.localStorageService.setItem('client', client);
 
-    const totals: { [key: string]: any } =
-      this.localStorageService.getItem<{ [key: string]: number }>('totals') ??
-      {};
+    const totals: { [key: string]: any } = this.localStorageService.getItem<{ [key: string]: number }>('totals') ?? {};
     if (!totals['Income Replacement']) {
       totals['Income Replacement'] = { value: 0, priority: 100 };
     }
@@ -88,29 +82,20 @@ export class ClientComponent implements OnInit {
   }
 
   private loadSelectedBracket(): void {
-    const clientData: Client | null =
-      this.localStorageService.getItem<Client>('client');
+    const clientData: Client | null = this.localStorageService.getItem<Client>('client');
     if (clientData && clientData.selectedBracket) {
       const storedBracket: TaxBracket = clientData.selectedBracket;
-      this.selectedBracket = this.taxBrackets.find(
-        (bracket: TaxBracket): boolean =>
-          bracket.minIncome === storedBracket.minIncome,
-      );
+      this.selectedBracket = this.taxBrackets.find((bracket: TaxBracket): boolean => bracket.minIncome === storedBracket.minIncome);
     }
   }
 
   private updateTaxBrackets(): void {
     const year: number = new Date().getFullYear();
     this.taxBrackets = TAX_BRACKETS[year]?.[this.province.toUpperCase()] || [];
-    this.selectedBracket = this.taxBrackets.find(
-      (bracket: TaxBracket, index: number, array: TaxBracket[]) => {
-        const nextBracket: TaxBracket = array[index + 1];
-        return (
-          this.annualIncome >= bracket.minIncome &&
-          (!nextBracket || this.annualIncome < nextBracket.minIncome)
-        );
-      },
-    );
+    this.selectedBracket = this.taxBrackets.find((bracket: TaxBracket, index: number, array: TaxBracket[]) => {
+      const nextBracket: TaxBracket = array[index + 1];
+      return this.annualIncome >= bracket.minIncome && (!nextBracket || this.annualIncome < nextBracket.minIncome);
+    });
   }
 
   saveSelectedBracket(): void {
@@ -123,10 +108,7 @@ export class ClientComponent implements OnInit {
   updateBirthdateAndMultiplier(newBirthdate: string | null): void {
     this.birthdateModel.birthdate = newBirthdate;
 
-    this.incomeReplacementMultiplier = Math.max(
-      this.expectedRetirementAge - this.birthdateModel.age,
-      0,
-    );
+    this.incomeReplacementMultiplier = Math.max(this.expectedRetirementAge - this.birthdateModel.age, 0);
 
     this.updateClientData();
   }

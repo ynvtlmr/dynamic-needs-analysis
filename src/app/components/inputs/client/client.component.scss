@@ -1,0 +1,36 @@
+@import '../../../../styles/styles';
+
+// .client-container {
+//   width: 600px;
+// }
+
+// .client-table {
+//   width: 100%; /* Make the table take up the full width of the container */
+//   table-layout: fixed; /* Make the table cells adjust their width to fit the table */
+// }
+
+.client {
+  &-container {
+    width: 600px;
+    background-color: lightgray;
+  }
+  &-table {
+    width: 100%; /* Make the table take up the full width of the container */
+    table-layout: fixed; /* Make the table cells adjust their width to fit the table */
+  }
+}
+
+
+// .client-container {
+//   width: 600px;
+//   // display: flex;
+//   // flex-direction: column;
+//   // align-items: center;
+//   // justify-content: center;
+//   // height: 100vh;
+// }
+
+// .client-table {
+//   width: 100%; /* Make the table take up the full width of the container */
+//   table-layout: fixed; /* Make the table cells adjust their width to fit the table */
+// }

@@ -1,1 +1,36 @@
-<router-outlet></router-outlet>
+<!-- Orginal -->
+<!-- <router-outlet></router-outlet> -->
+
+
+<!-- New -->
+<!-- <app-header></app-header>
+<app-menu></app-menu>
+<router-outlet></router-outlet> -->
+
+<!-- New New-->
+<div class="app-container">
+  <app-header></app-header>
+  <!-- <app-menu></app-menu> -->
+  <app-menu *ngIf="showMenu"></app-menu>
+  <router-outlet></router-outlet> 
+</div>
+
+
+<!-- <mat-sidenav-container>
+  <app-sidenav></app-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container> -->
+
+
+
+<!-- New New-->
+<!-- <div class="app-container">
+  <app-header></app-header> -->
+  <!-- <app-menu *ngIf="showMenu"></app-menu> -->
+  <!-- <app-menu></app-menu>
+  <router-outlet></router-outlet> 
+</div> -->
+

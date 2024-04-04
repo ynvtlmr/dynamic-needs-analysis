@@ -1,0 +1,35 @@
+<!-- <mat-sidenav-content>
+  <h1 class="title">DNA</h1>
+  <mat-toolbar color="primary">
+    <button mat-icon-button (click)="toggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+</mat-sidenav-content> -->
+
+<div class="header-container">
+  <header>
+    <mat-toolbar color="primary">
+      <div class="button-container">
+        <button mat-icon-button (click)="toggleMenu()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="title-container">
+        <h1 class="title">
+          Dynamic Needs Analysis
+        </h1>
+      </div>
+      <div class="user-container">
+      <!-- <div *ngIf="authService.currentUser" class="user-container"></div> -->
+        <h1 class="user">
+            <!-- Welcome, {{ authService.currentUser.displayName || authService.currentUser.email }} -->
+            Welcome, {{ currentUserEmail }}
+        </h1>
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </header>
+</div>
+

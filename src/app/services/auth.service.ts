@@ -7,7 +7,6 @@ import { Credential } from '../models/credential.model';
 
 
 @Injectable({ providedIn: 'root' })
-
 export class AuthService {
   private auth: Auth = inject(Auth);
   readonly authState$ = authState(this.auth);
@@ -15,19 +14,11 @@ export class AuthService {
   constructor(private router: Router) {}
 
   signUpWithEmailAndPassword(credential: Credential): Promise<UserCredential> {
-    return createUserWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password,
-    );
+    return createUserWithEmailAndPassword(this.auth, credential.email, credential.password);
   }
 
   logInWithEmailAndPassword(credential: Credential): Promise<UserCredential> {
-    return signInWithEmailAndPassword(
-      this.auth,
-      credential.email,
-      credential.password,
-    );
+    return signInWithEmailAndPassword(this.auth, credential.email, credential.password);
   }
 
   async logOut(): Promise<void> {
@@ -40,4 +31,10 @@ export class AuthService {
       throw error;
     }
   }
+
+  getCurrentUserEmail(): string | null {
+    const user = this.auth.currentUser;
+    return user ? user.email : null;
+  }
+
 }

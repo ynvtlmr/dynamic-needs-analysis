@@ -12,7 +12,8 @@ export const routes: Routes = [
   {
     path: 'auth',
     canActivate: [publicGuard],
-    loadComponent: () =>
+    // loadComponent: () =>
+    loadChildren: () =>
       import('./pages/auth/auth.component').then((c) => c.AuthComponent),
     title: 'Auth',
   },
