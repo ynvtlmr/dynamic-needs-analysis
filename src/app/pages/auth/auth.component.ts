@@ -1,22 +1,14 @@
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { sendEmailVerification, UserCredential } from '@angular/fire/auth';
-import {
-  MatCard,
-  MatCardContent,
-  MatCardHeader,
-  MatCardTitle,
-} from '@angular/material/card';
+import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-auth',
@@ -34,6 +26,8 @@ import { MatIcon } from '@angular/material/icon';
     MatCardContent,
     MatCardTitle,
     MatCardHeader,
+    MatInputModule,
+    MatButtonModule,
   ],
 })
 export class AuthComponent {
@@ -81,7 +75,7 @@ export class AuthComponent {
       if (userCredential.user && !userCredential.user.emailVerified) {
         alert('Please verify your email before logging in.');
       } else {
-        await this.router.navigateByUrl('/');
+        await this.router.navigateByUrl('/client');
       }
     } catch (error) {
       console.error(error);
