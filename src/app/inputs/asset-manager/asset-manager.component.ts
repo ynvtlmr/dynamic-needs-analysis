@@ -154,11 +154,10 @@ export class AssetManagerComponent {
 
     this.assets.forEach((asset: Asset): void => {
       const futureValue: number = this.calculateFutureValue(asset);
+      const totalAllocation: number = asset.beneficiaries.reduce((sum: any, beneficiary: { allocation: any; }) => sum + beneficiary.allocation, 0);
       asset.beneficiaries.forEach((beneficiary: Beneficiary): void => {
-        const distribution: number =
-          (beneficiary.allocation / 100) * futureValue;
-        distributions[beneficiary.name] =
-          (distributions[beneficiary.name] || 0) + distribution;
+        const distribution: number = (beneficiary.allocation / totalAllocation) * futureValue;
+        distributions[beneficiary.name] = (distributions[beneficiary.name] || 0) + distribution;
       });
     });
 
