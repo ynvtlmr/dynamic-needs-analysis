@@ -70,12 +70,19 @@ export class AssetValueBarChartComponent implements OnInit {
     });
 
     this.assets.forEach((asset: Asset): void => {
+      const totalAllocation = asset.beneficiaries.reduce(
+        (sum, b: Beneficiary) => sum + b.allocation,
+        0,
+      );
+
       seriesData.forEach((series: { name: string; data: number[] }): void => {
         const beneficiary: Beneficiary | undefined = asset.beneficiaries.find(
           (b: Beneficiary): boolean => b.name === series.name,
         );
         series.data.push(
-          beneficiary ? (beneficiary.allocation / 100) * asset.currentValue : 0,
+          beneficiary
+            ? (beneficiary.allocation / totalAllocation) * asset.currentValue
+            : 0,
         );
       });
     });
